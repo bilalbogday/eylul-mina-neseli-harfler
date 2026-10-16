@@ -1,0 +1,1386 @@
+.app-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top right, #fef3c7 0%, #fff9f0 45%, #e0f2fe 100%);
+  padding-bottom: 90px;
+}
+
+/* KUTLAMA BİLDİRİMİ */
+.celebration-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: #fff;
+  padding: 16px 26px;
+  border-radius: 999px;
+  box-shadow: 0 14px 32px rgba(22, 163, 74, 0.38);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  animation: popBounce 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popBounce {
+  0% {
+    transform: translate(-50%, -30px) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ÜST NAVBAR */
+.top-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 3px solid #fde68a;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.brand-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ff6b6b, #feca57);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  box-shadow: 0 6px 14px rgba(255, 107, 107, 0.3);
+}
+
+.brand-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #e11d48;
+  line-height: 1.15;
+}
+
+.brand-subtitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.top-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  padding: 6px 14px 6px 8px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #1e293b;
+  transition: transform 0.15s ease;
+}
+
+.profile-pill:hover {
+  transform: scale(1.04);
+  border-color: #94a3b8;
+}
+
+.avatar-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+}
+
+.score-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.98rem;
+}
+
+.stars-pill {
+  background: #fef9c3;
+  border: 2px solid #fde047;
+  color: #854d0e;
+}
+
+.sticker-pill {
+  background: #f3e8ff;
+  border: 2px solid #d8b4fe;
+  color: #6b21a8;
+  cursor: pointer;
+}
+
+/* ANA KONTEYNER */
+.main-container {
+  max-width: 1120px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 16px;
+  flex: 1;
+}
+
+/* KARŞILAMA BANNER */
+.hero-welcome-banner {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+  color: #ffffff;
+  border-radius: 26px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 14px 30px rgba(255, 107, 107, 0.25);
+  margin-bottom: 22px;
+  flex-wrap: wrap;
+}
+
+.maarif-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.24);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.hero-welcome-text h2 {
+  font-size: 1.65rem;
+  margin-bottom: 6px;
+}
+
+.hero-welcome-text p {
+  font-size: 1rem;
+  opacity: 0.95;
+  max-width: 620px;
+}
+
+.hero-audio-btn {
+  background: #ffffff;
+  color: #e11d48;
+  border: none;
+  padding: 14px 22px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease;
+}
+
+.hero-audio-btn:active {
+  transform: scale(0.96);
+}
+
+/* ADA SEÇİCİ SEKME */
+.island-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.island-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 20px;
+  border: 3px solid transparent;
+  background: #ffffff;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.island-tab-btn:hover {
+  transform: translateY(-2px);
+}
+
+.island-tab-emoji {
+  font-size: 2rem;
+}
+
+.island-tab-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.island-tab-info strong {
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.island-tab-info span {
+  font-size: 0.78rem;
+  color: #475569;
+  font-weight: 700;
+}
+
+.island-progress-pill {
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+/* ADA HARFLER PANOSU */
+.island-board {
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  border: 3px solid rgba(255, 255, 255, 0.85);
+}
+
+.island-board-header {
+  margin-bottom: 20px;
+}
+
+.island-board-header h3 {
+  font-size: 1.5rem;
+  color: #0f172a;
+}
+
+.island-board-header p {
+  font-size: 0.95rem;
+  color: #334155;
+  font-weight: 700;
+}
+
+.letters-island-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.letter-island-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.07);
+  border: 3px solid #ffffff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  position: relative;
+}
+
+.letter-island-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.12);
+}
+
+.letter-island-card.mastered {
+  border-color: #22c55e;
+}
+
+.letter-step-num {
+  align-self: flex-start;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.letter-card-center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px;
+}
+
+.letter-pair {
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.letter-pair span {
+  font-size: 2.6rem;
+  opacity: 0.88;
+}
+
+.letter-mascot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8fafc;
+  padding: 10px 14px;
+  border-radius: 18px;
+}
+
+.mascot-icon {
+  font-size: 2.3rem;
+}
+
+.mascot-label {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #334155;
+  margin-top: 2px;
+}
+
+.letter-card-stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #f8fafc;
+  padding: 6px;
+  border-radius: 12px;
+}
+
+.letter-card-cta {
+  color: #ffffff;
+  text-align: center;
+  padding: 11px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+/* DERS / ALIŞTIRMA EKRANI */
+.letter-lesson-view {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.lesson-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 14px 20px;
+  border-radius: 22px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.back-map-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  color: #1e293b;
+  padding: 10px 16px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 0.98rem;
+  cursor: pointer;
+}
+
+.lesson-letter-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  padding: 8px 22px;
+  border-radius: 999px;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.badge-emoji {
+  font-size: 1.65rem;
+}
+
+.lesson-stars-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 4 EGZERSİZ SEKMESİ */
+.exercise-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.ex-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 12px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 3px solid #e2e8f0;
+  color: #475569;
+  font-weight: 800;
+  font-size: 0.98rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ex-tab.active {
+  border-color: #ff6b6b;
+  background: #fff1f2;
+  color: #e11d48;
+  transform: translateY(-2px);
+}
+
+.ex-tab.done {
+  border-color: #86efac;
+}
+
+.done-icon {
+  color: #16a34a;
+}
+
+/* ADIM 1: SES TANIMA */
+.exercise-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sound-hero-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 24px;
+  border: 4px solid #ff6b6b;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
+}
+
+.big-letter-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+  align-items: center;
+}
+
+.giant-letter-btn {
+  border: none;
+  border-radius: 26px;
+  padding: 32px 20px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  cursor: pointer;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease;
+}
+
+.giant-letter-btn:active {
+  transform: scale(0.96);
+}
+
+.giant-pair {
+  font-size: 5.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.listen-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.24);
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.mascot-showcase {
+  text-align: center;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 22px;
+}
+
+.mascot-big-emoji {
+  font-size: 5rem;
+  line-height: 1.1;
+}
+
+.mascot-word-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 6px;
+}
+
+.phonetic-desc {
+  margin-top: 8px;
+  font-size: 1.05rem;
+  color: #475569;
+  font-weight: 700;
+}
+
+.section-subtitle {
+  font-size: 1.25rem;
+  color: #1e293b;
+  text-align: center;
+}
+
+.word-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.word-interactive-card {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 20px;
+  text-align: center;
+  border: 3px solid #e2e8f0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.word-interactive-card:hover {
+  transform: translateY(-4px);
+  border-color: #38bdf8;
+}
+
+.word-emoji {
+  font-size: 3.6rem;
+}
+
+.word-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.syllable-chips {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.syllable-chip {
+  padding: 5px 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 1.05rem;
+}
+
+.chip-red {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.chip-blue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.word-sentence {
+  font-size: 0.92rem;
+  color: #475569;
+  font-weight: 700;
+}
+
+.card-audio-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #0284c7;
+  background: #e0f2fe;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+/* ADIM 2: PARMAKLA HARF ÇİZME CANVAS */
+.tracing-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 24px;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
+  border: 3px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.tracing-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.step-pill {
+  display: inline-block;
+  background: #fef3c7;
+  color: #b45309;
+  font-weight: 800;
+  font-size: 0.82rem;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+}
+
+.case-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.case-btn {
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: 2px solid #cbd5e1;
+  background: #f8fafc;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.case-btn.active {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #1e293b;
+}
+
+.tracing-instruction {
+  font-size: 1rem;
+  color: #475569;
+  font-weight: 700;
+  text-align: center;
+}
+
+.canvas-wrapper {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  max-width: 88vw;
+  max-height: 88vw;
+  background: #fffdf9;
+  border: 4px dashed #94a3b8;
+  border-radius: 28px;
+  overflow: hidden;
+  touch-action: none;
+  box-shadow: inset 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.guide-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.ghost-letter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15rem;
+  font-weight: 800;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.trace-points-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.trace-dot {
+  position: absolute;
+  width: 38px;
+  height: 38px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 3px solid #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: #1e293b;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.trace-dot.done {
+  transform: translate(-50%, -50%) scale(1.18);
+  border-color: #16a34a;
+  color: #fff;
+}
+
+.draw-canvas {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.tracing-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+}
+
+.trace-progress-info {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.trace-bar-bg {
+  width: 100%;
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.trace-bar-fill {
+  height: 100%;
+  transition: width 0.25s ease;
+}
+
+.tracing-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.success-banner {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 12px 20px;
+  border-radius: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ADIM 3: HECE BİRLEŞTİRME */
+.syllable-game-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 28px 22px;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
+  border: 3px solid #bae6fd;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.syllable-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.syllable-box {
+  min-width: 125px;
+  padding: 22px 24px;
+  border-radius: 24px;
+  border: 4px solid #cbd5e1;
+  background: #f8fafc;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.syllable-box.part-1.activated {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #b91c1c;
+  transform: scale(1.05);
+}
+
+.syllable-box.part-2.activated {
+  background: #dbeafe;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+.part-text {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.part-sub {
+  font-size: 0.85rem;
+  font-weight: 800;
+  opacity: 0.75;
+}
+
+.plus-sign {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #64748b;
+}
+
+.syllable-result-box {
+  min-width: 190px;
+  padding: 20px 26px;
+  border-radius: 24px;
+  border: 4px dashed #94a3b8;
+  background: #f8fafc;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.25s ease;
+}
+
+.syllable-result-box.revealed {
+  border-style: solid;
+  border-color: #16a34a;
+  background: #dcfce7;
+  transform: scale(1.07);
+}
+
+.result-emoji {
+  font-size: 3rem;
+}
+
+.result-word {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #15803d;
+}
+
+.result-meaning {
+  font-size: 0.92rem;
+  font-weight: 800;
+  color: #334155;
+}
+
+.syllable-controls {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* ADIM 4: SESİ DUY VE BUL QUIZ */
+.quiz-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 28px 22px;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
+  border: 3px solid #fde047;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.quiz-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-listen-big {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  border: none;
+  padding: 16px 28px;
+  border-radius: 20px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.25);
+}
+
+.quiz-prompt {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #334155;
+  max-width: 580px;
+}
+
+.quiz-options-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.quiz-option-btn {
+  background: #f8fafc;
+  border: 4px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 24px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.quiz-option-btn:hover {
+  transform: translateY(-3px);
+}
+
+.quiz-option-btn.correct {
+  background: #dcfce7;
+  border-color: #16a34a;
+}
+
+.quiz-option-btn.wrong {
+  background: #fee2e2;
+  border-color: #ef4444;
+}
+
+.quiz-opt-emoji {
+  font-size: 4rem;
+}
+
+.quiz-opt-word {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.quiz-opt-badge {
+  background: #e2e8f0;
+  color: #475569;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+/* ÇIKARTMA ALBÜMÜ */
+.stickers-view {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.album-header {
+  background: #ffffff;
+  padding: 22px 26px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  border: 3px solid #e9d5ff;
+}
+
+.album-counter {
+  background: #f3e8ff;
+  color: #6b21a8;
+  padding: 12px 20px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.album-counter strong {
+  font-size: 1.5rem;
+}
+
+.sticker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+  gap: 16px;
+}
+
+.sticker-slot {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 18px 14px;
+  text-align: center;
+  border: 3px solid #e2e8f0;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.15s ease;
+}
+
+.sticker-slot.unlocked {
+  border-color: #facc15;
+  background: linear-gradient(180deg, #ffffff 0%, #fefce8 100%);
+}
+
+.sticker-slot.locked {
+  opacity: 0.72;
+}
+
+.sticker-letter-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.sticker-emoji-box {
+  font-size: 3.4rem;
+  margin-top: 12px;
+}
+
+.sticker-name {
+  font-weight: 800;
+  font-size: 1rem;
+  color: #0f172a;
+}
+
+.sticker-island {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.sticker-mini-progress {
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #334155;
+}
+
+/* PROFİLLER & BULUT YEDEK */
+.profiles-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.profiles-card,
+.cloud-backup-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  border: 3px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.profile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+.profile-row-item.active {
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
+
+.prof-row-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.prof-row-avatar {
+  font-size: 2rem;
+}
+
+.prof-select-badge {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #15803d;
+}
+
+.add-profile-form {
+  border-top: 2px dashed #e2e8f0;
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 2px solid #cbd5e1;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 700;
+}
+
+.avatar-picker {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.avatar-pick-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.avatar-pick-btn.selected {
+  border-color: #ff6b6b;
+  background: #fff1f2;
+  transform: scale(1.1);
+}
+
+.cloud-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sync-status-badge {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0284c7;
+}
+
+.cloud-desc {
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.device-code-box {
+  background: #f1f5f9;
+  padding: 14px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.device-code-box code {
+  display: block;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 2px;
+}
+
+.restore-input-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.pwa-install-guide {
+  background: #fffbeb;
+  border: 2px solid #fde68a;
+  padding: 16px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+}
+
+.pwa-install-guide ul {
+  margin-top: 8px;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ORTAK BUTONLAR */
+.btn-primary {
+  background: #ff6b6b;
+  color: #ffffff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255, 107, 107, 0.28);
+}
+
+.btn-secondary {
+  background: #f1f5f9;
+  color: #1e293b;
+  border: 2px solid #cbd5e1;
+  padding: 11px 18px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.btn-large {
+  padding: 15px 28px;
+  font-size: 1.1rem;
+}
+
+.step-next-bar,
+.quiz-footer-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+/* ALT PWA NAVİGASYON BARI */
+.bottom-pwa-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  border-top: 3px solid #fde68a;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+}
+
+.nav-item {
+  flex: 1;
+  max-width: 200px;
+  background: transparent;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #64748b;
+  font-weight: 800;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.nav-item.active {
+  background: #fff1f2;
+  color: #e11d48;
+}
+
+@media (max-width: 720px) {
+  .exercise-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .giant-pair {
+    font-size: 4.2rem;
+  }
+  .brand-title {
+    font-size: 1.1rem;
+  }
+}
