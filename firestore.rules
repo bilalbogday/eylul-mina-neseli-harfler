@@ -8,5 +8,8 @@ service cloud.firestore {
     match /neseli_harfler_profiles/{deviceId} {
       allow read, write: if true;
     }
+    match /neseli_harfler_global/{docId} {
+      allow read, write: if true;
+    }
   }
 }

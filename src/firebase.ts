@@ -58,3 +58,36 @@ export async function loadCloudBackup(customDeviceId?: string): Promise<Record<s
     return null
   }
 }
+
+export async function saveGlobalAvatar(avatarUrlOrData: string): Promise<boolean> {
+  try {
+    await setDoc(
+      doc(db, 'neseli_harfler_global', 'default_avatar'),
+      {
+        avatar: avatarUrlOrData,
+        updatedAt: new Date().toISOString(),
+      },
+      { merge: true }
+    )
+    return true
+  } catch (err) {
+    console.warn('Global avatar kaydedilemedi:', err)
+    return false
+  }
+}
+
+export async function loadGlobalAvatar(): Promise<string | null> {
+  try {
+    const snap = await getDoc(doc(db, 'neseli_harfler_global', 'default_avatar'))
+    if (snap.exists()) {
+      const data = snap.data()
+      if (data && typeof data.avatar === 'string' && data.avatar) {
+        return data.avatar
+      }
+    }
+    return null
+  } catch (err) {
+    console.warn('Global avatar okunamadı:', err)
+    return null
+  }
+}

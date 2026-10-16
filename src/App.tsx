@@ -25,7 +25,13 @@ import { ISLAND_GROUPS, LETTERS_DATA, type LetterCurriculum } from './curriculum
 import { LetterTracingCanvas } from './LetterTracingCanvas'
 import { LetterSoundGame } from './LetterSoundGame'
 import { ProfilePhotoModal } from './ProfilePhotoModal'
-import { getOrCreateDeviceId, loadCloudBackup, saveCloudBackup } from './firebase'
+import {
+  getOrCreateDeviceId,
+  loadCloudBackup,
+  saveCloudBackup,
+  saveGlobalAvatar,
+  loadGlobalAvatar,
+} from './firebase'
 import { playSoundEffect, speakTurkish, playWelcomeGreeting } from './sound'
 import './App.css'
 
@@ -52,12 +58,14 @@ const AVATAR_OPTIONS = ['👧', '🧒', '🦄', '🦁', '🐰', '🐼', '🦊', 
 const STORAGE_PROFILES_KEY = 'eylul_mina_neseli_harfler_profiles_v1'
 const STORAGE_ACTIVE_ID_KEY = 'eylul_mina_neseli_harfler_active_profile_v1'
 
+const DEFAULT_EYLUL_MINA_PHOTO = '/images/eylul-mina-avatar.jpg'
+
 function createDefaultProfiles(): ChildProfile[] {
   return [
     {
       id: 'prof_eylul_mina',
       name: 'Eylül Mina',
-      avatar: '👧',
+      avatar: DEFAULT_EYLUL_MINA_PHOTO,
       stars: 0,
       letterProgress: {},
     },
@@ -70,7 +78,15 @@ export default function App() {
       const saved = localStorage.getItem(STORAGE_PROFILES_KEY)
       if (saved) {
         const parsed = JSON.parse(saved)
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Eğer profil Eylül Mina ise ve hala varsayılan emojide kalmışsa güncel fotoğrafa yükselt
+          return parsed.map((p: ChildProfile) => {
+            if (p.id === 'prof_eylul_mina' && (!p.avatar || p.avatar === '👧')) {
+              return { ...p, avatar: DEFAULT_EYLUL_MINA_PHOTO }
+            }
+            return p
+          })
+        }
       }
     } catch {
       // ignore
@@ -115,14 +131,29 @@ export default function App() {
     return LETTERS_DATA.find((l) => l.id === selectedLetterId) || null
   }, [selectedLetterId])
 
-  // İlk açılışta buluttan yedek kontrolü
+  // İlk açılışta buluttan yedek ve global avatar kontrolü
   useEffect(() => {
+    // 1. Cihaza özel bulut yedeği kontrolü
     loadCloudBackup().then((cloudData) => {
       if (cloudData && Array.isArray(cloudData.profiles) && cloudData.profiles.length > 0) {
         const localSaved = localStorage.getItem(STORAGE_PROFILES_KEY)
         if (!localSaved) {
           setProfiles(cloudData.profiles as ChildProfile[])
         }
+      }
+    })
+
+    // 2. Tüm cihazlar için ortak global profil fotoğrafı senkronizasyonu
+    loadGlobalAvatar().then((globalAvatar) => {
+      if (globalAvatar) {
+        setProfiles((prev) =>
+          prev.map((prof) => {
+            if (prof.id === 'prof_eylul_mina' && prof.avatar !== globalAvatar) {
+              return { ...prof, avatar: globalAvatar }
+            }
+            return prof
+          })
+        )
       }
     })
   }, [])
@@ -167,6 +198,10 @@ export default function App() {
     setProfiles((prev) =>
       prev.map((prof) => (prof.id === activeProfile.id ? { ...prof, avatar: newAvatar } : prof))
     )
+    // Tüm cihazların anında görmesi için bulut ortak koleksiyonuna da kaydet
+    if (activeProfile.id === 'prof_eylul_mina') {
+      saveGlobalAvatar(newAvatar)
+    }
     triggerCelebration(`📸 ${activeProfile.name} için yeni profil resmi kaydedildi!`)
   }
 
