@@ -220,12 +220,12 @@
 
 .hero-avatar-frame-large {
   position: relative;
-  width: 130px;
-  height: 130px;
+  width: 155px;
+  height: 155px;
   border-radius: 50%;
   background: #ffffff;
-  padding: 5px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22), inset 0 2px 6px rgba(255, 255, 255, 0.6);
+  padding: 6px;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.25), inset 0 2px 6px rgba(255, 255, 255, 0.6);
   cursor: pointer;
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -241,7 +241,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 5.2rem;
+  font-size: 6.2rem;
   overflow: hidden;
   background: #fffdfa;
 }
@@ -1644,11 +1644,11 @@
     justify-content: center;
   }
   .hero-avatar-frame-large {
-    width: 110px;
-    height: 110px;
+    width: 130px;
+    height: 130px;
   }
   .hero-avatar-big-img {
-    font-size: 4.4rem;
+    font-size: 5.2rem;
   }
   .hero-welcome-text h2 {
     font-size: 1.45rem;

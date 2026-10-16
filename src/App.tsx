@@ -921,15 +921,8 @@ export default function App() {
 
               <div className="hero-welcome-text">
                 <div className="hero-badge-row">
-                  <span className="maarif-badge">✨ Türkiye Yüzyılı Maarif Modeli</span>
                   <span className="hero-name-pill">👑 {activeProfile.name}</span>
                 </div>
-                <h2>
-                  Hoş geldin {activeProfile.name}!
-                </h2>
-                <p className="hero-special-message">
-                  Bu uygulamayı baban senin için yaptı. Umarım çok eğlenirsin ve güzel vakit geçirirsin! ❤️
-                </p>
 
                 <div className="hero-action-buttons">
                   <button
@@ -940,7 +933,7 @@ export default function App() {
                       playWelcomeGreeting(activeProfile.name)
                     }}
                   >
-                    <Volume2 size={22} /> Hoş Geldin Mesajını Dinle 🔊
+                    <Volume2 size={24} /> Hoş Geldin Mesajını Dinle 🔊
                   </button>
                 </div>
               </div>
