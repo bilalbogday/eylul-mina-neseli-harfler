@@ -19,11 +19,13 @@ import {
   Gamepad2,
   Camera,
   Utensils,
+  Flashlight,
 } from 'lucide-react'
 import { ISLAND_GROUPS, LETTERS_DATA, type LetterCurriculum } from './curriculum'
 import { LetterTracingCanvas } from './LetterTracingCanvas'
 import { LetterSoundGame } from './LetterSoundGame'
 import { SyllableKitchenGame } from './SyllableKitchenGame'
+import { LetterDetectiveGame } from './LetterDetectiveGame'
 import { ProfilePhotoModal } from './ProfilePhotoModal'
 import {
   getOrCreateDeviceId,
@@ -40,7 +42,7 @@ export interface ChildProfile {
   name: string
   avatar: string
   stars: number
-  // Her harf için tamamlanan 4 aktivite: sound, trace, syllable, quiz
+  // Her harf için tamamlanan aktiviteler: sound, trace, syllable, quiz, game, detective
   letterProgress: Record<
     string,
     {
@@ -49,6 +51,7 @@ export interface ChildProfile {
       syllable?: boolean
       quiz?: boolean
       game?: boolean
+      detective?: boolean
     }
   >
 }
@@ -98,10 +101,12 @@ export default function App() {
     return localStorage.getItem(STORAGE_ACTIVE_ID_KEY) || 'prof_eylul_mina'
   })
 
-  const [activeTab, setActiveTab] = useState<'map' | 'stickers' | 'profiles'>('map')
+  const [activeTab, setActiveTab] = useState<'map' | 'detective' | 'stickers' | 'profiles'>('map')
   const [selectedGroupId, setSelectedGroupId] = useState<number>(1)
   const [selectedLetterId, setSelectedLetterId] = useState<string | null>(null)
-  const [exerciseStep, setExerciseStep] = useState<'sound' | 'trace' | 'syllable' | 'quiz' | 'game'>('sound')
+  const [exerciseStep, setExerciseStep] = useState<
+    'sound' | 'trace' | 'syllable' | 'detective' | 'quiz' | 'game'
+  >('sound')
 
   // Yeni profil ekleme modal/form
   const [newProfileName, setNewProfileName] = useState('')
@@ -209,7 +214,10 @@ export default function App() {
     return <span className={className}>{avatarStr}</span>
   }
 
-  const markActivityDone = (letterId: string, activity: 'sound' | 'trace' | 'syllable' | 'quiz' | 'game') => {
+  const markActivityDone = (
+    letterId: string,
+    activity: 'sound' | 'trace' | 'syllable' | 'detective' | 'quiz' | 'game'
+  ) => {
     setProfiles((prev) =>
       prev.map((prof) => {
         if (prof.id !== activeProfile.id) return prof
@@ -259,7 +267,10 @@ export default function App() {
   const getLetterStarCount = (letterId: string): number => {
     const p = activeProfile.letterProgress[letterId]
     if (!p) return 0
-    return [p.sound, p.trace, p.syllable, p.quiz, p.game].filter(Boolean).length
+    return Math.min(
+      5,
+      [p.sound, p.trace, p.syllable, p.detective, p.quiz, p.game].filter(Boolean).length
+    )
   }
 
   const totalEarnedStickers = useMemo(() => {
@@ -521,6 +532,23 @@ export default function App() {
 
               <button
                 type="button"
+                className={`ex-tab ${exerciseStep === 'detective' ? 'active' : ''} ${
+                  activeProfile.letterProgress[selectedLetter.id]?.detective ? 'done' : ''
+                }`}
+                onClick={() => {
+                  playSoundEffect('click')
+                  setExerciseStep('detective')
+                }}
+              >
+                <Flashlight size={20} />
+                <span>4. Harf Dedektifi</span>
+                {activeProfile.letterProgress[selectedLetter.id]?.detective && (
+                  <CheckCircle2 size={16} className="done-icon" />
+                )}
+              </button>
+
+              <button
+                type="button"
                 className={`ex-tab ${exerciseStep === 'quiz' ? 'active' : ''} ${
                   activeProfile.letterProgress[selectedLetter.id]?.quiz ? 'done' : ''
                 }`}
@@ -533,7 +561,7 @@ export default function App() {
                 }}
               >
                 <Ear size={20} />
-                <span>4. Dinle & Bul</span>
+                <span>5. Dinle & Bul</span>
                 {activeProfile.letterProgress[selectedLetter.id]?.quiz && (
                   <CheckCircle2 size={16} className="done-icon" />
                 )}
@@ -550,7 +578,7 @@ export default function App() {
                 }}
               >
                 <Gamepad2 size={20} />
-                <span>5. Sesli Oyun</span>
+                <span>6. Sesli Oyun</span>
                 {activeProfile.letterProgress[selectedLetter.id]?.game && (
                   <CheckCircle2 size={16} className="done-icon" />
                 )}
@@ -674,6 +702,23 @@ export default function App() {
                   onNext={() => {
                     markActivityDone(selectedLetter.id, 'syllable')
                     playSoundEffect('fanfare')
+                    setExerciseStep('detective')
+                  }}
+                />
+              </div>
+            )}
+
+            {/* ADIM 4: KARANLIK ODA / HARF DEDEKTİFİ (EL FENERİ OYUNU) */}
+            {exerciseStep === 'detective' && (
+              <div className="exercise-panel">
+                <LetterDetectiveGame
+                  letter={selectedLetter}
+                  childName={activeProfile.name}
+                  completed={Boolean(activeProfile.letterProgress[selectedLetter.id]?.detective)}
+                  onComplete={() => markActivityDone(selectedLetter.id, 'detective')}
+                  onExit={() => {
+                    markActivityDone(selectedLetter.id, 'detective')
+                    playSoundEffect('fanfare')
                     setExerciseStep('quiz')
                     if (quizQuestions[0]) {
                       setTimeout(() => speakTurkish(quizQuestions[0].speakPrompt), 300)
@@ -683,7 +728,7 @@ export default function App() {
               </div>
             )}
 
-            {/* ADIM 5: MİNİ SESLİ OYUN */}
+            {/* ADIM 6: MİNİ SESLİ OYUN */}
             {exerciseStep === 'game' && (
               <div className="exercise-panel">
                 <LetterSoundGame
@@ -699,7 +744,7 @@ export default function App() {
               </div>
             )}
 
-            {/* ADIM 4: SESİ DUYUP DOĞRU HARFİ/KELİMEYİ BULMA */}
+            {/* ADIM 5: SESİ DUYUP DOĞRU HARFİ/KELİMEYİ BULMA */}
             {exerciseStep === 'quiz' && (
               <div className="exercise-panel">
                 {(() => {
@@ -709,7 +754,7 @@ export default function App() {
                     <div className="quiz-card">
                       <div className="quiz-header">
                         <span className="step-pill">
-                          4. Adım: Sesi Duy ve Bul ({quizQuestionIdx + 1}/{quizQuestions.length})
+                          5. Adım: Sesi Duy ve Bul ({quizQuestionIdx + 1}/{quizQuestions.length})
                         </span>
                         <button
                           type="button"
@@ -802,6 +847,20 @@ export default function App() {
               </div>
             )}
           </div>
+        ) : activeTab === 'detective' ? (
+          /* ================= KARANLIK ODA / HARF DEDEKTİFİ TAM EKRAN OYUN ================= */
+          <div className="detective-standalone-view">
+            <LetterDetectiveGame
+              childName={activeProfile.name}
+              onComplete={() => {
+                markActivityDone('t', 'detective')
+              }}
+              onExit={() => {
+                playSoundEffect('click')
+                setActiveTab('map')
+              }}
+            />
+          </div>
         ) : activeTab === 'map' ? (
           /* ================= SEVİYE HARİTASI VE HARF ADALARI ================= */
           <div className="map-view">
@@ -848,6 +907,18 @@ export default function App() {
                     }}
                   >
                     <Volume2 size={24} /> Hoş Geldin Mesajını Dinle 🔊
+                  </button>
+
+                  <button
+                    type="button"
+                    className="hero-detective-launch-btn"
+                    onClick={() => {
+                      playSoundEffect('pop')
+                      setSelectedLetterId(null)
+                      setActiveTab('detective')
+                    }}
+                  >
+                    <Flashlight size={22} /> 🔦 Harf Dedektifi (Karanlık Oda)
                   </button>
                 </div>
               </div>
@@ -1188,6 +1259,19 @@ export default function App() {
         >
           <Sparkles size={22} />
           <span>Harf Adaları</span>
+        </button>
+
+        <button
+          type="button"
+          className={`nav-item ${activeTab === 'detective' && !selectedLetterId ? 'active' : ''}`}
+          onClick={() => {
+            playSoundEffect('click')
+            setSelectedLetterId(null)
+            setActiveTab('detective')
+          }}
+        >
+          <Flashlight size={22} />
+          <span>Harf Dedektifi</span>
         </button>
 
         <button

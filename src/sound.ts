@@ -17,7 +17,7 @@ function getAudioContext(): AudioContext | null {
 }
 
 export function playSoundEffect(
-  type: 'success' | 'pop' | 'error' | 'fanfare' | 'click' | 'sneeze' | 'bubble'
+  type: 'success' | 'pop' | 'error' | 'fanfare' | 'click' | 'sneeze' | 'bubble' | 'pling' | 'applause'
 ) {
   try {
     const ctx = getAudioContext()
@@ -36,6 +36,62 @@ export function playSoundEffect(
       gain.connect(ctx.destination)
       osc.start(now)
       osc.stop(now + 0.09)
+    } else if (type === 'pling') {
+      // Neşeli sihirli "pling" çan/kristal sesi (harf bulunduğunda)
+      const freqs = [880, 1318.5, 1760] // A5, E6, A6
+      freqs.forEach((f, idx) => {
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+        osc.type = 'sine'
+        const start = now + idx * 0.055
+        osc.frequency.setValueAtTime(f, start)
+        osc.frequency.exponentialRampToValueAtTime(f * 1.03, start + 0.35)
+        gain.gain.setValueAtTime(0.24 / (idx + 1), start)
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.38)
+        osc.connect(gain)
+        gain.connect(ctx.destination)
+        osc.start(start)
+        osc.stop(start + 0.38)
+      })
+    } else if (type === 'applause') {
+      // Zafer müziği + alkış ritmi
+      const melody = [523.25, 659.25, 783.99, 1046.5, 1318.5, 1046.5, 1318.5, 1567.98]
+      const times = [0, 0.09, 0.18, 0.28, 0.4, 0.52, 0.64, 0.78]
+      melody.forEach((freq, idx) => {
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+        osc.type = 'triangle'
+        const t = now + times[idx]
+        osc.frequency.setValueAtTime(freq, t)
+        gain.gain.setValueAtTime(0.24, t)
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.35)
+        osc.connect(gain)
+        gain.connect(ctx.destination)
+        osc.start(t)
+        osc.stop(t + 0.35)
+      })
+
+      // Alkış efektleri (kısa beyaz gürültü vuruşları)
+      for (let i = 0; i < 12; i++) {
+        const bufferSize = ctx.sampleRate * 0.045
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
+        const data = buffer.getChannelData(0)
+        for (let j = 0; j < bufferSize; j++) {
+          data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (bufferSize * 0.4))
+        }
+        const noise = ctx.createBufferSource()
+        noise.buffer = buffer
+        const filter = ctx.createBiquadFilter()
+        filter.type = 'bandpass'
+        filter.frequency.setValueAtTime(1200 + (i % 3) * 300, now + i * 0.085)
+        const gain = ctx.createGain()
+        gain.gain.setValueAtTime(0.16, now + i * 0.085)
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.085 + 0.045)
+        noise.connect(filter)
+        filter.connect(gain)
+        gain.connect(ctx.destination)
+        noise.start(now + i * 0.085)
+      }
     } else if (type === 'success') {
       const notes = [523.25, 659.25, 783.99, 1046.5] // C5, E5, G5, C6
       notes.forEach((freq, idx) => {

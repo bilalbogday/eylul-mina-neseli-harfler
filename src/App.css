@@ -644,10 +644,10 @@
   gap: 6px;
 }
 
-/* 4 EGZERSİZ SEKMESİ */
+/* 6 EGZERSİZ SEKMESİ */
 .exercise-tabs {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
@@ -2100,9 +2100,6 @@
   .exercise-tabs {
     grid-template-columns: repeat(2, 1fr);
   }
-  .exercise-tabs .ex-tab:last-child {
-    grid-column: span 2;
-  }
   .balloon-field {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -2525,3 +2522,363 @@
 .btn-save-photo:hover {
   background: #15803d;
 }
+
+/* ================= KARANLIK ODA / HARF DEDEKTİFİ (EL FENERİ OYUNU) ================= */
+.hero-detective-launch-btn {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #fde047;
+  border: 3px solid #facc15;
+  padding: 13px 22px;
+  border-radius: 20px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.28), 0 0 14px rgba(250, 204, 21, 0.35);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.hero-detective-launch-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.35), 0 0 20px rgba(250, 204, 21, 0.55);
+}
+
+.detective-standalone-view {
+  width: 100%;
+}
+
+.detective-game-card {
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 28px;
+  padding: 20px;
+  border: 4px solid #fbbf24;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  color: #f8fafc;
+}
+
+.detective-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  background: rgba(15, 23, 42, 0.65);
+  padding: 12px 16px;
+  border-radius: 20px;
+  border: 2px solid rgba(250, 204, 21, 0.3);
+}
+
+.detective-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.detective-flashlight-badge {
+  background: #facc15;
+  color: #0f172a;
+  font-weight: 900;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.45);
+}
+
+.detective-main-title {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #fef08a;
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.detective-hud-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.detective-letter-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.detective-target-slot {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.15rem;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.detective-target-slot.dim {
+  background: rgba(51, 65, 85, 0.6);
+  border: 2px dashed #64748b;
+  color: rgba(148, 163, 184, 0.4);
+}
+
+.detective-target-slot.lit {
+  background: linear-gradient(135deg, #f97316, #ec4899);
+  border: 2px solid #fef08a;
+  color: #ffffff;
+  transform: scale(1.12);
+  box-shadow: 0 0 14px rgba(250, 204, 21, 0.6);
+}
+
+.detective-target-slot .slot-star {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+}
+
+.detective-counter-pill {
+  background: rgba(30, 41, 59, 0.9);
+  border: 2px solid #38bdf8;
+  color: #e0f2fe;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.detective-counter-pill strong {
+  color: #facc15;
+  font-size: 1.05rem;
+}
+
+.detective-refresh-btn {
+  background: #334155;
+  color: #f8fafc;
+  border: 2px solid #64748b;
+  padding: 8px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.detective-refresh-btn:hover {
+  background: #475569;
+  border-color: #94a3b8;
+  transform: translateY(-1px);
+}
+
+.detective-letter-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 4px 6px;
+}
+
+.selector-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #94a3b8;
+}
+
+.detective-char-pill {
+  background: rgba(51, 65, 85, 0.7);
+  color: #cbd5e1;
+  border: 2px solid #475569;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.detective-char-pill.active {
+  background: #facc15;
+  color: #0f172a;
+  border-color: #fef08a;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.45);
+  transform: scale(1.05);
+}
+
+.detective-speech-bubble {
+  background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%);
+  border: 2px solid #60a5fa;
+  border-radius: 20px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.speech-owl-avatar {
+  font-size: 2.2rem;
+  background: rgba(255, 255, 255, 0.12);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.speech-text {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #eff6ff;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.speech-text strong {
+  color: #fde047;
+}
+
+.speech-listen-btn {
+  background: #3b82f6;
+  color: #ffffff;
+  border: 2px solid #93c5fd;
+  padding: 8px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.detective-gentle-hint {
+  background: rgba(254, 243, 199, 0.95);
+  color: #92400e;
+  border: 2px solid #f59e0b;
+  padding: 8px 16px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-align: center;
+  animation: shakeAlert 0.4s ease;
+}
+
+.detective-canvas-container {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 4px solid #334155;
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.7);
+  background: #0a0f1e;
+  touch-action: none;
+  user-select: none;
+}
+
+.detective-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.detective-victory-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.35s ease;
+}
+
+.detective-victory-card {
+  background: linear-gradient(180deg, #ffffff 0%, #fefce8 100%);
+  color: #0f172a;
+  border: 5px solid #facc15;
+  border-radius: 30px;
+  padding: 28px 24px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45), 0 0 30px rgba(250, 204, 21, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: modalScaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.victory-crown-badge {
+  font-size: 3.4rem;
+  line-height: 1;
+}
+
+.detective-victory-card h2 {
+  font-size: 1.65rem;
+  font-weight: 900;
+  color: #b45309;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.detective-victory-card p {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #334155;
+  margin: 0;
+}
+
+.detective-victory-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
+}
+
+.detective-play-again-btn {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35);
+}
+
+@media (max-width: 640px) {
+  .detective-game-card {
+    padding: 14px;
+  }
+  .detective-main-title {
+    font-size: 1.2rem;
+  }
+  .detective-speech-bubble {
+    flex-direction: column;
+    text-align: center;
+    padding: 12px;
+  }
+  .detective-target-slot {
+    width: 31px;
+    height: 31px;
+    font-size: 1rem;
+  }
+}
+
