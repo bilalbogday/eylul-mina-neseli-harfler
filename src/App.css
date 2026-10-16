@@ -92,6 +92,12 @@
   gap: 10px;
 }
 
+.profile-pill-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .profile-pill {
   display: flex;
   align-items: center;
@@ -111,15 +117,48 @@
   border-color: #94a3b8;
 }
 
+.change-photo-badge-btn {
+  position: absolute;
+  top: -4px;
+  left: 24px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ff6b6b;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.change-photo-badge-btn:hover {
+  transform: scale(1.15);
+  background: #e11d48;
+}
+
 .avatar-circle {
-  width: 30px;
-  height: 30px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   background: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
+  overflow: hidden;
+  border: 2px solid #ffedd5;
+  flex-shrink: 0;
+}
+
+.avatar-img-tag {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .score-pill {
@@ -1184,13 +1223,70 @@
 }
 
 .prof-row-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 2rem;
+  overflow: hidden;
+  border: 2px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+.prof-row-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-small-photo {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  color: #334155;
+}
+
+.btn-small-photo:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
 }
 
 .prof-select-badge {
   font-weight: 800;
   font-size: 0.85rem;
   color: #15803d;
+}
+
+.hero-welcome-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.hero-avatar-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  overflow: hidden;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
 }
 
 .add-profile-form {
@@ -1591,4 +1687,214 @@
 .game-done-emoji {
   font-size: 5rem;
   animation: balloonFloat 2s ease-in-out infinite;
+}
+
+/* ================= PROFİL FOTOĞRAFI YÜKLEME MODALI ================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.profile-photo-modal {
+  background: #ffffff;
+  border-radius: 28px;
+  width: 100%;
+  max-width: 480px;
+  padding: 26px 22px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  border: 4px solid #ffedd5;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: modalScaleUp 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalScaleUp {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.photo-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.photo-modal-header h3 {
+  font-size: 1.35rem;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-close-btn {
+  background: #f1f5f9;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.modal-close-btn:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.photo-modal-subtitle {
+  font-size: 0.92rem;
+  color: #475569;
+  line-height: 1.45;
+  font-weight: 600;
+}
+
+.photo-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  background: radial-gradient(circle, #fff7ed 0%, #fff 70%);
+  border-radius: 20px;
+  border: 2px dashed #fed7aa;
+}
+
+.photo-preview-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 4px solid #ff6b6b;
+  box-shadow: 0 10px 24px rgba(255, 107, 107, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.custom-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.emoji-photo-span {
+  font-size: 4.8rem;
+  line-height: 1;
+}
+
+.photo-preview-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.photo-upload-btn {
+  background: linear-gradient(135deg, #ff6b6b, #f97316);
+  box-shadow: 0 6px 16px rgba(249, 115, 22, 0.3);
+}
+
+.photo-remove-btn {
+  color: #e11d48;
+  border-color: #fecdd3;
+  background: #fff1f2;
+}
+
+.photo-remove-btn:hover {
+  background: #ffe4e6;
+}
+
+.photo-presets-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.presets-title {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.photo-presets-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  max-height: 125px;
+  overflow-y: auto;
+  padding: 4px 2px;
+}
+
+.preset-emoji-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.preset-emoji-btn:hover {
+  transform: scale(1.1);
+  border-color: #cbd5e1;
+}
+
+.preset-emoji-btn.active {
+  border-color: #ff6b6b;
+  background: #fff1f2;
+  transform: scale(1.15);
+  box-shadow: 0 4px 10px rgba(255, 107, 107, 0.25);
+}
+
+.photo-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.btn-save-photo {
+  background: #16a34a;
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.3);
+}
+
+.btn-save-photo:hover {
+  background: #15803d;
 }

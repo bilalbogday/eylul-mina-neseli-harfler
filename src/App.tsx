@@ -19,10 +19,12 @@ import {
   Check,
   RefreshCw,
   Gamepad2,
+  Camera,
 } from 'lucide-react'
 import { ISLAND_GROUPS, LETTERS_DATA, type LetterCurriculum } from './curriculum'
 import { LetterTracingCanvas } from './LetterTracingCanvas'
 import { LetterSoundGame } from './LetterSoundGame'
+import { ProfilePhotoModal } from './ProfilePhotoModal'
 import { getOrCreateDeviceId, loadCloudBackup, saveCloudBackup } from './firebase'
 import { playSoundEffect, speakTurkish } from './sound'
 import './App.css'
@@ -92,6 +94,7 @@ export default function App() {
   const [restoreCodeInput, setRestoreCodeInput] = useState('')
   const [copiedDeviceCode, setCopiedDeviceCode] = useState(false)
   const [celebrationMessage, setCelebrationMessage] = useState<string | null>(null)
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
 
   // Hece birleştirme state
   const [syllableIndex, setSyllableIndex] = useState(0)
@@ -158,6 +161,25 @@ export default function App() {
     setTimeout(() => {
       setCelebrationMessage(null)
     }, 3000)
+  }
+
+  const handleUpdateAvatar = (newAvatar: string) => {
+    setProfiles((prev) =>
+      prev.map((prof) => (prof.id === activeProfile.id ? { ...prof, avatar: newAvatar } : prof))
+    )
+    triggerCelebration(`📸 ${activeProfile.name} için yeni profil resmi kaydedildi!`)
+  }
+
+  const renderAvatarElement = (avatarStr: string, className = 'avatar-circle', altName = '') => {
+    const isImage = avatarStr.startsWith('data:image') || avatarStr.startsWith('http')
+    if (isImage) {
+      return (
+        <span className={`${className} avatar-has-image`}>
+          <img src={avatarStr} alt={altName || 'Profil'} className="avatar-img-tag" />
+        </span>
+      )
+    }
+    return <span className={className}>{avatarStr}</span>
   }
 
   const markActivityDone = (letterId: string, activity: 'sound' | 'trace' | 'syllable' | 'quiz' | 'game') => {
@@ -303,6 +325,15 @@ export default function App() {
         </div>
       )}
 
+      {/* PROFİL FOTOĞRAFI YÜKLEME MODALI */}
+      <ProfilePhotoModal
+        isOpen={isPhotoModalOpen}
+        childName={activeProfile.name}
+        currentAvatar={activeProfile.avatar}
+        onClose={() => setIsPhotoModalOpen(false)}
+        onSaveAvatar={handleUpdateAvatar}
+      />
+
       {/* ÜST BAR */}
       <header className="top-navbar">
         <div
@@ -321,19 +352,33 @@ export default function App() {
         </div>
 
         <div className="top-stats">
-          <button
-            type="button"
-            className="profile-pill"
-            onClick={() => {
-              playSoundEffect('click')
-              setSelectedLetterId(null)
-              setActiveTab('profiles')
-            }}
-            title="Çocuk Profilini Değiştir"
-          >
-            <span className="avatar-circle">{activeProfile.avatar}</span>
-            <span className="profile-name">{activeProfile.name}</span>
-          </button>
+          <div className="profile-pill-wrapper">
+            <button
+              type="button"
+              className="profile-pill"
+              onClick={() => {
+                playSoundEffect('click')
+                setSelectedLetterId(null)
+                setActiveTab('profiles')
+              }}
+              title="Çocuk Profilini Değiştir"
+            >
+              {renderAvatarElement(activeProfile.avatar, 'avatar-circle', activeProfile.name)}
+              <span className="profile-name">{activeProfile.name}</span>
+            </button>
+            <button
+              type="button"
+              className="change-photo-badge-btn"
+              onClick={(e) => {
+                e.stopPropagation()
+                playSoundEffect('click')
+                setIsPhotoModalOpen(true)
+              }}
+              title="Profil Resmi Yükle / Değiştir"
+            >
+              <Camera size={13} />
+            </button>
+          </div>
 
           <div className="score-pill stars-pill" title="Toplanan Yıldızlar">
             <Star size={18} fill="#facc15" color="#eab308" />
@@ -849,9 +894,12 @@ export default function App() {
             <section className="hero-welcome-banner">
               <div className="hero-welcome-text">
                 <span className="maarif-badge">✨ Türkiye Yüzyılı Maarif Modeli (ANETİL Sıralı)</span>
-                <h2>
-                  Merhaba {activeProfile.name} {activeProfile.avatar}! Bugün Hangi Sesi Keşfedelim?
-                </h2>
+                <div className="hero-welcome-heading-row">
+                  {renderAvatarElement(activeProfile.avatar, 'hero-avatar-badge', activeProfile.name)}
+                  <h2>
+                    Merhaba {activeProfile.name}! Bugün Hangi Sesi Keşfedelim?
+                  </h2>
+                </div>
                 <p>
                   Bir harf seç; sesini dinle, parmağınla çiz, heceleri birleştir ve çıkartma albümünü
                   doldur!
@@ -1052,7 +1100,7 @@ export default function App() {
                         }}
                       >
                         <div className="prof-row-left">
-                          <span className="prof-row-avatar">{prof.avatar}</span>
+                          {renderAvatarElement(prof.avatar, 'prof-row-avatar', prof.name)}
                           <div>
                             <h4>{prof.name}</h4>
                             <span>
@@ -1060,9 +1108,25 @@ export default function App() {
                             </span>
                           </div>
                         </div>
-                        <span className="prof-select-badge">
-                          {isCurrent ? '✅ Aktif Profil' : 'Seç'}
-                        </span>
+                        <div className="prof-row-right">
+                          {isCurrent && (
+                            <button
+                              type="button"
+                              className="btn-secondary btn-small-photo"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                playSoundEffect('click')
+                                setIsPhotoModalOpen(true)
+                              }}
+                              title="Fotoğrafı Değiştir"
+                            >
+                              <Camera size={14} /> Fotoğraf Değiştir
+                            </button>
+                          )}
+                          <span className="prof-select-badge">
+                            {isCurrent ? '✅ Aktif' : 'Seç'}
+                          </span>
+                        </div>
                       </div>
                     )
                   })}
