@@ -16,7 +16,9 @@ function getAudioContext(): AudioContext | null {
   return audioCtx
 }
 
-export function playSoundEffect(type: 'success' | 'pop' | 'error' | 'fanfare' | 'click') {
+export function playSoundEffect(
+  type: 'success' | 'pop' | 'error' | 'fanfare' | 'click' | 'sneeze' | 'bubble'
+) {
   try {
     const ctx = getAudioContext()
     if (!ctx) return
@@ -75,6 +77,37 @@ export function playSoundEffect(type: 'success' | 'pop' | 'error' | 'fanfare' | 
       gain.connect(ctx.destination)
       osc.start(now)
       osc.stop(now + 0.22)
+    } else if (type === 'sneeze') {
+      // Komik hapşırma sesi simülasyonu: tiz nefes çekme + gürültülü "HAPŞUU"
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.type = 'sawtooth'
+      osc.frequency.setValueAtTime(350, now)
+      osc.frequency.linearRampToValueAtTime(800, now + 0.12)
+      osc.frequency.exponentialRampToValueAtTime(120, now + 0.35)
+      gain.gain.setValueAtTime(0.05, now)
+      gain.gain.linearRampToValueAtTime(0.28, now + 0.12)
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35)
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+      osc.start(now)
+      osc.stop(now + 0.35)
+    } else if (type === 'bubble') {
+      // Kaynayan tencere fokurdama / su kabarcığı sesi
+      [0, 0.07, 0.14].forEach((delay, idx) => {
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+        osc.type = 'sine'
+        const baseFreq = idx % 2 === 0 ? 320 : 440
+        osc.frequency.setValueAtTime(baseFreq, now + delay)
+        osc.frequency.exponentialRampToValueAtTime(baseFreq * 1.8, now + delay + 0.08)
+        gain.gain.setValueAtTime(0.16, now + delay)
+        gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.08)
+        osc.connect(gain)
+        gain.connect(ctx.destination)
+        osc.start(now + delay)
+        osc.stop(now + delay + 0.08)
+      })
     }
   } catch {
     // Ignore audio context errors on restricted devices

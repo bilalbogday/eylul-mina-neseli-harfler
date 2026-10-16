@@ -1031,116 +1031,560 @@
   gap: 8px;
 }
 
-/* ADIM 3: HECE BİRLEŞTİRME */
-.syllable-game-card {
+/* ================= ADIM 3: HECE MUTFAĞI (KELİME PİŞİRME OYUNU) ================= */
+.kitchen-game-card {
   background: #ffffff;
-  border-radius: 26px;
-  padding: 28px 22px;
-  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
-  border: 3px solid #bae6fd;
-  text-align: center;
+  border-radius: 28px;
+  padding: 24px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  border: 4px solid #f97316;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
-.syllable-stage {
+.kitchen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.kitchen-title-box h3 {
+  font-size: 1.45rem;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.chef-icon {
+  color: #ea580c;
+}
+
+.kitchen-pill {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.kitchen-dish-counter {
+  background: #fff7ed;
+  border: 2px solid #fed7aa;
+  padding: 6px 14px;
+  border-radius: 999px;
+  color: #9a3412;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* SİPARİŞ BİLETİ */
+.kitchen-order-board {
+  background: #fffbeb;
+  border: 3px dashed #f59e0b;
+  border-radius: 24px;
+  padding: 18px 22px;
+  position: relative;
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.12);
+}
+
+.order-badge {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: #f59e0b;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.8rem;
+  padding: 3px 12px;
+  border-radius: 999px;
+}
+
+.order-content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.order-dish-emoji {
+  font-size: 3.2rem;
+  background: #ffffff;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.order-text {
+  flex: 1;
+}
+
+.order-dish-name {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #b45309;
+  line-height: 1.1;
+}
+
+.order-recipe-title {
+  font-size: 0.95rem;
+  color: #78350f;
+  font-weight: 700;
+}
+
+.order-listen-btn {
+  background: #ffffff;
+  border: 2px solid #fbbf24;
+  color: #d97706;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.order-listen-btn:hover {
+  transform: scale(1.1);
+}
+
+.recipe-slots-row {
+  display: flex;
+  gap: 12px;
   flex-wrap: wrap;
-  margin: 10px 0;
 }
 
-.syllable-box {
-  min-width: 125px;
-  padding: 22px 24px;
-  border-radius: 24px;
-  border: 4px solid #cbd5e1;
-  background: #f8fafc;
-  cursor: pointer;
+.recipe-slot {
+  background: #ffffff;
+  border: 3px dashed #d1d5db;
+  border-radius: 16px;
+  padding: 10px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  min-width: 90px;
+  transition: all 0.2s ease;
 }
 
-.syllable-box.part-1.activated {
-  background: #fee2e2;
-  border-color: #ef4444;
-  color: #b91c1c;
-  transform: scale(1.05);
-}
-
-.syllable-box.part-2.activated {
-  background: #dbeafe;
-  border-color: #3b82f6;
-  color: #1d4ed8;
-  transform: scale(1.05);
-}
-
-.part-text {
-  font-size: 3.2rem;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.part-sub {
-  font-size: 0.85rem;
-  font-weight: 800;
-  opacity: 0.75;
-}
-
-.plus-sign {
-  font-size: 2.4rem;
-  font-weight: 900;
-  color: #64748b;
-}
-
-.syllable-result-box {
-  min-width: 190px;
-  padding: 20px 26px;
-  border-radius: 24px;
-  border: 4px dashed #94a3b8;
-  background: #f8fafc;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  transition: all 0.25s ease;
-}
-
-.syllable-result-box.revealed {
+.recipe-slot.filled {
   border-style: solid;
-  border-color: #16a34a;
+  border-color: #22c55e;
   background: #dcfce7;
-  transform: scale(1.07);
+  transform: scale(1.05);
 }
 
-.result-emoji {
-  font-size: 3rem;
+.recipe-slot.next-pulse {
+  border-color: #f97316;
+  animation: pulseSlot 1.5s infinite;
 }
 
-.result-word {
-  font-size: 2.8rem;
+@keyframes pulseSlot {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
+  50% { transform: scale(1.04); box-shadow: 0 0 0 6px rgba(249, 115, 22, 0); }
+}
+
+.slot-idx {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #6b7280;
+}
+
+.slot-text {
+  font-size: 1.6rem;
   font-weight: 900;
   color: #15803d;
 }
 
-.result-meaning {
-  font-size: 0.92rem;
+/* PİŞİRME SAHNESİ: AŞÇI VE TENCERE */
+.kitchen-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 16px 0;
+  flex-wrap: wrap;
+}
+
+.kitchen-chef-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.chef-avatar {
+  width: 90px;
+  height: 90px;
+  background: #eff6ff;
+  border-radius: 50%;
+  border: 4px solid #93c5fd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.chef-hat-emoji {
+  font-size: 2rem;
+  position: absolute;
+  top: -16px;
+}
+
+.chef-face-emoji {
+  font-size: 2.8rem;
+  margin-top: 10px;
+}
+
+.chef-name-tag {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #1e293b;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+/* SEVİMLİ TENCERE */
+.magic-pot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: transform 0.25s ease;
+}
+
+.magic-pot-container.boiling {
+  animation: potShake 0.4s ease infinite;
+}
+
+.magic-pot-container.sneeze {
+  animation: potSneeze 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.magic-pot-container.victory {
+  animation: potVictory 0.7s ease infinite alternate;
+}
+
+@keyframes potShake {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes potSneeze {
+  0% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.15) rotate(-8deg); }
+  50% { transform: scale(0.9) rotate(8deg); }
+  75% { transform: scale(1.05) rotate(-4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes potVictory {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.06) translateY(-4px); }
+}
+
+.pot-steam-area {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.steam-puff {
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 900;
+  animation: puffFloat 1s ease-out;
+}
+
+.rainbow-puff {
+  background: linear-gradient(135deg, #f43f5e, #fbbf24, #10b981, #3b82f6);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.4);
+}
+
+.sneeze-puff {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 2px solid #ef4444;
+  font-size: 1rem;
+}
+
+.victory-puff {
+  background: #dcfce7;
+  color: #15803d;
+  border: 2px solid #22c55e;
+}
+
+.gentle-bubbles {
+  display: flex;
+  gap: 8px;
+  opacity: 0.75;
+}
+
+.bubble-dot {
+  font-size: 1.2rem;
+  animation: bubbleRise 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes bubbleRise {
+  from { transform: translateY(0); opacity: 0.4; }
+  to { transform: translateY(-10px); opacity: 1; }
+}
+
+.pot-body {
+  position: relative;
+  width: 210px;
+  height: 120px;
+  background: linear-gradient(180deg, #dc2626 0%, #991b1b 100%);
+  border-radius: 0 0 55px 55px;
+  box-shadow: 0 14px 28px rgba(153, 27, 27, 0.35), inset 0 -8px 16px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pot-rim {
+  width: 230px;
+  height: 38px;
+  background: #ef4444;
+  border-radius: 50%;
+  margin-top: -19px;
+  border: 4px solid #b91c1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+.pot-soup-liquid {
+  width: 195px;
+  height: 28px;
+  background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.soup-icon {
+  animation: soupBubble 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes soupBubble {
+  from { transform: scale(0.9); }
+  to { transform: scale(1.1); }
+}
+
+.pot-inside-text {
+  max-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pot-handles {
+  position: absolute;
+  top: 10px;
+  width: 24px;
+  height: 36px;
+  border: 5px solid #7f1d1d;
+  background: transparent;
+  border-radius: 12px;
+}
+
+.handle-left {
+  left: -20px;
+  border-right: none;
+}
+
+.handle-right {
+  right: -20px;
+  border-left: none;
+}
+
+.pot-belly {
+  margin-top: 16px;
+}
+
+.pot-face {
+  font-size: 2.4rem;
+}
+
+.pot-stove-fire {
+  position: absolute;
+  bottom: -20px;
+  display: flex;
+  gap: 12px;
+}
+
+.fire-flicker {
+  animation: fireDance 0.5s infinite alternate ease-in-out;
+}
+
+.flame-2 {
+  animation-delay: 0.15s;
+}
+
+.flame-3 {
+  animation-delay: 0.3s;
+}
+
+@keyframes fireDance {
+  0% { transform: scaleY(0.85) scaleX(0.9); }
+  100% { transform: scaleY(1.2) scaleX(1.1); }
+}
+
+/* HAPŞIRMA BİLDİRİMİ BANNERI */
+.sneeze-alert-banner {
+  background: #fef2f2;
+  border: 3px solid #ef4444;
+  color: #991b1b;
+  padding: 12px 18px;
+  border-radius: 18px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-align: center;
+  animation: shakeAlert 0.4s ease;
+}
+
+@keyframes shakeAlert {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+/* BAHARAT RAFI VE KAVANOZLAR */
+.kitchen-shelf-area {
+  background: #f8fafc;
+  border: 3px solid #e2e8f0;
+  border-radius: 22px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shelf-header {
+  font-size: 0.95rem;
   font-weight: 800;
   color: #334155;
 }
 
-.syllable-controls {
-  display: flex;
-  justify-content: center;
+.jars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 14px;
+}
+
+.spice-jar-btn {
+  background: #ffffff;
+  border: 3px solid #cbd5e1;
+  border-radius: 20px;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.spice-jar-btn:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.spice-jar-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.jar-lid {
+  width: 48px;
+  height: 10px;
+  background: #78350f;
+  border-radius: 6px;
+}
+
+.jar-glass {
+  width: 72px;
+  height: 64px;
+  border-radius: 14px;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jar-text {
+  font-size: 1.85rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.jar-action-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #475569;
+}
+
+/* ZAFER / YEMEK BİTTİ ALANI */
+.kitchen-victory-box {
+  background: #f0fdf4;
+  border: 3px solid #22c55e;
+  border-radius: 22px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.victory-badge {
+  background: #16a34a;
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 1.15rem;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kitchen-victory-box p {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #15803d;
+}
+
+.kitchen-victory-actions {
+  display: flex;
+  gap: 12px;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 6px;
 }
 
 /* ADIM 4: SESİ DUY VE BUL QUIZ */

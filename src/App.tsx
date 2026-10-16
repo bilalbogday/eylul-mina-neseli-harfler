@@ -9,21 +9,21 @@ import {
   UserPlus,
   Cloud,
   CheckCircle2,
-  Puzzle,
   Ear,
   Pencil,
   BookOpen,
-  RotateCcw,
   Users,
   Copy,
   Check,
   RefreshCw,
   Gamepad2,
   Camera,
+  Utensils,
 } from 'lucide-react'
 import { ISLAND_GROUPS, LETTERS_DATA, type LetterCurriculum } from './curriculum'
 import { LetterTracingCanvas } from './LetterTracingCanvas'
 import { LetterSoundGame } from './LetterSoundGame'
+import { SyllableKitchenGame } from './SyllableKitchenGame'
 import { ProfilePhotoModal } from './ProfilePhotoModal'
 import {
   getOrCreateDeviceId,
@@ -112,11 +112,6 @@ export default function App() {
   const [celebrationMessage, setCelebrationMessage] = useState<string | null>(null)
   const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false)
 
-  // Hece birleştirme state
-  const [syllableIndex, setSyllableIndex] = useState(0)
-  const [clickedParts, setClickedParts] = useState<[boolean, boolean]>([false, false])
-  const [mergedSuccess, setMergedSuccess] = useState(false)
-
   // Sesi duyup bulma quiz state
   const [quizQuestionIdx, setQuizQuestionIdx] = useState(0)
   const [quizSelectedOption, setQuizSelectedOption] = useState<string | null>(null)
@@ -179,9 +174,6 @@ export default function App() {
 
   // Harf değiştiğinde alt egzersiz state'lerini sıfırla
   useEffect(() => {
-    setSyllableIndex(0)
-    setClickedParts([false, false])
-    setMergedSuccess(false)
     setQuizQuestionIdx(0)
     setQuizSelectedOption(null)
     setQuizCorrectCount(0)
@@ -520,8 +512,8 @@ export default function App() {
                   setExerciseStep('syllable')
                 }}
               >
-                <Puzzle size={20} />
-                <span>3. Hece Birleştir</span>
+                <Utensils size={20} />
+                <span>3. Hece Mutfağı</span>
                 {activeProfile.letterProgress[selectedLetter.id]?.syllable && (
                   <CheckCircle2 size={16} className="done-icon" />
                 )}
@@ -665,142 +657,29 @@ export default function App() {
                       setExerciseStep('syllable')
                     }}
                   >
-                    Hece Birleştirmeye Geç <ChevronRight size={22} />
+                    Hece Mutfağına Geç <ChevronRight size={22} />
                   </button>
                 </div>
               </div>
             )}
 
-            {/* ADIM 3: HECE VE KELİME BİRLEŞTİRME */}
+            {/* ADIM 3: HECE MUTFAĞI (KELİME PİŞİRME OYUNU) */}
             {exerciseStep === 'syllable' && (
               <div className="exercise-panel">
-                {(() => {
-                  const task =
-                    selectedLetter.syllableTasks[syllableIndex] || selectedLetter.syllableTasks[0]
-                  return (
-                    <div className="syllable-game-card">
-                      <div className="syllable-header">
-                        <span className="step-pill">
-                          3. Adım: Hece ve Kelime Treni ({syllableIndex + 1}/
-                          {selectedLetter.syllableTasks.length})
-                        </span>
-                        <h3>Sırayla Kutulara Dokun ve Sesleri Birleştir!</h3>
-                      </div>
-
-                      <div className="syllable-stage">
-                        <button
-                          type="button"
-                          className={`syllable-box part-1 ${clickedParts[0] ? 'activated' : ''}`}
-                          onClick={() => {
-                            playSoundEffect('pop')
-                            speakTurkish(task.parts[0])
-                            setClickedParts((prev) => {
-                              const next: [boolean, boolean] = [true, prev[1]]
-                              if (next[0] && next[1]) {
-                                setTimeout(() => {
-                                  playSoundEffect('success')
-                                  speakTurkish(`${task.result}! ${task.meaning}`)
-                                  setMergedSuccess(true)
-                                }, 450)
-                              }
-                              return next
-                            })
-                          }}
-                        >
-                          <span className="part-text">{task.parts[0]}</span>
-                          <span className="part-sub">1. Ses</span>
-                        </button>
-
-                        <div className="plus-sign">+</div>
-
-                        <button
-                          type="button"
-                          className={`syllable-box part-2 ${clickedParts[1] ? 'activated' : ''}`}
-                          onClick={() => {
-                            playSoundEffect('pop')
-                            speakTurkish(task.parts[1])
-                            setClickedParts((prev) => {
-                              const next: [boolean, boolean] = [prev[0], true]
-                              if (next[0] && next[1]) {
-                                setTimeout(() => {
-                                  playSoundEffect('success')
-                                  speakTurkish(`${task.result}! ${task.meaning}`)
-                                  setMergedSuccess(true)
-                                }, 450)
-                              }
-                              return next
-                            })
-                          }}
-                        >
-                          <span className="part-text">{task.parts[1]}</span>
-                          <span className="part-sub">2. Ses</span>
-                        </button>
-
-                        <div className="plus-sign">=</div>
-
-                        <button
-                          type="button"
-                          className={`syllable-result-box ${mergedSuccess ? 'revealed' : ''}`}
-                          onClick={() => {
-                            playSoundEffect('success')
-                            speakTurkish(`${task.parts[0]}, ${task.parts[1]} daha: ${task.result}! ${task.meaning}`)
-                            setClickedParts([true, true])
-                            setMergedSuccess(true)
-                          }}
-                        >
-                          <span className="result-emoji">{task.emoji}</span>
-                          <span className="result-word">{task.result}</span>
-                          <span className="result-meaning">{task.meaning}</span>
-                        </button>
-                      </div>
-
-                      <div className="syllable-controls">
-                        <button
-                          type="button"
-                          className="btn-secondary"
-                          onClick={() => {
-                            setClickedParts([false, false])
-                            setMergedSuccess(false)
-                            speakTurkish(`${task.parts[0]} ve ${task.parts[1]} seslerini birleştir.`)
-                          }}
-                        >
-                          <RotateCcw size={18} /> Tekrar Dene
-                        </button>
-
-                        {syllableIndex < selectedLetter.syllableTasks.length - 1 ? (
-                          <button
-                            type="button"
-                            className="btn-primary"
-                            onClick={() => {
-                              playSoundEffect('click')
-                              setSyllableIndex((i) => i + 1)
-                              setClickedParts([false, false])
-                              setMergedSuccess(false)
-                            }}
-                          >
-                            Sonraki Kelime <ChevronRight size={18} />
-                          </button>
-                        ) : (
-                          <button
-                            type="button"
-                            className="btn-primary"
-                            style={{ backgroundColor: '#16a34a' }}
-                            onClick={() => {
-                              markActivityDone(selectedLetter.id, 'syllable')
-                              playSoundEffect('fanfare')
-                              setExerciseStep('quiz')
-                              if (quizQuestions[0]) {
-                                setTimeout(() => speakTurkish(quizQuestions[0].speakPrompt), 300)
-                              }
-                            }}
-                          >
-                            <CheckCircle2 size={18} /> Hecelemeyi Bitir & Oyuna Geç!
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  )
-                })()}
+                <SyllableKitchenGame
+                  letter={selectedLetter}
+                  childName={activeProfile.name}
+                  completed={Boolean(activeProfile.letterProgress[selectedLetter.id]?.syllable)}
+                  onComplete={() => markActivityDone(selectedLetter.id, 'syllable')}
+                  onNext={() => {
+                    markActivityDone(selectedLetter.id, 'syllable')
+                    playSoundEffect('fanfare')
+                    setExerciseStep('quiz')
+                    if (quizQuestions[0]) {
+                      setTimeout(() => speakTurkish(quizQuestions[0].speakPrompt), 300)
+                    }
+                  }}
+                />
               </div>
             )}
 
