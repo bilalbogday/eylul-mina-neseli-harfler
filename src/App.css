@@ -193,19 +193,128 @@
   flex: 1;
 }
 
-/* KARŞILAMA BANNER */
+/* KARŞILAMA BANNER - BÜYÜK PROFİL VİTRİNİ */
 .hero-welcome-banner {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 50%, #ffa502 100%);
   color: #ffffff;
-  border-radius: 26px;
-  padding: 24px 28px;
+  border-radius: 32px;
+  padding: 30px 32px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  box-shadow: 0 14px 30px rgba(255, 107, 107, 0.25);
-  margin-bottom: 22px;
+  gap: 28px;
+  box-shadow: 0 16px 36px rgba(255, 107, 107, 0.32);
+  margin-bottom: 24px;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+/* BÜYÜK PROFİL FOTOĞRAFI VİTRİNİ */
+.hero-avatar-showcase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.hero-avatar-frame-large {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 5px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22), inset 0 2px 6px rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hero-avatar-frame-large:hover {
+  transform: scale(1.06);
+}
+
+.hero-avatar-big-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5.2rem;
+  overflow: hidden;
+  background: #fffdfa;
+}
+
+.hero-avatar-camera-btn {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #e11d48;
+  border: 3px solid #ff6b6b;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  z-index: 2;
+}
+
+.hero-avatar-camera-btn:hover {
+  transform: scale(1.15);
+  background: #ffe4e6;
+}
+
+.hero-avatar-glow-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 3px dashed rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  animation: rotateSlow 20s linear infinite;
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.hero-avatar-edit-label {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.hero-avatar-edit-label:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.hero-welcome-text {
+  flex: 1;
+}
+
+.hero-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-wrap: wrap;
+  margin-bottom: 8px;
 }
 
 .maarif-badge {
@@ -215,38 +324,81 @@
   border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 800;
-  margin-bottom: 8px;
+}
+
+.hero-name-pill {
+  display: inline-block;
+  background: #ffffff;
+  color: #e11d48;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .hero-welcome-text h2 {
-  font-size: 1.65rem;
-  margin-bottom: 6px;
+  font-size: 1.85rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  line-height: 1.2;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero-welcome-text p {
-  font-size: 1rem;
+  font-size: 1.05rem;
   opacity: 0.95;
-  max-width: 620px;
+  max-width: 640px;
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+.hero-action-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .hero-audio-btn {
   background: #ffffff;
   color: #e11d48;
   border: none;
-  padding: 14px 22px;
-  border-radius: 20px;
+  padding: 12px 22px;
+  border-radius: 18px;
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 0.98rem;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
   transition: transform 0.15s ease;
 }
 
 .hero-audio-btn:active {
   transform: scale(0.96);
+}
+
+.hero-photo-trigger-btn {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  padding: 11px 18px;
+  border-radius: 18px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.hero-photo-trigger-btn:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
 }
 
 /* ADA SEÇİCİ SEKME */
@@ -1470,6 +1622,26 @@
 }
 
 @media (max-width: 720px) {
+  .hero-welcome-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 20px;
+    gap: 18px;
+  }
+  .hero-badge-row,
+  .hero-action-buttons {
+    justify-content: center;
+  }
+  .hero-avatar-frame-large {
+    width: 110px;
+    height: 110px;
+  }
+  .hero-avatar-big-img {
+    font-size: 4.4rem;
+  }
+  .hero-welcome-text h2 {
+    font-size: 1.45rem;
+  }
   .exercise-tabs {
     grid-template-columns: repeat(2, 1fr);
   }

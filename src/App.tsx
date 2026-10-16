@@ -892,32 +892,81 @@ export default function App() {
           /* ================= SEVİYE HARİTASI VE HARF ADALARI ================= */
           <div className="map-view">
             <section className="hero-welcome-banner">
-              <div className="hero-welcome-text">
-                <span className="maarif-badge">✨ Türkiye Yüzyılı Maarif Modeli (ANETİL Sıralı)</span>
-                <div className="hero-welcome-heading-row">
-                  {renderAvatarElement(activeProfile.avatar, 'hero-avatar-badge', activeProfile.name)}
-                  <h2>
-                    Merhaba {activeProfile.name}! Bugün Hangi Sesi Keşfedelim?
-                  </h2>
+              {/* BÜYÜK VE BELİRGİN PROFİL FOTOĞRAFI VİTRİNİ */}
+              <div className="hero-avatar-showcase">
+                <div
+                  className="hero-avatar-frame-large"
+                  onClick={() => {
+                    playSoundEffect('click')
+                    setIsPhotoModalOpen(true)
+                  }}
+                  title="Fotoğrafı Değiştirmek İçin Dokun"
+                >
+                  {renderAvatarElement(activeProfile.avatar, 'hero-avatar-big-img', activeProfile.name)}
+                  <button
+                    type="button"
+                    className="hero-avatar-camera-btn"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      playSoundEffect('click')
+                      setIsPhotoModalOpen(true)
+                    }}
+                    title="Profil Fotoğrafı Yükle"
+                  >
+                    <Camera size={18} />
+                  </button>
+                  <div className="hero-avatar-glow-ring" />
                 </div>
-                <p>
-                  Bir harf seç; sesini dinle, parmağınla çiz, heceleri birleştir ve çıkartma albümünü
-                  doldur!
-                </p>
+                <button
+                  type="button"
+                  className="hero-avatar-edit-label"
+                  onClick={() => {
+                    playSoundEffect('click')
+                    setIsPhotoModalOpen(true)
+                  }}
+                >
+                  <Camera size={14} /> Fotoğrafı Değiştir
+                </button>
               </div>
 
-              <button
-                type="button"
-                className="hero-audio-btn"
-                onClick={() => {
-                  playSoundEffect('pop')
-                  speakTurkish(
-                    `Merhaba ${activeProfile.name}! Eylül Mina Neşeli Harfler dünyasına hoş geldin! Hadi bir harf seçip oynayalım!`
-                  )
-                }}
-              >
-                <Volume2 size={24} /> Hoş Geldin Mesajı
-              </button>
+              <div className="hero-welcome-text">
+                <div className="hero-badge-row">
+                  <span className="maarif-badge">✨ Türkiye Yüzyılı Maarif Modeli</span>
+                  <span className="hero-name-pill">👑 {activeProfile.name}</span>
+                </div>
+                <h2>
+                  Hoş Geldin {activeProfile.name}! Bugün Hangi Sesi Keşfedelim?
+                </h2>
+                <p>
+                  Bir harf adası seç; sesleri dinle, parmağınla çiz, heceleri birleştir ve çıkartma albümünü
+                  doldur!
+                </p>
+
+                <div className="hero-action-buttons">
+                  <button
+                    type="button"
+                    className="hero-audio-btn"
+                    onClick={() => {
+                      playSoundEffect('pop')
+                      speakTurkish(
+                        `Merhaba ${activeProfile.name}! Neşeli Harfler dünyasına hoş geldin! Hadi bir harf seçip maceraya başlayalım!`
+                      )
+                    }}
+                  >
+                    <Volume2 size={22} /> Hoş Geldin Mesajı
+                  </button>
+                  <button
+                    type="button"
+                    className="hero-photo-trigger-btn"
+                    onClick={() => {
+                      playSoundEffect('click')
+                      setIsPhotoModalOpen(true)
+                    }}
+                  >
+                    <Camera size={18} /> Profil Resmini Değiştir
+                  </button>
+                </div>
+              </div>
             </section>
 
             {/* 5 ADA SEÇİCİ */}
