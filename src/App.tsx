@@ -18,9 +18,11 @@ import {
   Copy,
   Check,
   RefreshCw,
+  Gamepad2,
 } from 'lucide-react'
 import { ISLAND_GROUPS, LETTERS_DATA, type LetterCurriculum } from './curriculum'
 import { LetterTracingCanvas } from './LetterTracingCanvas'
+import { LetterSoundGame } from './LetterSoundGame'
 import { getOrCreateDeviceId, loadCloudBackup, saveCloudBackup } from './firebase'
 import { playSoundEffect, speakTurkish } from './sound'
 import './App.css'
@@ -38,6 +40,7 @@ export interface ChildProfile {
       trace?: boolean
       syllable?: boolean
       quiz?: boolean
+      game?: boolean
     }
   >
 }
@@ -80,7 +83,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<'map' | 'stickers' | 'profiles'>('map')
   const [selectedGroupId, setSelectedGroupId] = useState<number>(1)
   const [selectedLetterId, setSelectedLetterId] = useState<string | null>(null)
-  const [exerciseStep, setExerciseStep] = useState<'sound' | 'trace' | 'syllable' | 'quiz'>('sound')
+  const [exerciseStep, setExerciseStep] = useState<'sound' | 'trace' | 'syllable' | 'quiz' | 'game'>('sound')
 
   // Yeni profil ekleme modal/form
   const [newProfileName, setNewProfileName] = useState('')
@@ -157,7 +160,7 @@ export default function App() {
     }, 3000)
   }
 
-  const markActivityDone = (letterId: string, activity: 'sound' | 'trace' | 'syllable' | 'quiz') => {
+  const markActivityDone = (letterId: string, activity: 'sound' | 'trace' | 'syllable' | 'quiz' | 'game') => {
     setProfiles((prev) =>
       prev.map((prof) => {
         if (prof.id !== activeProfile.id) return prof
@@ -207,7 +210,7 @@ export default function App() {
   const getLetterStarCount = (letterId: string): number => {
     const p = activeProfile.letterProgress[letterId]
     if (!p) return 0
-    return [p.sound, p.trace, p.syllable, p.quiz].filter(Boolean).length
+    return [p.sound, p.trace, p.syllable, p.quiz, p.game].filter(Boolean).length
   }
 
   const totalEarnedStickers = useMemo(() => {
@@ -380,7 +383,7 @@ export default function App() {
               </div>
 
               <div className="lesson-stars-indicator">
-                {[1, 2, 3, 4].map((st) => (
+                {[1, 2, 3, 4, 5].map((st) => (
                   <Star
                     key={st}
                     size={22}
@@ -460,6 +463,23 @@ export default function App() {
                 <Ear size={20} />
                 <span>4. Dinle & Bul</span>
                 {activeProfile.letterProgress[selectedLetter.id]?.quiz && (
+                  <CheckCircle2 size={16} className="done-icon" />
+                )}
+              </button>
+
+              <button
+                type="button"
+                className={`ex-tab ${exerciseStep === 'game' ? 'active' : ''} ${
+                  activeProfile.letterProgress[selectedLetter.id]?.game ? 'done' : ''
+                }`}
+                onClick={() => {
+                  playSoundEffect('click')
+                  setExerciseStep('game')
+                }}
+              >
+                <Gamepad2 size={20} />
+                <span>5. Sesli Oyun</span>
+                {activeProfile.letterProgress[selectedLetter.id]?.game && (
                   <CheckCircle2 size={16} className="done-icon" />
                 )}
               </button>
@@ -704,6 +724,22 @@ export default function App() {
               </div>
             )}
 
+            {/* ADIM 5: MİNİ SESLİ OYUN */}
+            {exerciseStep === 'game' && (
+              <div className="exercise-panel">
+                <LetterSoundGame
+                  letter={selectedLetter}
+                  childName={activeProfile.name}
+                  completed={Boolean(activeProfile.letterProgress[selectedLetter.id]?.game)}
+                  onComplete={() => markActivityDone(selectedLetter.id, 'game')}
+                  onExit={() => {
+                    playSoundEffect('click')
+                    setSelectedLetterId(null)
+                  }}
+                />
+              </div>
+            )}
+
             {/* ADIM 4: SESİ DUYUP DOĞRU HARFİ/KELİMEYİ BULMA */}
             {exerciseStep === 'quiz' && (
               <div className="exercise-panel">
@@ -790,12 +826,12 @@ export default function App() {
                                 markActivityDone(selectedLetter.id, 'quiz')
                                 playSoundEffect('fanfare')
                                 speakTurkish(
-                                  `Tebrikler ${activeProfile.name}! ${selectedLetter.upper} harfini başarıyla tamamladın!`
+                                  `Tebrikler ${activeProfile.name}! Şimdi ${selectedLetter.mascotWord} ile mini sesli oyun zamanı!`
                                 )
-                                setSelectedLetterId(null)
+                                setExerciseStep('game')
                               }}
                             >
-                              <Sparkles size={20} /> Harfi Tamamla ve Ödülü Al! (
+                              <Sparkles size={20} /> Ödülü Al ve Oyuna Geç! (
                               {Math.max(quizCorrectCount, 1)}/{quizQuestions.length})
                             </button>
                           )}
@@ -909,7 +945,7 @@ export default function App() {
                       </div>
 
                       <div className="letter-card-stars">
-                        {[1, 2, 3, 4].map((s) => (
+                        {[1, 2, 3, 4, 5].map((s) => (
                           <Star
                             key={s}
                             size={18}
@@ -978,7 +1014,7 @@ export default function App() {
                     <div className="sticker-name">{letter.sticker.name}</div>
                     <div className="sticker-island">{letter.sticker.islandTitle}</div>
                     <div className="sticker-mini-progress">
-                      {unlocked ? '✨ Kazanıldı!' : `${stars}/4 Yıldız`}
+                      {unlocked ? '✨ Kazanıldı!' : `${stars}/5 Yıldız`}
                     </div>
                   </div>
                 )

@@ -445,7 +445,7 @@
 /* 4 EGZERSİZ SEKMESİ */
 .exercise-tabs {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
 }
 
@@ -1377,10 +1377,218 @@
   .exercise-tabs {
     grid-template-columns: repeat(2, 1fr);
   }
+  .exercise-tabs .ex-tab:last-child {
+    grid-column: span 2;
+  }
+  .balloon-field {
+    grid-template-columns: repeat(3, 1fr);
+  }
   .giant-pair {
     font-size: 4.2rem;
   }
   .brand-title {
     font-size: 1.1rem;
   }
+}
+
+/* ADIM 5: MİNİ SESLİ OYUN */
+.sound-game-card {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 26px 20px;
+  border: 4px solid #ff6b6b;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.sound-game-header h3 {
+  font-size: 1.5rem;
+  margin: 4px 0 10px;
+}
+
+.game-phase-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.game-phase-dots span {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  color: #94a3b8;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.game-phase-dots span.active {
+  background: #fff1f2;
+  color: #e11d48;
+}
+
+.game-phase-dots span.done {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.balloon-field {
+  width: 100%;
+  max-width: 560px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  justify-items: center;
+  padding: 10px 0 20px;
+}
+
+.balloon {
+  width: 92px;
+  height: 108px;
+  border: none;
+  border-radius: 50% 50% 46% 46%;
+  color: #ffffff;
+  font-size: 2.6rem;
+  font-weight: 800;
+  font-family: 'Fredoka', sans-serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  position: relative;
+  box-shadow: inset -8px -10px 0 rgba(0, 0, 0, 0.12), 0 8px 14px rgba(0, 0, 0, 0.12);
+  animation: balloonFloat 2.6s ease-in-out infinite;
+  transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+.balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  width: 2px;
+  height: 16px;
+  background: #94a3b8;
+}
+
+.balloon.popped {
+  animation: none;
+  background: transparent !important;
+  box-shadow: none;
+  transform: scale(1.2);
+  opacity: 0.6;
+  cursor: default;
+}
+
+.balloon.popped::after {
+  display: none;
+}
+
+.balloon.shake {
+  animation: balloonShake 0.45s ease;
+}
+
+@keyframes balloonFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes balloonShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px) rotate(-6deg); }
+  75% { transform: translateX(8px) rotate(6deg); }
+}
+
+.ear-game {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.ear-speaker {
+  width: 220px;
+  height: 200px;
+  border-radius: 32px;
+  border: 4px dashed #93c5fd;
+  background: #eff6ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 800;
+  color: #1d4ed8;
+  cursor: pointer;
+}
+
+.ear-speaker-icon {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+.game-reveal-word {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.ear-answer-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.ear-btn {
+  min-width: 150px;
+  padding: 18px 24px;
+  border-radius: 22px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  cursor: pointer;
+  border: 4px solid;
+}
+
+.ear-btn.yes {
+  background: #dcfce7;
+  border-color: #22c55e;
+  color: #15803d;
+}
+
+.ear-btn.no {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #b91c1c;
+}
+
+.ear-feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.fb-correct,
+.fb-wrong {
+  font-size: 1.4rem;
+  font-weight: 900;
+}
+
+.fb-correct { color: #15803d; }
+.fb-wrong { color: #b45309; }
+
+.game-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.game-done-emoji {
+  font-size: 5rem;
+  animation: balloonFloat 2s ease-in-out infinite;
 }
