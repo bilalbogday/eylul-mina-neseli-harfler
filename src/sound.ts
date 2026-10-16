@@ -81,6 +81,54 @@ export function playSoundEffect(type: 'success' | 'pop' | 'error' | 'fanfare' | 
   }
 }
 
+export function playWelcomeGreeting(childName = 'Eylül Mina', onEnd?: () => void) {
+  // 1. Öncelikli olarak berrak, genç, neşeli ve doğal Türkçe kadın ses kaydını çal
+  try {
+    const audio = new Audio('/audio/welcome-eylul-mina.mp3')
+    audio.playbackRate = 1.05 // Genç ve enerjik tempo
+    if (onEnd) {
+      audio.onended = onEnd
+    }
+    const playPromise = audio.play()
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Tarayıcı otomatik ses engellerse veya dosya yüklenemezse Web Speech API'ye düş
+        speakTurkishWithYouthVoice(
+          `Hoş geldin ${childName}! Bu uygulamayı baban senin için yaptı. Umarım çok eğlenirsin ve güzel vakit geçirirsin!`
+        )
+      })
+    }
+  } catch {
+    speakTurkishWithYouthVoice(
+      `Hoş geldin ${childName}! Bu uygulamayı baban senin için yaptı. Umarım çok eğlenirsin ve güzel vakit geçirirsin!`
+    )
+  }
+}
+
+export function speakTurkishWithYouthVoice(text: string) {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
+  try {
+    window.speechSynthesis.cancel()
+    const utterance = new SpeechSynthesisUtterance(text)
+    utterance.lang = 'tr-TR'
+    utterance.rate = 1.0 // Genç ve neşeli canlı tempo
+    utterance.pitch = 1.25 // Daha genç ve enerjik kadın ses tonu
+
+    const voices = window.speechSynthesis.getVoices()
+    const youthFemaleVoice =
+      voices.find((v) => v.lang.toLowerCase().includes('tr') && (v.name.toLowerCase().includes('yelda') || v.name.toLowerCase().includes('seda') || v.name.toLowerCase().includes('female'))) ||
+      voices.find((v) => v.lang.toLowerCase().includes('tr') && v.name.toLowerCase().includes('emel')) ||
+      voices.find((v) => v.lang.toLowerCase().includes('tr'))
+
+    if (youthFemaleVoice) {
+      utterance.voice = youthFemaleVoice
+    }
+    window.speechSynthesis.speak(utterance)
+  } catch {
+    // ignore
+  }
+}
+
 export function speakTurkish(text: string, rate = 0.88, pitch = 1.1) {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return
 
@@ -106,3 +154,4 @@ export function speakTurkish(text: string, rate = 0.88, pitch = 1.1) {
     // Fallback if speech synthesis fails
   }
 }
+

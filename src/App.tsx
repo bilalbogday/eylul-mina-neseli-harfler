@@ -26,7 +26,7 @@ import { LetterTracingCanvas } from './LetterTracingCanvas'
 import { LetterSoundGame } from './LetterSoundGame'
 import { ProfilePhotoModal } from './ProfilePhotoModal'
 import { getOrCreateDeviceId, loadCloudBackup, saveCloudBackup } from './firebase'
-import { playSoundEffect, speakTurkish } from './sound'
+import { playSoundEffect, speakTurkish, playWelcomeGreeting } from './sound'
 import './App.css'
 
 export interface ChildProfile {
@@ -917,16 +917,6 @@ export default function App() {
                   </button>
                   <div className="hero-avatar-glow-ring" />
                 </div>
-                <button
-                  type="button"
-                  className="hero-avatar-edit-label"
-                  onClick={() => {
-                    playSoundEffect('click')
-                    setIsPhotoModalOpen(true)
-                  }}
-                >
-                  <Camera size={14} /> Fotoğrafı Değiştir
-                </button>
               </div>
 
               <div className="hero-welcome-text">
@@ -935,11 +925,10 @@ export default function App() {
                   <span className="hero-name-pill">👑 {activeProfile.name}</span>
                 </div>
                 <h2>
-                  Hoş Geldin {activeProfile.name}! Bugün Hangi Sesi Keşfedelim?
+                  Hoş geldin {activeProfile.name}!
                 </h2>
-                <p>
-                  Bir harf adası seç; sesleri dinle, parmağınla çiz, heceleri birleştir ve çıkartma albümünü
-                  doldur!
+                <p className="hero-special-message">
+                  Bu uygulamayı baban senin için yaptı. Umarım çok eğlenirsin ve güzel vakit geçirirsin! ❤️
                 </p>
 
                 <div className="hero-action-buttons">
@@ -948,22 +937,10 @@ export default function App() {
                     className="hero-audio-btn"
                     onClick={() => {
                       playSoundEffect('pop')
-                      speakTurkish(
-                        `Merhaba ${activeProfile.name}! Neşeli Harfler dünyasına hoş geldin! Hadi bir harf seçip maceraya başlayalım!`
-                      )
+                      playWelcomeGreeting(activeProfile.name)
                     }}
                   >
-                    <Volume2 size={22} /> Hoş Geldin Mesajı
-                  </button>
-                  <button
-                    type="button"
-                    className="hero-photo-trigger-btn"
-                    onClick={() => {
-                      playSoundEffect('click')
-                      setIsPhotoModalOpen(true)
-                    }}
-                  >
-                    <Camera size={18} /> Profil Resmini Değiştir
+                    <Volume2 size={22} /> Hoş Geldin Mesajını Dinle 🔊
                   </button>
                 </div>
               </div>
