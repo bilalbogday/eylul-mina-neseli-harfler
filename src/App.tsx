@@ -924,30 +924,6 @@ export default function App() {
                   >
                     <Volume2 size={24} /> Hoş Geldin Mesajını Dinle 🔊
                   </button>
-
-                  <button
-                    type="button"
-                    className="hero-kitchen-launch-btn"
-                    onClick={() => {
-                      playSoundEffect('pop')
-                      setSelectedLetterId(null)
-                      setActiveTab('kitchen')
-                    }}
-                  >
-                    <Utensils size={22} /> 🍲 Hece Mutfağı (Kelime Pişir)
-                  </button>
-
-                  <button
-                    type="button"
-                    className="hero-detective-launch-btn"
-                    onClick={() => {
-                      playSoundEffect('pop')
-                      setSelectedLetterId(null)
-                      setActiveTab('detective')
-                    }}
-                  >
-                    <Flashlight size={22} /> 🔦 Harf Dedektifi (Karanlık Oda)
-                  </button>
                 </div>
               </div>
             </section>
