@@ -101,7 +101,9 @@ export default function App() {
     return localStorage.getItem(STORAGE_ACTIVE_ID_KEY) || 'prof_eylul_mina'
   })
 
-  const [activeTab, setActiveTab] = useState<'map' | 'detective' | 'stickers' | 'profiles'>('map')
+  const [activeTab, setActiveTab] = useState<
+    'map' | 'kitchen' | 'detective' | 'stickers' | 'profiles'
+  >('map')
   const [selectedGroupId, setSelectedGroupId] = useState<number>(1)
   const [selectedLetterId, setSelectedLetterId] = useState<string | null>(null)
   const [exerciseStep, setExerciseStep] = useState<
@@ -847,6 +849,20 @@ export default function App() {
               </div>
             )}
           </div>
+        ) : activeTab === 'kitchen' ? (
+          /* ================= HECE MUTFAĞI (3 SEVİYELİ TAM EKRAN OYUN) ================= */
+          <div className="detective-standalone-view">
+            <SyllableKitchenGame
+              childName={activeProfile.name}
+              onComplete={() => {
+                markActivityDone('e', 'syllable')
+              }}
+              onNext={() => {
+                playSoundEffect('click')
+                setActiveTab('map')
+              }}
+            />
+          </div>
         ) : activeTab === 'detective' ? (
           /* ================= KARANLIK ODA / HARF DEDEKTİFİ TAM EKRAN OYUN ================= */
           <div className="detective-standalone-view">
@@ -907,6 +923,18 @@ export default function App() {
                     }}
                   >
                     <Volume2 size={24} /> Hoş Geldin Mesajını Dinle 🔊
+                  </button>
+
+                  <button
+                    type="button"
+                    className="hero-kitchen-launch-btn"
+                    onClick={() => {
+                      playSoundEffect('pop')
+                      setSelectedLetterId(null)
+                      setActiveTab('kitchen')
+                    }}
+                  >
+                    <Utensils size={22} /> 🍲 Hece Mutfağı (Kelime Pişir)
                   </button>
 
                   <button
@@ -1259,6 +1287,19 @@ export default function App() {
         >
           <Sparkles size={22} />
           <span>Harf Adaları</span>
+        </button>
+
+        <button
+          type="button"
+          className={`nav-item ${activeTab === 'kitchen' && !selectedLetterId ? 'active' : ''}`}
+          onClick={() => {
+            playSoundEffect('click')
+            setSelectedLetterId(null)
+            setActiveTab('kitchen')
+          }}
+        >
+          <Utensils size={22} />
+          <span>Hece Mutfağı</span>
         </button>
 
         <button

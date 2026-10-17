@@ -2882,3 +2882,743 @@
   }
 }
 
+/* ================= GELİŞMİŞ HECE MUTFAĞI V2 (3 AŞAMALI İNTERAKTİF SAHNE) ================= */
+.hero-kitchen-launch-btn {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  color: #ffffff;
+  border: 3px solid #fed7aa;
+  padding: 13px 22px;
+  border-radius: 20px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(234, 88, 12, 0.32);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.hero-kitchen-launch-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 26px rgba(234, 88, 12, 0.45);
+}
+
+.kitchen-v2-scene {
+  position: relative;
+  background:
+    radial-gradient(circle at 50% 25%, rgba(254, 243, 199, 0.9) 0%, rgba(255, 237, 213, 0.95) 60%, #fed7aa 100%);
+  border-radius: 30px;
+  padding: 20px;
+  border: 5px solid #d97706;
+  box-shadow: 0 16px 36px rgba(120, 53, 15, 0.18), inset 0 2px 12px rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+.kitchen-v2-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 12px 16px;
+  border-radius: 20px;
+  border: 2px solid #fdba74;
+}
+
+.kitchen-v2-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.kitchen-v2-badge {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.kitchen-v2-brand h3 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #7c2d12;
+  margin: 0;
+}
+
+.kitchen-plates-tracker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fffbeb;
+  border: 2px solid #fcd34d;
+  padding: 6px 14px;
+  border-radius: 999px;
+  flex-wrap: wrap;
+}
+
+.plates-label {
+  font-size: 0.88rem;
+  font-weight: 900;
+  color: #92400e;
+}
+
+.plates-stars-row {
+  display: flex;
+  gap: 4px;
+}
+
+.plate-star-slot {
+  font-size: 1.15rem;
+  opacity: 0.45;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.plate-star-slot.earned {
+  opacity: 1;
+  transform: scale(1.18);
+}
+
+.master-chef-mini-badge {
+  background: #facc15;
+  color: #713f12;
+  font-weight: 900;
+  font-size: 0.78rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+/* ZORLUK SEVİYESİ SEKMELERİ */
+.kitchen-level-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.kitchen-lvl-btn {
+  background: rgba(255, 255, 255, 0.85);
+  color: #78350f;
+  border: 2px solid #fdba74;
+  padding: 8px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.kitchen-lvl-btn.active {
+  background: #ea580c;
+  color: #ffffff;
+  border-color: #9a3412;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+  transform: translateY(-1px);
+}
+
+/* AHŞAP SİPARİŞ PANOSU (TARİF KARTI) */
+.wooden-order-board {
+  position: relative;
+  background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
+  border: 4px solid #b45309;
+  border-radius: 24px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 20px rgba(120, 53, 15, 0.16), inset 0 2px 0 rgba(255, 255, 255, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.wooden-nail {
+  position: absolute;
+  top: 8px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #78350f;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.nail-left {
+  left: 12px;
+}
+
+.nail-right {
+  right: 12px;
+}
+
+.order-board-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.order-big-emoji-box {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 3px solid #f59e0b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.4rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.order-title-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-counter-tag {
+  font-size: 0.76rem;
+  font-weight: 900;
+  color: #b45309;
+  text-transform: uppercase;
+}
+
+.order-word-heading {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #78350f;
+  line-height: 1.05;
+  margin: 2px 0;
+}
+
+.order-sub-recipe {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #92400e;
+}
+
+.order-audio-btn {
+  background: #ea580c;
+  color: #ffffff;
+  border: 2px solid #9a3412;
+  padding: 10px 16px;
+  border-radius: 16px;
+  font-weight: 900;
+  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(234, 88, 12, 0.28);
+  transition: transform 0.15s ease;
+}
+
+.order-audio-btn:hover {
+  transform: scale(1.06);
+}
+
+/* HECE KUTUCUKLARI ([ LA ] + [ ? ]) */
+.order-syllable-boxes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.syllable-box-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.syllable-plus-sign {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #92400e;
+}
+
+.recipe-syllable-box {
+  min-width: 82px;
+  padding: 8px 14px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.recipe-syllable-box.empty {
+  background: rgba(255, 255, 255, 0.75);
+  border: 3px dashed #b45309;
+  color: #92400e;
+}
+
+.recipe-syllable-box.next-target {
+  background: #ffffff;
+  border: 3px dashed #ea580c;
+  animation: pulseSlot 1.4s infinite;
+}
+
+.recipe-syllable-box.filled {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: 3px solid #15803d;
+  color: #ffffff;
+  transform: scale(1.06);
+  box-shadow: 0 6px 14px rgba(22, 163, 74, 0.3);
+}
+
+.box-step-num {
+  font-size: 0.7rem;
+  font-weight: 800;
+  opacity: 0.85;
+}
+
+.box-syllable-text {
+  font-size: 1.65rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+/* ORTA SAHNE: ŞEF KEDİ MASKOTU & BÜYÜLÜ KAYNAYAN TENCERE */
+.kitchen-center-stage {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  align-items: center;
+  gap: 16px;
+  padding: 6px 0;
+}
+
+.chef-mascot-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.chef-Mascot-svg-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chef-cat-svg {
+  width: 128px;
+  height: 136px;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.12));
+  animation: balloonFloat 3s ease-in-out infinite;
+}
+
+.chef-cat-tag {
+  background: #7c2d12;
+  color: #fef3c7;
+  font-size: 0.8rem;
+  font-weight: 900;
+  padding: 3px 12px;
+  border-radius: 999px;
+  margin-top: -6px;
+}
+
+.chef-speech-bubble {
+  background: #ffffff;
+  border: 3px solid #f59e0b;
+  border-radius: 20px;
+  padding: 12px 16px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  max-width: 310px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.chef-speech-bubble.bubble-sneeze {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #991b1b;
+  animation: shakeAlert 0.45s ease;
+}
+
+.chef-speech-bubble p {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 6px;
+  line-height: 1.35;
+}
+
+.bubble-listen-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  color: #d97706;
+}
+
+/* BÜYÜLÜ TENCERE ALANI */
+.cauldron-Interactive-zone {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+}
+
+.cauldron-Interactive-zone.happy .magic-cauldron-svg {
+  animation: potShake 0.4s ease 2;
+}
+
+.cauldron-Interactive-zone.sneeze .magic-cauldron-svg {
+  animation: potSneeze 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.magic-cauldron-svg {
+  width: 270px;
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 12px 20px rgba(15, 23, 42, 0.25));
+}
+
+.flying-pot-lid {
+  animation: lidFlyUp 0.9s ease-out infinite alternate;
+}
+
+@keyframes lidFlyUp {
+  from { transform: translateY(0) rotate(-4deg); }
+  to { transform: translateY(-18px) rotate(6deg); }
+}
+
+/* PARÇACIK SİSTEMİ (Baloncuk, Yıldız, Yeşil Hapşırık Dumanı) */
+.pot-particles-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.pot-particle {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.pt-smoke_green,
+.pt-smoke_rainbow {
+  filter: blur(2px);
+}
+
+/* AŞAMA 2: KARIŞTIRMA HUD VE PROGRESS BAR */
+.stir-progress- {
+  width: 100%;
+  max-width: 320px;
+  background: #ffffff;
+  border: 3px solid #ea580c;
+  border-radius: 20px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  box-shadow: 0 8px 20px rgba(234, 88, 12, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 15;
+}
+
+.stir-hud-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 900;
+  font-size: 0.92rem;
+  color: #9a3412;
+}
+
+.stir-bar-track {
+  width: 100%;
+  height: 16px;
+  background: #ffedd5;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 2px solid #fdba74;
+}
+
+.stir-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f97316, #eab308, #22c55e);
+  transition: width 0.15s ease;
+}
+
+.stir-quick-btn {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.3);
+}
+
+.stir-quick-btn:active {
+  transform: scale(0.96);
+}
+
+/* AHŞAP BAHARAT KAVANOZLARI RAFI (SVG KAVANOZLAR) */
+.wooden-spice-shelf {
+  background: rgba(255, 255, 255, 0.78);
+  border: 3px solid #d97706;
+  border-radius: 24px;
+  padding: 14px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shelf-plank-top {
+  font-size: 0.95rem;
+  color: #78350f;
+  text-align: center;
+}
+
+.svg-jars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 12px;
+  justify-items: center;
+  padding: 4px 4px 8px;
+}
+
+.svg-spice-jar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: grab;
+  transition: transform 0.18s ease, opacity 0.2s ease;
+  touch-action: none;
+}
+
+.svg-spice-jar-item:hover:not(.jar-empty-used) {
+  transform: translateY(-6px) scale(1.06);
+}
+
+.svg-spice-jar-item.jar-empty-used {
+  opacity: 0.38;
+  pointer-events: none;
+  cursor: default;
+}
+
+.svg-spice-jar-item.jar-dragging-source {
+  opacity: 0.45;
+  transform: scale(0.92);
+}
+
+.jar-vector-svg {
+  width: 86px;
+  height: 108px;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.1));
+}
+
+.jar-bottom-hint {
+  font-size: 0.74rem;
+  font-weight: 900;
+  color: #78350f;
+  background: #fef3c7;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-top: 2px;
+}
+
+.wooden-shelf-beam {
+  height: 14px;
+  margin: 0 -16px;
+  background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 10px rgba(120, 53, 15, 0.25);
+}
+
+/* BEZIER UÇAN KAVANOZ & SÜRÜKLENEN KAVANOZ */
+.bezier-flying-jar {
+  position: absolute;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.pointer-dragged-jar {
+  position: fixed;
+  z-index: 999;
+  pointer-events: none;
+  transform: translate(-50%, -65%) scale(1.15);
+}
+
+.flying-jar-badge {
+  background: #ffffff;
+  border: 4px solid #f97316;
+  color: #0f172a;
+  font-weight: 900;
+  font-size: 1.7rem;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* AŞAMA 3: SERVİS VE KELİME BİRLEŞTİRME KARTI */
+.serving-reward-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+  border: 4px solid #22c55e;
+  border-radius: 26px;
+  padding: 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 14px 30px rgba(22, 163, 74, 0.2);
+  animation: modalScaleUp 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.serving-rainbow-header {
+  background: linear-gradient(135deg, #16a34a, #059669);
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.serving-dish-showcase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.serving-big-emoji {
+  font-size: 4.4rem;
+  line-height: 1;
+  animation: balloonFloat 2s ease-in-out infinite;
+}
+
+.serving-syllables-merge-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.serving-syl-pill {
+  background: #e2e8f0;
+  color: #475569;
+  font-weight: 900;
+  font-size: 1.5rem;
+  padding: 8px 18px;
+  border-radius: 16px;
+  border: 3px solid #cbd5e1;
+  transition: all 0.25s ease;
+}
+
+.serving-syl-pill.lit {
+  background: #fef08a;
+  color: #b45309;
+  border-color: #f59e0b;
+  transform: scale(1.16);
+  box-shadow: 0 0 16px rgba(250, 204, 21, 0.7);
+}
+
+.serving-final-word {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #15803d;
+  letter-spacing: 2px;
+  transition: transform 0.3s ease;
+}
+
+.serving-final-word.merged-glow {
+  transform: scale(1.12);
+  color: #ea580c;
+  text-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+}
+
+.serving-actions-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* 5 YEMEK SONRASI USTA ŞEF ROZETİ MODALI */
+.master-chef-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.master-chef-modal-card {
+  background: linear-gradient(180deg, #ffffff 0%, #fefce8 100%);
+  border: 5px solid #facc15;
+  border-radius: 30px;
+  padding: 30px 24px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  animation: modalScaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.master-badge-icon {
+  font-size: 3.8rem;
+}
+
+.master-chef-modal-card h2 {
+  font-size: 1.7rem;
+  color: #b45309;
+  margin: 0;
+}
+
+.master-chef-modal-card p {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #334155;
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .kitchen-center-stage {
+    grid-template-columns: 1fr;
+  }
+  .wooden-order-board {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .order-syllable-boxes {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+

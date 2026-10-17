@@ -17,7 +17,19 @@ function getAudioContext(): AudioContext | null {
 }
 
 export function playSoundEffect(
-  type: 'success' | 'pop' | 'error' | 'fanfare' | 'click' | 'sneeze' | 'bubble' | 'pling' | 'applause'
+  type:
+    | 'success'
+    | 'pop'
+    | 'error'
+    | 'fanfare'
+    | 'click'
+    | 'sneeze'
+    | 'bubble'
+    | 'pling'
+    | 'applause'
+    | 'bloop'
+    | 'chord'
+    | 'stir'
 ) {
   try {
     const ctx = getAudioContext()
@@ -36,6 +48,50 @@ export function playSoundEffect(
       gain.connect(ctx.destination)
       osc.start(now)
       osc.stop(now + 0.09)
+    } else if (type === 'bloop') {
+      // Kavanoz tencereye düşünce: "Bloop / Su damlası" sesi (frekansı yükselen sinüs dalgası)
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.type = 'sine'
+      osc.frequency.setValueAtTime(260, now)
+      osc.frequency.exponentialRampToValueAtTime(780, now + 0.14)
+      gain.gain.setValueAtTime(0.26, now)
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16)
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+      osc.start(now)
+      osc.stop(now + 0.16)
+    } else if (type === 'chord') {
+      // Doğru hece: Neşeli majör akor (C5 - E5 - G5 arpej)
+      const notes = [523.25, 659.25, 783.99] // C5, E5, G5
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+        osc.type = 'triangle'
+        const start = now + idx * 0.075
+        osc.frequency.setValueAtTime(freq, start)
+        gain.gain.setValueAtTime(0.24, start)
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.32)
+        osc.connect(gain)
+        gain.connect(ctx.destination)
+        osc.start(start)
+        osc.stop(start + 0.32)
+      })
+    } else if (type === 'stir') {
+      // Karıştırma esnasında yumuşak fokurdama / su girdabı baloncuk sesi
+      const freqs = [290, 410, 540]
+      const f = freqs[Math.floor(Math.random() * freqs.length)]
+      const osc = ctx.createOscillator()
+      const gain = ctx.createGain()
+      osc.type = 'sine'
+      osc.frequency.setValueAtTime(f, now)
+      osc.frequency.exponentialRampToValueAtTime(f * 1.65, now + 0.075)
+      gain.gain.setValueAtTime(0.14, now)
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08)
+      osc.connect(gain)
+      gain.connect(ctx.destination)
+      osc.start(now)
+      osc.stop(now + 0.08)
     } else if (type === 'pling') {
       // Neşeli sihirli "pling" çan/kristal sesi (harf bulunduğunda)
       const freqs = [880, 1318.5, 1760] // A5, E6, A6
@@ -134,23 +190,43 @@ export function playSoundEffect(
       osc.start(now)
       osc.stop(now + 0.22)
     } else if (type === 'sneeze') {
-      // Komik hapşırma sesi simülasyonu: tiz nefes çekme + gürültülü "HAPŞUU"
+      // Komik "boing / buzzer" sesi (düşük frekanslı testere dişi dalga + white noise hapşırık efekti)
       const osc = ctx.createOscillator()
       const gain = ctx.createGain()
       osc.type = 'sawtooth'
-      osc.frequency.setValueAtTime(350, now)
-      osc.frequency.linearRampToValueAtTime(800, now + 0.12)
-      osc.frequency.exponentialRampToValueAtTime(120, now + 0.35)
-      gain.gain.setValueAtTime(0.05, now)
-      gain.gain.linearRampToValueAtTime(0.28, now + 0.12)
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35)
+      osc.frequency.setValueAtTime(280, now)
+      osc.frequency.linearRampToValueAtTime(620, now + 0.12)
+      osc.frequency.exponentialRampToValueAtTime(110, now + 0.38)
+      gain.gain.setValueAtTime(0.08, now)
+      gain.gain.linearRampToValueAtTime(0.26, now + 0.12)
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4)
       osc.connect(gain)
       gain.connect(ctx.destination)
       osc.start(now)
-      osc.stop(now + 0.35)
+      osc.stop(now + 0.4)
+
+      // White noise "Çuuu!" hapşırık tıslaması
+      const bufferSize = Math.floor(ctx.sampleRate * 0.22)
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
+      const data = buffer.getChannelData(0)
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.5))
+      }
+      const noise = ctx.createBufferSource()
+      noise.buffer = buffer
+      const filter = ctx.createBiquadFilter()
+      filter.type = 'bandpass'
+      filter.frequency.setValueAtTime(1600, now + 0.11)
+      const nGain = ctx.createGain()
+      nGain.gain.setValueAtTime(0.22, now + 0.11)
+      nGain.gain.exponentialRampToValueAtTime(0.001, now + 0.33)
+      noise.connect(filter)
+      filter.connect(nGain)
+      nGain.connect(ctx.destination)
+      noise.start(now + 0.11)
     } else if (type === 'bubble') {
       // Kaynayan tencere fokurdama / su kabarcığı sesi
-      [0, 0.07, 0.14].forEach((delay, idx) => {
+      ;[0, 0.07, 0.14].forEach((delay, idx) => {
         const osc = ctx.createOscillator()
         const gain = ctx.createGain()
         osc.type = 'sine'
