@@ -5944,3 +5944,551 @@
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+   NEON KILIÇ: HARF SAMURAYI (WORD NINJA SLICER GAME)
+   ========================================================================== */
+
+.neon-samurai-wrapper {
+  background: linear-gradient(180deg, #090d16 0%, #0f172a 40%, #1e1b4b 100%);
+  border-radius: 24px;
+  padding: 18px;
+  border: 3px solid #f43f5e;
+  box-shadow: 0 15px 45px rgba(244, 63, 94, 0.35);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  user-select: none;
+}
+
+/* BAŞLANGIÇ EKRANI VE MOD SEÇİMİ */
+.samurai-intro-card {
+  background: rgba(15, 23, 42, 0.9);
+  border: 2px solid rgba(244, 63, 94, 0.4);
+  border-radius: 22px;
+  padding: 28px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: inset 0 0 30px rgba(244, 63, 94, 0.15);
+}
+
+.samurai-hero-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.25), rgba(168, 85, 247, 0.25));
+  border: 2.5px solid #f43f5e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.6);
+  animation: pulseNeon 2s infinite alternate;
+}
+
+.samurai-hero-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 14px rgba(244, 63, 94, 0.7);
+  letter-spacing: 0.5px;
+}
+
+.samurai-completed-tag {
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.samurai-hero-desc {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  max-width: 520px;
+  line-height: 1.5;
+}
+
+.samurai-modes-selection {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 680px;
+  margin-top: 6px;
+}
+
+.mode-card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 2.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 16px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mode-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(244, 63, 94, 0.6);
+}
+
+.mode-card.selected {
+  border-color: #f43f5e;
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.18), rgba(30, 41, 59, 0.9));
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.35);
+}
+
+.mode-card-badge {
+  align-self: flex-start;
+  background: #ec4899;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 900;
+  padding: 3px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+}
+
+.mode-card-badge.pro {
+  background: #f59e0b;
+}
+
+.mode-card h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #f8fafc;
+}
+
+.mode-card p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.mode-highlight-text {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #f472b6;
+  margin-top: 4px;
+}
+
+.submode-pill-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.submode-btn {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 5px 8px;
+  color: #cbd5e1;
+  font-size: 0.74rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.submode-btn.active {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.btn-start-samurai {
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+  border: 3px solid #fda4af;
+  border-radius: 20px;
+  padding: 14px 36px;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(244, 63, 94, 0.6);
+  transition: transform 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.5px;
+}
+
+.btn-start-samurai:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(244, 63, 94, 0.8);
+}
+
+.btn-start-samurai:active {
+  transform: scale(0.98);
+}
+
+/* OYUN İÇİ ARAYÜZ (HUD) */
+.samurai-gameplay-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.samurai-hud-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hud-left-stats,
+.hud-right-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stat-pill {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 900;
+}
+
+.score-pill {
+  border-color: #facc15;
+}
+
+.stat-num {
+  font-size: 1.15rem;
+  color: #facc15;
+}
+
+.combo-pill {
+  border-color: #38bdf8;
+  color: #38bdf8;
+  animation: pulseNeon 1s infinite alternate;
+}
+
+.infinity-pill {
+  border-color: #ec4899;
+  color: #f472b6;
+  font-size: 0.85rem;
+}
+
+.hearts-pill {
+  display: flex;
+  gap: 4px;
+  padding: 6px 10px;
+}
+
+.timer-pill {
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.timer-pill.danger {
+  border-color: #ef4444;
+  color: #ef4444;
+  animation: pulseDanger 1s infinite;
+}
+
+.btn-samurai-exit {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #cbd5e1;
+  transition: all 0.15s;
+}
+
+.btn-samurai-exit:hover {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+/* HEDEF KELİME TAKİP PANOSU */
+.hud-target-word-board {
+  flex: 1;
+  min-width: 240px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 2px solid #38bdf8;
+  border-radius: 18px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
+}
+
+.word-emoji-pill {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.word-letters-track {
+  display: flex;
+  gap: 6px;
+}
+
+.word-slot-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #94a3b8;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.word-slot-box.next-target {
+  border-color: #facc15;
+  color: #facc15;
+  background: rgba(250, 204, 21, 0.15);
+  animation: pulseTarget 1.2s infinite alternate;
+}
+
+.word-slot-box.sliced {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: 2px solid #34d399;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  transform: scale(1.05);
+}
+
+/* GÜÇLENDİRME BİLDİRİM ÇUBUĞU */
+.samurai-powerup-banner {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.powerup-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.powerup-tag.freeze {
+  background: rgba(56, 189, 248, 0.2);
+  border: 1px solid #38bdf8;
+  color: #7dd3fc;
+}
+
+.powerup-tag.frenzy {
+  background: rgba(250, 204, 21, 0.2);
+  border: 1px solid #facc15;
+  color: #fde047;
+}
+
+/* CANVAS SAHNESİ */
+.samurai-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 3px solid #f43f5e;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.samurai-canvas-element {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #0f172a;
+}
+
+.samurai-watermark {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.65);
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+/* OYUN BİTTİ MODALİ */
+.samurai-gameover-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.samurai-gameover-card {
+  background: #0f172a;
+  border: 2px solid #f43f5e;
+  border-radius: 24px;
+  max-width: 440px;
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+  animation: modalScaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.gameover-emblem {
+  font-size: 3.2rem;
+  line-height: 1;
+}
+
+.samurai-gameover-card h3 {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #f43f5e;
+}
+
+.samurai-gameover-card p {
+  margin: 0;
+  font-size: 1rem;
+  color: #e2e8f0;
+}
+
+.highscore-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(250, 204, 21, 0.15);
+  border: 1px solid #facc15;
+  border-radius: 14px;
+  padding: 6px 16px;
+  color: #facc15;
+  font-weight: 900;
+}
+
+.gameover-btns {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.btn-restart {
+  flex: 1;
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+  border: none;
+  border-radius: 14px;
+  padding: 12px;
+  color: #ffffff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.btn-finish {
+  flex: 1;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  border-radius: 14px;
+  padding: 12px;
+  color: #ffffff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* ALT BİLGİ DİPNOTU */
+.samurai-footer-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 4px 6px;
+}
+
+.words-cleared-count {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #facc15;
+}
+
+.pedagogy-samurai-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: #94a3b8;
+  line-height: 1.3;
+}
+
+@keyframes pulseTarget {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 4px rgba(250, 204, 21, 0.4);
+  }
+  100% {
+    transform: scale(1.1);
+    box-shadow: 0 0 14px rgba(250, 204, 21, 0.8);
+  }
+}
+
+@keyframes pulseNeon {
+  0% {
+    box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 24px rgba(244, 63, 94, 0.8);
+  }
+}
+
+@media (max-width: 640px) {
+  .samurai-modes-selection {
+    grid-template-columns: 1fr;
+  }
+  .hud-target-word-board {
+    order: 3;
+    width: 100%;
+  }
+  .samurai-hud-top {
+    justify-content: space-between;
+  }
+}

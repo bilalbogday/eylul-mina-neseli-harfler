@@ -15,7 +15,6 @@ import {
   Copy,
   Check,
   RefreshCw,
-  Gamepad2,
   Camera,
   Utensils,
   Flashlight,
@@ -23,6 +22,7 @@ import {
   Rocket,
   Ship,
   Anchor,
+  Swords,
 } from 'lucide-react'
 import {
   ISLAND_GROUPS,
@@ -34,7 +34,7 @@ import { LighthouseTracingGame } from './LighthouseTracingGame'
 import { XylophoneMusicGame } from './XylophoneMusicGame'
 import { SpaceRocketGame } from './SpaceRocketGame'
 import { OceanWinchGame } from './OceanWinchGame'
-import { LetterSoundGame } from './LetterSoundGame'
+import { NeonSamuraiGame } from './NeonSamuraiGame'
 import { SyllableKitchenGame } from './SyllableKitchenGame'
 import { LetterDetectiveGame } from './LetterDetectiveGame'
 import { ProfilePhotoModal } from './ProfilePhotoModal'
@@ -66,6 +66,7 @@ export interface ChildProfile {
       winch?: boolean
       quiz?: boolean
       game?: boolean
+      samurai?: boolean
     }
   >
 }
@@ -144,7 +145,7 @@ export default function App() {
   const [selectedGroupId, setSelectedGroupId] = useState<number>(1)
   const [selectedLetterId, setSelectedLetterId] = useState<string | null>(null)
   const [exerciseStep, setExerciseStep] = useState<
-    'sound' | 'trace' | 'syllable' | 'detective' | 'xylophone' | 'rocket' | 'winch' | 'quiz' | 'game'
+    'sound' | 'trace' | 'syllable' | 'detective' | 'xylophone' | 'rocket' | 'winch' | 'quiz' | 'samurai'
   >('sound')
 
   // Yeni profil ekleme modal/form
@@ -265,6 +266,7 @@ export default function App() {
       | 'winch'
       | 'quiz'
       | 'game'
+      | 'samurai'
   ) => {
     setProfiles((prev) =>
       prev.map((prof) => {
@@ -327,6 +329,7 @@ export default function App() {
         p.winch,
         p.quiz,
         p.game,
+        p.samurai,
       ].filter(Boolean).length
     )
   }
@@ -704,17 +707,17 @@ export default function App() {
 
               <button
                 type="button"
-                className={`ex-tab ${exerciseStep === 'game' ? 'active' : ''} ${
-                  activeProfile.letterProgress[selectedLetter.id]?.game ? 'done' : ''
+                className={`ex-tab ${exerciseStep === 'samurai' ? 'active' : ''} ${
+                  activeProfile.letterProgress[selectedLetter.id]?.samurai ? 'done' : ''
                 }`}
                 onClick={() => {
                   playSoundEffect('click')
-                  setExerciseStep('game')
+                  setExerciseStep('samurai')
                 }}
               >
-                <Gamepad2 size={18} />
-                <span>9. Balon Oyunu</span>
-                {activeProfile.letterProgress[selectedLetter.id]?.game && (
+                <Swords size={18} />
+                <span>9. Harf Samurayı</span>
+                {activeProfile.letterProgress[selectedLetter.id]?.samurai && (
                   <CheckCircle2 size={16} className="done-icon" />
                 )}
               </button>
@@ -949,14 +952,14 @@ export default function App() {
               </div>
             )}
 
-            {/* ADIM 9: MİNİ SESLİ BALON OYUNU */}
-            {exerciseStep === 'game' && (
+            {/* ADIM 9: NEON KILIÇ: HARF SAMURAYI */}
+            {exerciseStep === 'samurai' && (
               <div className="exercise-panel">
-                <LetterSoundGame
+                <NeonSamuraiGame
                   letter={selectedLetter}
                   childName={activeProfile.name}
-                  completed={Boolean(activeProfile.letterProgress[selectedLetter.id]?.game)}
-                  onComplete={() => markActivityDone(selectedLetter.id, 'game')}
+                  completed={Boolean(activeProfile.letterProgress[selectedLetter.id]?.samurai)}
+                  onComplete={() => markActivityDone(selectedLetter.id, 'samurai')}
                   onExit={() => {
                     playSoundEffect('click')
                     setSelectedLetterId(null)
@@ -1051,12 +1054,12 @@ export default function App() {
                                 markActivityDone(selectedLetter.id, 'quiz')
                                 playSoundEffect('fanfare')
                                 speakTurkish(
-                                  `Tebrikler ${activeProfile.name}! Şimdi ${selectedLetter.mascotWord} ile mini sesli oyun zamanı!`
+                                  `Tebrikler ${activeProfile.name}! Şimdi Neon Kılıç Harf Samurayı zamanı!`
                                 )
-                                setExerciseStep('game')
+                                setExerciseStep('samurai')
                               }}
                             >
-                              <Sparkles size={20} /> Ödülü Al ve Oyuna Geç! (
+                              <Sparkles size={20} /> Ödülü Al ve Harf Samurayına Geç! (
                               {Math.max(quizCorrectCount, 1)}/{quizQuestions.length})
                             </button>
                           )}
