@@ -67,7 +67,32 @@ export interface ChildProfile {
   >
 }
 
-const AVATAR_OPTIONS = ['👧', '🧒', '🦄', '🦁', '🐰', '🐼', '🦊', '🦋', '🚀', '👑']
+const AVATAR_OPTIONS = [
+  '👧',
+  '👸',
+  '🧚‍♀️',
+  '🧜‍♀️',
+  '🦸‍♀️',
+  '🩰',
+  '👩‍🚀',
+  '👩‍🎨',
+  '🎀',
+  '👑',
+  '🌸',
+  '🍓',
+  '🦄',
+  '🐰',
+  '🐱',
+  '🐶',
+  '🐼',
+  '🦊',
+  '🦋',
+  '🦩',
+  '🧒',
+  '👦',
+  '🦸‍♂️',
+  '🚀',
+]
 
 const STORAGE_PROFILES_KEY = 'eylul_mina_neseli_harfler_profiles_v1'
 const STORAGE_ACTIVE_ID_KEY = 'eylul_mina_neseli_harfler_active_profile_v1'

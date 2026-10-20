@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react'
-import { Camera, Upload, Trash2, X, Check, Image as ImageIcon } from 'lucide-react'
+import { useRef, useState, useMemo } from 'react'
+import { Camera, Upload, Trash2, X, Check, Image as ImageIcon, Sparkles } from 'lucide-react'
 import { playSoundEffect, speakTurkish } from './sound'
 
 interface ProfilePhotoModalProps {
@@ -10,7 +10,44 @@ interface ProfilePhotoModalProps {
   onSaveAvatar: (newAvatar: string) => void
 }
 
-const PRESET_EMOJIS = ['👧', '🧒', '🦄', '🦁', '🐰', '🐼', '🦊', '🦋', '🚀', '👑', '🐱', '🐶', '🦖', '⭐']
+export interface AvatarCategory {
+  id: string
+  label: string
+  icon: string
+  emojis: string[]
+}
+
+// Çoğunlukla kız çocuklarının en sevdiği prensesler, sevimli kız karakterleri ve şirin maskotlar
+export const AVATAR_CATEGORIES: AvatarCategory[] = [
+  {
+    id: 'girls',
+    label: 'Prensesler & Kızlar',
+    icon: '👸',
+    emojis: [
+      '👧', '👸', '🧚‍♀️', '🧜‍♀️', '🦸‍♀️', '🧝‍♀️', '👩‍🚀', '👩‍🎨',
+      '👩‍🍳', '👩‍🎤', '💃', '🩰', '👧🏻', '👧🏼', '👧🏽', '👸🏻',
+      '👸🏼', '👸🏽', '🧚🏻‍♀️', '🧜🏻‍♀️', '🦸🏻‍♀️', '🎀', '👑', '🌸',
+      '🍓', '🍭', '🧁', '🦄',
+    ],
+  },
+  {
+    id: 'animals',
+    label: 'Sevimli Hayvanlar',
+    icon: '🐰',
+    emojis: [
+      '🐰', '🐱', '🐶', '🐼', '🦊', '🐨', '🐻', '🦋',
+      '🦩', '🦔', '🐬', '🦭', '🐣', '🐧', '🦥', '🦁',
+    ],
+  },
+  {
+    id: 'heroes',
+    label: 'Kahramanlar & Diğer',
+    icon: '⭐',
+    emojis: [
+      '🧒', '👦', '🦸‍♂️', '🧑‍🚀', '🦖', '🚀', '🌈', '⭐',
+    ],
+  },
+]
 
 export function ProfilePhotoModal({
   currentAvatar,
@@ -22,12 +59,22 @@ export function ProfilePhotoModal({
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const [preview, setPreview] = useState<string>(currentAvatar)
   const [selectedPreset, setSelectedPreset] = useState<string>(
-    currentAvatar.startsWith('data:image') ? '' : currentAvatar
+    currentAvatar.startsWith('data:image') || currentAvatar.startsWith('http') ? '' : currentAvatar
   )
+  const [activeCategoryId, setActiveCategoryId] = useState<string>('girls')
+
+  // Seçili kategoriye göre gösterilecek emojiler
+  const displayedEmojis = useMemo(() => {
+    if (activeCategoryId === 'all') {
+      return Array.from(new Set(AVATAR_CATEGORIES.flatMap((c) => c.emojis)))
+    }
+    const category = AVATAR_CATEGORIES.find((c) => c.id === activeCategoryId)
+    return category ? category.emojis : AVATAR_CATEGORIES[0].emojis
+  }, [activeCategoryId])
 
   if (!isOpen) return null
 
-  // Görseli sıkıştırıp 256x256 kare DataURL'e çevirme (LocalStorage ve Firebase boyutu için hafif tutulur)
+  // Görseli sıkıştırıp 256x256 kare DataURL'e çevirme
   const processImageFile = (file: File) => {
     const reader = new FileReader()
     reader.onload = (e) => {
@@ -35,10 +82,9 @@ export function ProfilePhotoModal({
       img.onload = () => {
         const canvas = document.createElement('canvas')
         const MAX_SIZE = 256
-        let width = img.width
-        let height = img.height
+        const width = img.width
+        const height = img.height
 
-        // Kare kırpma ve ölçekleme
         const minDim = Math.min(width, height)
         const cropX = (width - minDim) / 2
         const cropY = (height - minDim) / 2
@@ -50,7 +96,6 @@ export function ProfilePhotoModal({
 
         ctx.drawImage(img, cropX, cropY, minDim, minDim, 0, 0, MAX_SIZE, MAX_SIZE)
 
-        // WebP / JPEG formatında kaliteli ve hafif çıktı (~20-40kb)
         const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85)
         setPreview(compressedDataUrl)
         setSelectedPreset('')
@@ -81,36 +126,37 @@ export function ProfilePhotoModal({
 
   const handleRemovePhoto = () => {
     playSoundEffect('click')
-    setPreview('👧')
-    setSelectedPreset('👧')
+    setPreview('👸')
+    setSelectedPreset('👸')
   }
 
   const isCustomPhoto = preview.startsWith('data:image') || preview.startsWith('http')
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="profile-photo-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="profile-photo-modal modal-large" onClick={(e) => e.stopPropagation()}>
         <div className="photo-modal-header">
           <h3>
-            <Camera size={22} color="#ff6b6b" /> {childName} için Profil Resmi
+            <Camera size={24} color="#ec4899" /> {childName} için Profil Resmi
           </h3>
-          <button type="button" className="modal-close-btn" onClick={onClose}>
+          <button type="button" className="modal-close-btn" onClick={onClose} title="Kapat">
             <X size={20} />
           </button>
         </div>
 
         <p className="photo-modal-subtitle">
-          Cihazınızdan, galeriden ya da kameradan çocuğunuzun kendi fotoğrafını yükleyebilirsiniz!
+          Cihazınızdan çocuğunuzun kendi fotoğrafını yükleyebilir veya aşağıdaki sevimli karakterlerden birini seçebilirsiniz!
         </p>
 
-        {/* BÜYÜK ÖNİZLEME */}
+        {/* BÜYÜK VE BELİRGİN ÖNİZLEME */}
         <div className="photo-preview-container">
-          <div className="photo-preview-circle">
+          <div className="photo-preview-circle large-circle">
             {isCustomPhoto ? (
               <img src={preview} alt={childName} className="custom-photo-img" />
             ) : (
-              <span className="emoji-photo-span">{preview}</span>
+              <span className="emoji-photo-span jumbo-emoji">{preview}</span>
             )}
+            <div className="preview-glow-ring" />
           </div>
 
           <div className="photo-preview-controls">
@@ -119,7 +165,7 @@ export function ProfilePhotoModal({
               className="btn-primary photo-upload-btn"
               onClick={() => fileInputRef.current?.click()}
             >
-              <Upload size={18} /> Fotoğraf Seç / Çek
+              <Upload size={18} /> Kendi Fotoğrafını Yükle
             </button>
 
             {isCustomPhoto && (
@@ -127,9 +173,9 @@ export function ProfilePhotoModal({
                 type="button"
                 className="btn-secondary photo-remove-btn"
                 onClick={handleRemovePhoto}
-                title="Fotoğrafı Kaldır"
+                title="Fotoğrafı Kaldır ve Karakter Seç"
               >
-                <Trash2 size={16} /> Kaldır
+                <Trash2 size={16} /> Fotoğrafı Kaldır
               </button>
             )}
 
@@ -143,26 +189,68 @@ export function ProfilePhotoModal({
           </div>
         </div>
 
-        {/* EMOJİ / MASKOT SEÇİMİ ALTERNATİFİ */}
+        {/* EMOJİ / KARAKTER SEÇİM BÖLÜMÜ */}
         <div className="photo-presets-section">
-          <div className="presets-title">
-            <ImageIcon size={16} /> Veya Sevimli Bir Karakter Seçin:
-          </div>
-          <div className="photo-presets-grid">
-            {PRESET_EMOJIS.map((emoji) => (
+          <div className="presets-header-row">
+            <div className="presets-title">
+              <ImageIcon size={18} color="#ec4899" /> Sevimli Bir Karakter Seç:
+            </div>
+
+            {/* Kategori Filtre Butonları */}
+            <div className="presets-category-tabs">
+              {AVATAR_CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  className={`category-pill ${activeCategoryId === cat.id ? 'active' : ''}`}
+                  onClick={() => {
+                    playSoundEffect('click')
+                    setActiveCategoryId(cat.id)
+                  }}
+                >
+                  <span>{cat.icon}</span>
+                  <span>{cat.label}</span>
+                </button>
+              ))}
               <button
-                key={emoji}
                 type="button"
-                className={`preset-emoji-btn ${selectedPreset === emoji && !isCustomPhoto ? 'active' : ''}`}
+                className={`category-pill ${activeCategoryId === 'all' ? 'active' : ''}`}
                 onClick={() => {
-                  playSoundEffect('pop')
-                  setPreview(emoji)
-                  setSelectedPreset(emoji)
+                  playSoundEffect('click')
+                  setActiveCategoryId('all')
                 }}
               >
-                {emoji}
+                <span>🌈</span>
+                <span>Tümü</span>
               </button>
-            ))}
+            </div>
+          </div>
+
+          {/* BÜYÜTÜLMÜŞ VE GENİŞLETİLMİŞ KARAKTER IZGARASI */}
+          <div className="photo-presets-grid jumbo-grid">
+            {displayedEmojis.map((emoji, idx) => {
+              const isSelected = selectedPreset === emoji && !isCustomPhoto
+              return (
+                <button
+                  key={`${emoji}-${idx}`}
+                  type="button"
+                  className={`preset-emoji-btn jumbo-btn ${isSelected ? 'active' : ''}`}
+                  onClick={() => {
+                    playSoundEffect('pop')
+                    setPreview(emoji)
+                    setSelectedPreset(emoji)
+                  }}
+                  title={emoji}
+                >
+                  <span className="jumbo-char">{emoji}</span>
+                  {isSelected && (
+                    <span className="selected-check-badge">
+                      <Check size={12} strokeWidth={3} />
+                    </span>
+                  )}
+                </button>
+              )
+            })}
           </div>
         </div>
 
@@ -172,7 +260,7 @@ export function ProfilePhotoModal({
             Vazgeç
           </button>
           <button type="button" className="btn-primary btn-save-photo" onClick={handleSave}>
-            <Check size={18} /> Resmi Kaydet
+            <Sparkles size={18} /> Resmi Kaydet
           </button>
         </div>
       </div>
