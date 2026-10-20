@@ -659,7 +659,7 @@ export default function App() {
                 }}
               >
                 <Rocket size={18} />
-                <span>6. Kargo Roketi</span>
+                <span>6. Uzaylı Kargo Roketi</span>
                 {activeProfile.letterProgress[selectedLetter.id]?.rocket && (
                   <CheckCircle2 size={16} className="done-icon" />
                 )}
@@ -877,7 +877,7 @@ export default function App() {
                       setExerciseStep('rocket')
                     }}
                   >
-                    Kargo Roketine Geç <ChevronRight size={22} />
+                    Uzaylı Kargo Roketine Geç <ChevronRight size={22} />
                   </button>
                 </div>
               </div>
