@@ -21,7 +21,12 @@ import {
   Utensils,
   Flashlight,
 } from 'lucide-react'
-import { ISLAND_GROUPS, LETTERS_DATA, type LetterCurriculum } from './curriculum'
+import {
+  ISLAND_GROUPS,
+  LETTERS_DATA,
+  getLearnedDistractorLetters,
+  type LetterCurriculum,
+} from './curriculum'
 import { LetterTracingCanvas } from './LetterTracingCanvas'
 import { LetterSoundGame } from './LetterSoundGame'
 import { SyllableKitchenGame } from './SyllableKitchenGame'
@@ -279,29 +284,55 @@ export default function App() {
     return LETTERS_DATA.filter((l) => isLetterStickerEarned(l.id)).length
   }, [activeProfile])
 
-  // Quiz soruları üretimi (Seçili harf için 3 soru)
+  // Quiz soruları üretimi (Seçili harf için 3 soru - Yalnızca öğrenilmiş harfler kullanılır)
   const quizQuestions = useMemo(() => {
     if (!selectedLetter) return []
-    const otherLetters = LETTERS_DATA.filter((l) => l.id !== selectedLetter.id)
+    const distractorLetters = getLearnedDistractorLetters(selectedLetter)
+
+    // Çeldirici harflerin maskot ve kelime havuzunu topla
+    const distractorPool: Array<{ word: string; emoji: string; letter: string; isCorrect: false }> = []
+    distractorLetters.forEach((l) => {
+      distractorPool.push({
+        word: l.mascotWord,
+        emoji: l.mascotEmoji,
+        letter: l.upper,
+        isCorrect: false,
+      })
+      l.words.forEach((w) => {
+        if (!distractorPool.some((item) => item.word === w.word)) {
+          distractorPool.push({
+            word: w.word,
+            emoji: w.emoji,
+            letter: l.upper,
+            isCorrect: false,
+          })
+        }
+      })
+    })
 
     return selectedLetter.words.map((targetWord, idx) => {
-      const distractors = otherLetters
-        .slice(idx * 3, idx * 3 + 2)
-        .map((d) => ({
-          word: d.mascotWord,
-          emoji: d.mascotEmoji,
-          letter: d.upper,
-          isCorrect: false,
-        }))
+      // Hedef kelime ile aynı olanları çeldiricilerden çıkar
+      const available = distractorPool.filter((d) => d.word !== targetWord.word)
+
+      let picks: typeof distractorPool = []
+      if (available.length <= 2) {
+        picks = [...available]
+      } else {
+        const start = (idx * 2) % available.length
+        picks = [available[start], available[(start + 1) % available.length]]
+      }
 
       const correctOption = {
         word: targetWord.word,
         emoji: targetWord.emoji,
         letter: selectedLetter.upper,
-        isCorrect: true,
+        isCorrect: true as const,
       }
 
-      const options = [...distractors, correctOption].sort((a, b) => a.word.localeCompare(b.word))
+      const options = [...picks, correctOption].sort((a, b) =>
+        a.word.localeCompare(b.word, 'tr-TR')
+      )
+
       return {
         promptText: `Hangi resmin adı "${selectedLetter.upper}" (${selectedLetter.soundHint}) sesi ile başlıyor veya içinde "${selectedLetter.upper}" sesi var? Dinle: "${targetWord.word}"`,
         speakPrompt: `${targetWord.word}! Göster bakalım, hangisi ${targetWord.word}?`,

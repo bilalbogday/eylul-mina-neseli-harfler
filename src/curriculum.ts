@@ -111,9 +111,9 @@ export const LETTERS_DATA: LetterCurriculum[] = [
       { word: 'Ayı', emoji: '🐻', syllables: ['A', 'yı'], sentence: 'Sevimli ayı bal yedi.' },
     ],
     syllableTasks: [
-      { parts: ['a', 'l'], result: 'al', meaning: 'Kırmızı elmayı al', emoji: '🍎' },
-      { parts: ['a', 't'], result: 'at', meaning: 'Dörtnala koşan at', emoji: '🐴' },
-      { parts: ['a', 'n'], result: 'an', meaning: 'Mutlu bir an', emoji: '⏰' },
+      { parts: ['a', 'n'], result: 'an', meaning: 'A ve N birleşti: an', emoji: '✨' },
+      { parts: ['n', 'a'], result: 'na', meaning: 'N ve A birleşti: na', emoji: '🎵' },
+      { parts: ['a', 'na'], result: 'ana', meaning: 'Sevgi dolu canım ana', emoji: '💛' },
     ],
     tracePoints: [
       { x: 50, y: 18 },
@@ -412,7 +412,7 @@ export const LETTERS_DATA: LetterCurriculum[] = [
       { word: 'Nar', emoji: '🍎', syllables: ['Nar'], sentence: 'Taneli kırmızı nar.' },
     ],
     syllableTasks: [
-      { parts: ['a', 'rı'], result: 'arı', meaning: 'Vız vız arı', emoji: '🐝' },
+      { parts: ['t', 'ur'], result: 'tur', meaning: 'Hızlı bir tur', emoji: '🔄' },
       { parts: ['n', 'ar'], result: 'nar', meaning: 'Tatlı nar', emoji: '🍎' },
       { parts: ['k', 'ar'], result: 'kar', meaning: 'Bembeyaz kar', emoji: '❄️' },
     ],
@@ -515,7 +515,7 @@ export const LETTERS_DATA: LetterCurriculum[] = [
     ],
     syllableTasks: [
       { parts: ['ü', 'tü'], result: 'ütü', meaning: 'Sıcak ütü', emoji: '👕' },
-      { parts: ['g', 'ül'], result: 'gül', meaning: 'Mis kokulu gül', emoji: '🌹' },
+      { parts: ['k', 'ül'], result: 'kül', meaning: 'Sıcak kül', emoji: '🌋' },
       { parts: ['t', 'ül'], result: 'tül', meaning: 'Beyaz tül perde', emoji: '🪟' },
     ],
     tracePoints: [
@@ -581,8 +581,8 @@ export const LETTERS_DATA: LetterCurriculum[] = [
     ],
     syllableTasks: [
       { parts: ['ö', 'n'], result: 'ön', meaning: 'Sıranın ön tarafı', emoji: '⬆️' },
-      { parts: ['k', 'öy'], result: 'köy', meaning: 'Yeşil şirin köy', emoji: '🏡' },
-      { parts: ['ör', 'dek'], result: 'ördek', meaning: 'Yüzen ördek', emoji: '🦆' },
+      { parts: ['k', 'ök'], result: 'kök', meaning: 'Ağacın kökü', emoji: '🌱' },
+      { parts: ['ö', 'rt'], result: 'ört', meaning: 'Üstünü ört', emoji: '🛏️' },
     ],
     tracePoints: [
       { x: 36, y: 14 },
@@ -821,7 +821,7 @@ export const LETTERS_DATA: LetterCurriculum[] = [
     syllableTasks: [
       { parts: ['c', 'am'], result: 'cam', meaning: 'Parlak cam', emoji: '🪟' },
       { parts: ['c', 'an'], result: 'can', meaning: 'Canım arkadaşım', emoji: '💖' },
-      { parts: ['ce', 'viz'], result: 'ceviz', meaning: 'Lezzetli ceviz', emoji: '🌰' },
+      { parts: ['ci', 'ci'], result: 'cici', meaning: 'Cici tatlı bebek', emoji: '👶' },
     ],
     tracePoints: [
       { x: 70, y: 24 },
@@ -921,7 +921,7 @@ export const LETTERS_DATA: LetterCurriculum[] = [
     syllableTasks: [
       { parts: ['h', 'al'], result: 'hal', meaning: 'Halı ve kilim', emoji: '🧶' },
       { parts: ['ha', 'lı'], result: 'halı', meaning: 'Yumuşak halı', emoji: '🏠' },
-      { parts: ['ha', 'vuç'], result: 'havuç', meaning: 'Tavşanın havucu', emoji: '🥕' },
+      { parts: ['h', 'an'], result: 'han', meaning: 'Tarihi büyük han', emoji: '🏰' },
     ],
     tracePoints: [
       { x: 28, y: 18 },
@@ -1071,3 +1071,43 @@ export const LETTERS_DATA: LetterCurriculum[] = [
     ],
   },
 ]
+
+/**
+ * Maarif modeline göre, verilen harfe kadar öğrenilmiş harfleri döndürür.
+ * Kural: Çocuklar harfleri sırayla öğrenir (A -> N -> E -> T -> İ -> L ...).
+ * Harf 'A' için önceki harf olmadığından, yalnızca 'A' ve 'N' harflerini döndürür.
+ * Harf 'N' için 'A' ve 'N' döndürür.
+ * Harf 'E' için 'A', 'N' ve 'E' döndürür.
+ */
+export function getLearnedLetters(letterOrUpper: string | LetterCurriculum): LetterCurriculum[] {
+  const upper = typeof letterOrUpper === 'string'
+    ? letterOrUpper.toLocaleUpperCase('tr-TR')
+    : letterOrUpper.upper
+  const idx = LETTERS_DATA.findIndex((l) => l.upper === upper || l.id === upper)
+  if (idx <= 0) {
+    // 'A' harfi için kural: Yalnızca A ve N harfleri
+    return LETTERS_DATA.slice(0, 2)
+  }
+  return LETTERS_DATA.slice(0, idx + 1)
+}
+
+/**
+ * Verilen harf haricinde, o ana kadar öğrenilmiş çeldirici harfleri döndürür.
+ * 'A' için -> ['N']
+ * 'N' için -> ['A']
+ * 'E' için -> ['A', 'N']
+ * 'T' için -> ['A', 'N', 'E']
+ */
+export function getLearnedDistractorLetters(letterOrUpper: string | LetterCurriculum): LetterCurriculum[] {
+  const upper = typeof letterOrUpper === 'string'
+    ? letterOrUpper.toLocaleUpperCase('tr-TR')
+    : letterOrUpper.upper
+  const learned = getLearnedLetters(letterOrUpper)
+  const distractors = learned.filter((l) => l.upper !== upper && l.id !== upper)
+  if (distractors.length === 0) {
+    const fallback = LETTERS_DATA.find((l) => l.upper !== upper)
+    return fallback ? [fallback] : []
+  }
+  return distractors
+}
+

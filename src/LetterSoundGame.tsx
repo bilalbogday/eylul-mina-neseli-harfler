@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Volume2, RotateCcw, ChevronRight, Sparkles } from 'lucide-react'
-import { LETTERS_DATA, type LetterCurriculum } from './curriculum'
+import {
+  type LetterCurriculum,
+  getLearnedLetters,
+  getLearnedDistractorLetters,
+} from './curriculum'
 import { playSoundEffect, speakTurkish } from './sound'
 
 interface LetterSoundGameProps {
@@ -42,29 +46,18 @@ function shuffle<T>(arr: T[]): T[] {
   return a
 }
 
-// Tüm müfredattaki kelimelerden (resimli) benzersiz bir havuz
-const WORD_POOL: { word: string; emoji: string }[] = (() => {
-  const map = new Map<string, string>()
-  LETTERS_DATA.forEach((l) => {
-    map.set(l.mascotWord, l.mascotEmoji)
-    l.words.forEach((w) => map.set(w.word, w.emoji))
-    l.syllableTasks.forEach((t) => {
-      const w = t.result.charAt(0).toLocaleUpperCase('tr-TR') + t.result.slice(1)
-      if (!map.has(w)) map.set(w, t.emoji)
-    })
-  })
-  return [...map.entries()].map(([word, emoji]) => ({ word, emoji }))
-})()
-
 function buildBalloons(letter: LetterCurriculum): Balloon[] {
-  const targets = Array.from({ length: TARGET_BALLOONS }, (_, i) => (i % 2 === 0 ? letter.upper : letter.lower))
-  // Aynı adadaki harfler önce (daha öğretici çeldiriciler), sonra diğerleri
-  const sameGroup = LETTERS_DATA.filter((l) => l.groupId === letter.groupId && l.id !== letter.id)
-  const others = shuffle(LETTERS_DATA.filter((l) => l.groupId !== letter.groupId))
-  const distractorPool = shuffle([...sameGroup, ...others.slice(0, 3)])
-  const distractors = distractorPool
-    .slice(0, TOTAL_BALLOONS - TARGET_BALLOONS)
-    .map((l) => (Math.random() > 0.5 ? l.upper : l.lower))
+  const targets = Array.from({ length: TARGET_BALLOONS }, (_, i) =>
+    i % 2 === 0 ? letter.upper : letter.lower
+  )
+  // Çeldiriciler yalnızca öğrenilmiş diğer harflerden seçilir
+  const distractorLetters = getLearnedDistractorLetters(letter)
+  const needed = TOTAL_BALLOONS - TARGET_BALLOONS
+  const distractors: string[] = []
+  for (let i = 0; i < needed; i++) {
+    const dl = distractorLetters[i % distractorLetters.length]
+    distractors.push(i % 2 === 0 ? dl.upper : dl.lower)
+  }
 
   return shuffle([
     ...targets.map((c) => ({ char: c, isTarget: true })),
@@ -80,13 +73,40 @@ function buildBalloons(letter: LetterCurriculum): Balloon[] {
 
 function buildEarRounds(letter: LetterCurriculum): EarRound[] {
   const target = trLower(letter.lower)
-  const withSound = shuffle(WORD_POOL.filter((w) => trLower(w.word).includes(target)))
-  const withoutSound = shuffle(WORD_POOL.filter((w) => !trLower(w.word).includes(target)))
-  const yesCount = Math.min(3, withSound.length)
-  const picks = [
-    ...withSound.slice(0, yesCount).map((w) => ({ ...w, hasSound: true })),
-    ...withoutSound.slice(0, EAR_ROUNDS - yesCount).map((w) => ({ ...w, hasSound: false })),
-  ]
+  const learned = getLearnedLetters(letter)
+
+  const map = new Map<string, string>()
+  learned.forEach((l) => {
+    map.set(l.mascotWord, l.mascotEmoji)
+    l.words.forEach((w) => map.set(w.word, w.emoji))
+  })
+  const pool = [...map.entries()].map(([word, emoji]) => ({ word, emoji }))
+
+  const withSound = shuffle(pool.filter((w) => trLower(w.word).includes(target)))
+  let withoutSound = shuffle(pool.filter((w) => !trLower(w.word).includes(target)))
+
+  // Harf 'A' için özel kural: {A, N} kelimelerinin hepsi 'A' harfi içerir.
+  // Zıt ses farkındalığı için N sesini kullan:
+  if (withoutSound.length === 0 && letter.upper === 'A') {
+    withoutSound = [
+      { word: 'Nnn (N Sesi)', emoji: '🎵' },
+      { word: 'N sesi', emoji: '🔔' },
+    ]
+  }
+
+  const yesCount = Math.min(3, Math.max(1, withSound.length))
+  const noCount = EAR_ROUNDS - yesCount
+
+  const picks: EarRound[] = []
+  for (let i = 0; i < yesCount; i++) {
+    const item = withSound[i % withSound.length]
+    if (item) picks.push({ ...item, hasSound: true })
+  }
+  for (let i = 0; i < noCount; i++) {
+    const item = withoutSound[i % withoutSound.length]
+    if (item) picks.push({ ...item, hasSound: false })
+  }
+
   return shuffle(picks)
 }
 

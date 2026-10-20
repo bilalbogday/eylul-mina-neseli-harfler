@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { RefreshCw, Volume2, Sparkles, Star, Flashlight } from 'lucide-react'
-import { LETTERS_DATA, type LetterCurriculum } from './curriculum'
+import {
+  type LetterCurriculum,
+  getLearnedDistractorLetters,
+} from './curriculum'
 import { playSoundEffect, speakTurkish } from './sound'
 
 interface LetterDetectiveGameProps {
@@ -53,7 +56,6 @@ const TARGET_COUNT = 5
 const FLASHLIGHT_RADIUS = 110
 
 const TARGET_COLORS = ['#fb923c', '#f472b6', '#facc15', '#38bdf8', '#a855f7']
-const DISTRACTOR_POOL = ['L', 'A', 'O', 'K', 'E', 'M', 'N', 'S']
 const BUG_POOL = ['🐞', '🐛', '🍃', '🐌']
 const CONFETTI_COLORS = ['#fbbf24', '#f43f5e', '#10b981', '#3b82f6', '#a855f7', '#fb923c', '#2dd4bf']
 
@@ -217,8 +219,14 @@ export function LetterDetectiveGame({
         })
       }
 
-      // 2. 3 adet yanıltıcı farklı harf (örn: L, A, O)
-      const distractorLetters = DISTRACTOR_POOL.filter((c) => c !== charToUse).slice(0, 3)
+      // 2. Yalnızca öğrenilmiş harflerden 3 adet çeldirici harf (Maarif modeli kuralı)
+      const learnedDistractors = getLearnedDistractorLetters(charToUse).map((l) => l.upper)
+      const distractorLetters: string[] = []
+      if (learnedDistractors.length > 0) {
+        for (let i = 0; i < 3; i++) {
+          distractorLetters.push(learnedDistractors[i % learnedDistractors.length])
+        }
+      }
       distractorLetters.forEach((dChar, idx) => {
         const anchor = selectedAnchors[TARGET_COUNT + idx] || shuffledAnchors[TARGET_COUNT + idx]
         if (!anchor) return
@@ -941,36 +949,25 @@ export function LetterDetectiveGame({
         </div>
       </div>
 
-      {/* Hızlı Harf Seçici (Varsayılan "T" başta olmak üzere istenirse diğer harflerle de oynanabilir) */}
-      <div className="detective-letter-selector">
-        <span className="selector-label">Aranan Harf:</span>
-        <button
-          type="button"
-          className={`detective-char-pill ${targetChar === 'T' ? 'active' : ''}`}
-          onClick={() => {
-            playSoundEffect('click')
-            setTargetChar('T')
-          }}
-        >
-          🔦 T (Varsayılan)
-        </button>
-        {LETTERS_DATA.slice(0, 10).map((item) => {
-          if (item.upper === 'T') return null
-          return (
+      {/* Harf Seçici: Yalnızca bağımsız oyun modunda ve 1. grup harflerle */}
+      {!letter && (
+        <div className="detective-letter-selector">
+          <span className="selector-label">Aranan Harf:</span>
+          {['T', 'A', 'N', 'E', 'İ', 'L'].map((char) => (
             <button
-              key={item.id}
+              key={char}
               type="button"
-              className={`detective-char-pill ${targetChar === item.upper ? 'active' : ''}`}
+              className={`detective-char-pill ${targetChar === char ? 'active' : ''}`}
               onClick={() => {
                 playSoundEffect('click')
-                setTargetChar(item.upper)
+                setTargetChar(char)
               }}
             >
-              {item.upper}
+              {char === 'T' ? '🔦 T (Varsayılan)' : char}
             </button>
-          )
-        })}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* SEVİMLİ SESLENDİRME BALONU / ÜST YÖNERGE */}
       <div className="detective-speech-bubble">

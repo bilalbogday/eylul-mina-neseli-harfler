@@ -8,7 +8,7 @@ import {
   CheckCircle2,
   Award,
 } from 'lucide-react'
-import { type LetterCurriculum } from './curriculum'
+import { type LetterCurriculum, getLearnedLetters } from './curriculum'
 import { playSoundEffect, speakTurkish } from './sound'
 
 interface SyllableKitchenGameProps {
@@ -132,9 +132,12 @@ export function SyllableKitchenGame({
     }
   }, [letter?.id])
 
-  // Aktif seviyenin yemek listesi
+  // Aktif seviyenin yemek listesi (Harf alıştırmasında yalnızca öğrenilmiş harfler kullanılır)
   const activeDishes: KitchenRecipe[] = useMemo(() => {
     if (selectedLevel === 'letter' && letter) {
+      const learned = getLearnedLetters(letter)
+      const allowedSet = new Set(learned.map((l) => l.upper))
+
       const list: KitchenRecipe[] = []
       letter.syllableTasks.forEach((st, idx) => {
         list.push({
@@ -149,10 +152,15 @@ export function SyllableKitchenGame({
           level: 1,
         })
       })
+
       letter.words.forEach((w, idx) => {
         if (w.syllables && w.syllables.length >= 2) {
           const upper = w.word.toLocaleUpperCase('tr-TR')
-          if (!list.some((item) => item.word === upper)) {
+          // Yalnızca kelimenin tüm harfleri öğrenilmişse ekle
+          const isAllLearned = [...upper.replace(/[^A-ZÇĞİÖŞÜ]/g, '')].every((ch) =>
+            allowedSet.has(ch)
+          )
+          if (isAllLearned && !list.some((item) => item.word === upper)) {
             list.push({
               id: `let_word_${letter.id}_${idx}`,
               word: upper,
@@ -223,7 +231,7 @@ export function SyllableKitchenGame({
   const lastStirSoundRef = useRef<number>(0)
   const isStirDraggingRef = useRef<boolean>(false)
 
-  // Raftaki kavanozları üret (Hedef heceler + 3 yanıltıcı kavanoz)
+  // Raftaki kavanozları üret (Hedef heceler + yalnızca öğrenilmiş harflerden 3 yanıltıcı kavanoz)
   const shelfJars: JarItem[] = useMemo(() => {
     if (!currentDish) return []
 
@@ -238,9 +246,55 @@ export function SyllableKitchenGame({
       }
     })
 
-    const distractors = shuffleArray(
-      DISTRACTOR_SYLLABLES.filter((d) => !currentDish.targetParts.includes(d))
-    ).slice(0, 3)
+    let distractors: string[] = []
+    if (letter) {
+      const learned = getLearnedLetters(letter)
+      const allowedSet = new Set(learned.map((l) => l.upper))
+      const pool = new Set<string>()
+
+      // Öğrenilmiş harflerin hece görevlerinden ve harflerinden topla
+      learned.forEach((l) => {
+        pool.add(l.upper)
+        l.syllableTasks.forEach((st) => {
+          st.parts.forEach((p) => pool.add(p.toLocaleUpperCase('tr-TR')))
+          pool.add(st.result.toLocaleUpperCase('tr-TR'))
+        })
+      })
+
+      // Sesli ve sessiz harflerin 2'li kombinasyonları
+      const vowels = ['A', 'E', 'İ', 'O', 'U', 'Ü', 'Ö', 'I'].filter((v) => allowedSet.has(v))
+      const consonants = learned.map((l) => l.upper).filter((c) => !vowels.includes(c))
+      vowels.forEach((v) => {
+        consonants.forEach((c) => {
+          pool.add(v + c)
+          pool.add(c + v)
+        })
+      })
+
+      const cleanList = [...pool].filter((s) => {
+        if (currentDish.targetParts.includes(s)) return false
+        return [...s].every((ch) => allowedSet.has(ch))
+      })
+
+      distractors = shuffleArray(cleanList).slice(0, 3)
+
+      // Eğer 3'ten azsa, öğrenilmiş harflerden tamamla
+      if (distractors.length < 3) {
+        learned.forEach((l) => {
+          if (
+            distractors.length < 3 &&
+            !currentDish.targetParts.includes(l.upper) &&
+            !distractors.includes(l.upper)
+          ) {
+            distractors.push(l.upper)
+          }
+        })
+      }
+    } else {
+      distractors = shuffleArray(
+        DISTRACTOR_SYLLABLES.filter((d) => !currentDish.targetParts.includes(d))
+      ).slice(0, 3)
+    }
 
     const distractorJars: JarItem[] = distractors.map((d, idx) => {
       const pal = JAR_PALETTE[(targetJars.length + idx) % JAR_PALETTE.length]
@@ -254,7 +308,7 @@ export function SyllableKitchenGame({
     })
 
     return shuffleArray([...targetJars, ...distractorJars])
-  }, [currentDish])
+  }, [currentDish, letter])
 
   // Parçacık üretme yardımcı fonksiyonu
   const spawnParticles = useCallback(
@@ -660,51 +714,47 @@ export function SyllableKitchenGame({
         </div>
       </div>
 
-      {/* SEVİYE SEÇİCİ SEKMELER (Seviye 1 Kolay, Seviye 2 Orta, Seviye 3 İleri) */}
-      <div className="kitchen-level-tabs">
-        {letter && (
+      {/* SEVİYE SEÇİCİ SEKMELER */}
+      {letter ? (
+        <div className="kitchen-level-tabs">
+          <div className="kitchen-lvl-btn active">
+            🔤 "{letter.upper}" Harfi Menüsü ({dishIdx + 1}/{activeDishes.length})
+          </div>
+        </div>
+      ) : (
+        <div className="kitchen-level-tabs">
           <button
             type="button"
-            className={`kitchen-lvl-btn ${selectedLevel === 'letter' ? 'active' : ''}`}
+            className={`kitchen-lvl-btn ${selectedLevel === 1 ? 'active' : ''}`}
             onClick={() => {
               playSoundEffect('click')
-              setSelectedLevel('letter')
+              setSelectedLevel(1)
             }}
           >
-            🔤 "{letter.upper}" Harfi Menüsü
+            🟢 Seviye 1 (Kolay • 1. Grup)
           </button>
-        )}
-        <button
-          type="button"
-          className={`kitchen-lvl-btn ${selectedLevel === 1 ? 'active' : ''}`}
-          onClick={() => {
-            playSoundEffect('click')
-            setSelectedLevel(1)
-          }}
-        >
-          🟢 Seviye 1 (Kolay • 1. Grup)
-        </button>
-        <button
-          type="button"
-          className={`kitchen-lvl-btn ${selectedLevel === 2 ? 'active' : ''}`}
-          onClick={() => {
-            playSoundEffect('click')
-            setSelectedLevel(2)
-          }}
-        >
-          🟡 Seviye 2 (Orta • 2 Hece)
-        </button>
-        <button
-          type="button"
-          className={`kitchen-lvl-btn ${selectedLevel === 3 ? 'active' : ''}`}
-          onClick={() => {
-            playSoundEffect('click')
-            setSelectedLevel(3)
-          }}
-        >
-          🔴 Seviye 3 (İleri • 3+ Hece)
-        </button>
-      </div>
+          <button
+            type="button"
+            className={`kitchen-lvl-btn ${selectedLevel === 2 ? 'active' : ''}`}
+            onClick={() => {
+              playSoundEffect('click')
+              setSelectedLevel(2)
+            }}
+          >
+            🟡 Seviye 2 (Orta • 2 Hece)
+          </button>
+          <button
+            type="button"
+            className={`kitchen-lvl-btn ${selectedLevel === 3 ? 'active' : ''}`}
+            onClick={() => {
+              playSoundEffect('click')
+              setSelectedLevel(3)
+            }}
+          >
+            🔴 Seviye 3 (İleri • 3+ Hece)
+          </button>
+        </div>
+      )}
 
       {/* AHŞAP SİPARİŞ PANOSU (TARİF KARTI) */}
       <div className="wooden-order-board">
