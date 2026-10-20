@@ -469,7 +469,9 @@ export default function App() {
             setActiveTab('map')
           }}
         >
-          <div className="brand-logo">🌈</div>
+          <div className="brand-logo">
+            <img src="/pwa-icon.svg" alt="Neşeli Harfler" className="brand-logo-img" />
+          </div>
           <div>
             <h1 className="brand-title">Eylül Mina Neşeli Harfler</h1>
             <p className="brand-subtitle">6 Yaş Okuma-Yazma & Ses Macerası</p>

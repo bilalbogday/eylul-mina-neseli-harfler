@@ -1,7 +1,198 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#896ee9"/><stop offset="1" stop-color="#6047c2"/></linearGradient></defs>
-  <rect width="512" height="512" rx="128" fill="url(#g)"/>
-  <path d="M111 152c53-22 103-18 145 13v210c-42-31-92-35-145-13V152Zm290 0c-53-22-103-18-145 13v210c42-31 92-35 145-13V152Z" fill="#fff" stroke="#fff" stroke-linejoin="round" stroke-width="17"/>
-  <path d="M256 165v210" fill="none" stroke="#d8ceff" stroke-linecap="round" stroke-width="15"/>
-  <path d="m377 96 10 24 25 10-25 10-10 25-10-25-25-10 25-10 10-24Z" fill="#ffd66e"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Arka Plan Gradyanı: Canlı Prenses Pembesi, Şeftali ve Sihirli Mor -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff2e93" />
+      <stop offset="40%" stop-color="#ff5277" />
+      <stop offset="75%" stop-color="#c026d3" />
+      <stop offset="100%" stop-color="#7c3aed" />
+    </linearGradient>
+
+    <!-- Saç Gradyanı: Sıcak Parlak Çikolata / Karamel Kahve -->
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b45309" />
+      <stop offset="50%" stop-color="#854d0e" />
+      <stop offset="100%" stop-color="#582a06" />
+    </linearGradient>
+
+    <!-- Taç Altın Gradyanı -->
+    <linearGradient id="goldCrown" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb" />
+      <stop offset="30%" stop-color="#fde047" />
+      <stop offset="70%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#a16207" />
+    </linearGradient>
+
+    <!-- Harf A Gradyanı (Canlı Şeker Sarısı / Turuncu) -->
+    <linearGradient id="letterAGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+
+    <!-- Harf B Gradyanı (Canlı Parlak Turkuaz / Mavi) -->
+    <linearGradient id="letterBGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9" />
+      <stop offset="50%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+
+    <!-- Fiyonk Pembe Gradyanı -->
+    <linearGradient id="bowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e" />
+      <stop offset="50%" stop-color="#e11d48" />
+      <stop offset="100%" stop-color="#9f1239" />
+    </linearGradient>
+
+    <!-- Yumuşak Gölge Filtresi -->
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#3b0764" flood-opacity="0.38" />
+    </filter>
+  </defs>
+
+  <!-- 1. ANA KÖŞELİ KARE (SQUIRCLE ARKA PLAN) -->
+  <rect width="512" height="512" rx="118" fill="url(#bgGrad)" />
+  <!-- Işıltılı İç Çerçeve -->
+  <rect width="500" height="500" x="6" y="6" rx="112" fill="none" stroke="rgba(255, 255, 255, 0.4)" stroke-width="3.5" />
+
+  <!-- 2. ARKA PLAN SEVİMLİ GÖKKUŞAĞI -->
+  <g opacity="0.35">
+    <circle cx="110" cy="90" r="130" fill="none" stroke="#f43f5e" stroke-width="12" />
+    <circle cx="110" cy="90" r="118" fill="none" stroke="#fbbf24" stroke-width="12" />
+    <circle cx="110" cy="90" r="106" fill="none" stroke="#38bdf8" stroke-width="12" />
+    <circle cx="110" cy="90" r="94" fill="none" stroke="#a855f7" stroke-width="12" />
+  </g>
+
+  <!-- 3. PARILDAYAN SİHİRLİ YILDIZLAR VE IŞILTI -->
+  <!-- Sol Üst Yıldız -->
+  <path d="M 75 145 Q 95 145 95 125 Q 95 145 115 145 Q 95 145 95 165 Q 95 145 75 145 Z" fill="#fef08a" />
+  <circle cx="95" cy="145" r="3" fill="#ffffff" />
+  <!-- Sağ Üst Büyük Yıldız -->
+  <path d="M 405 85 Q 425 85 425 65 Q 425 85 445 85 Q 425 85 425 105 Q 425 85 405 85 Z" fill="#fef08a" />
+  <circle cx="425" cy="85" r="4" fill="#ffffff" />
+  <!-- Küçük Işıltı Noktaları -->
+  <circle cx="410" cy="140" r="6" fill="#fde047" opacity="0.85" />
+  <circle cx="370" cy="65" r="4" fill="#ffffff" opacity="0.9" />
+  <circle cx="145" cy="80" r="5" fill="#fde047" opacity="0.85" />
+  <circle cx="70" cy="220" r="4.5" fill="#ffffff" opacity="0.75" />
+  <circle cx="445" cy="235" r="5" fill="#ffffff" opacity="0.8" />
+
+  <!-- 4. SEVİMLİ PRENSES KIZ KARAKTERİ (EYLÜL MİNA) -->
+  <g filter="url(#softShadow)">
+    <!-- Arka İkili Saç Topuzları / Örgüleri -->
+    <!-- Sol Saç Topuzu -->
+    <ellipse cx="165" cy="270" rx="42" ry="48" fill="url(#hairGrad)" transform="rotate(-15 165 270)" />
+    <!-- Sağ Saç Topuzu -->
+    <ellipse cx="347" cy="270" rx="42" ry="48" fill="url(#hairGrad)" transform="rotate(15 347 270)" />
+
+    <!-- Saç Fiyonkları (Sol ve Sağ Kırmızı/Pembe Fiyonklar) -->
+    <!-- Sol Fiyonk -->
+    <g transform="translate(155, 245) rotate(-20)">
+      <ellipse cx="-15" cy="0" rx="14" ry="10" fill="url(#bowGrad)" />
+      <ellipse cx="15" cy="0" rx="14" ry="10" fill="url(#bowGrad)" />
+      <circle cx="0" cy="0" r="7" fill="#facc15" />
+    </g>
+    <!-- Sağ Fiyonk -->
+    <g transform="translate(357, 245) rotate(20)">
+      <ellipse cx="-15" cy="0" rx="14" ry="10" fill="url(#bowGrad)" />
+      <ellipse cx="15" cy="0" rx="14" ry="10" fill="url(#bowGrad)" />
+      <circle cx="0" cy="0" r="7" fill="#facc15" />
+    </g>
+
+    <!-- Boyun ve Kıyafet / Elbise Yakası -->
+    <ellipse cx="256" cy="425" rx="70" ry="45" fill="#ffffff" />
+    <!-- Pembe Prenses Elbisesi -->
+    <path d="M 186 420 Q 256 445 326 420 L 340 500 L 172 500 Z" fill="#f43f5e" />
+    <path d="M 216 425 Q 256 445 296 425 L 302 465 Q 256 480 210 465 Z" fill="#ffe4e6" />
+    <!-- İnci Kolye -->
+    <circle cx="238" cy="428" r="5" fill="#ffffff" />
+    <circle cx="256" cy="432" r="6" fill="#fef08a" />
+    <circle cx="274" cy="428" r="5" fill="#ffffff" />
+
+    <!-- YÜZ (Ten Rengi & Sevimli Şekil) -->
+    <ellipse cx="256" cy="305" rx="88" ry="84" fill="#fed7aa" />
+    <ellipse cx="256" cy="305" rx="86" ry="82" fill="#ffedd5" />
+
+    <!-- Sevimli Kulaklar -->
+    <circle cx="168" cy="312" r="16" fill="#fed7aa" />
+    <circle cx="168" cy="312" r="9" fill="#fbcfe8" />
+    <circle cx="344" cy="312" r="16" fill="#fed7aa" />
+    <circle cx="344" cy="312" r="9" fill="#fbcfe8" />
+
+    <!-- Saçlar (Ön Kâküller ve Yan Bukleler) -->
+    <path d="M 170 280 C 170 200, 342 200, 342 280 C 330 250, 305 240, 275 255 C 256 240, 230 242, 215 258 C 195 242, 178 255, 170 280 Z" fill="url(#hairGrad)" />
+
+    <!-- PRENSES ALTIN TACI (CROWN) -->
+    <g transform="translate(256, 192)">
+      <!-- Taç Gövdesi -->
+      <path d="M -46 22 L -48 -8 L -20 8 L 0 -18 L 20 8 L 48 -8 L 46 22 Z" fill="url(#goldCrown)" stroke="#ca8a04" stroke-width="2" />
+      <!-- Taç Üstündeki Renkli Mücevher Taşları -->
+      <circle cx="-48" cy="-8" r="5" fill="#f43f5e" />
+      <circle cx="0" cy="-18" r="6" fill="#38bdf8" />
+      <circle cx="48" cy="-8" r="5" fill="#10b981" />
+      <!-- Taç Ortasında Parlayan Kalp -->
+      <path d="M -6 12 A 4 4 0 0 1 0 10 A 4 4 0 0 1 6 12 Q 6 18 0 21 Q -6 18 -6 12 Z" fill="#f43f5e" />
+    </g>
+
+    <!-- SEVİMLİ BÜYÜK GÖZLER (ANIME / SPARKLE STYLE) -->
+    <!-- Sol Göz -->
+    <ellipse cx="222" cy="305" rx="15" ry="20" fill="#0f172a" />
+    <!-- İris ve Işıltı -->
+    <ellipse cx="222" cy="308" rx="12" ry="14" fill="#4338ca" />
+    <circle cx="217" cy="298" r="6" fill="#ffffff" />
+    <circle cx="227" cy="313" r="3" fill="#ffffff" />
+    <!-- Sol Kirpikler -->
+    <path d="M 207 296 Q 222 284 237 296" fill="none" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round" />
+    <path d="M 235 293 L 241 289" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- Sağ Göz -->
+    <ellipse cx="290" cy="305" rx="15" ry="20" fill="#0f172a" />
+    <!-- İris ve Işıltı -->
+    <ellipse cx="290" cy="308" rx="12" ry="14" fill="#4338ca" />
+    <circle cx="285" cy="298" r="6" fill="#ffffff" />
+    <circle cx="295" cy="313" r="3" fill="#ffffff" />
+    <!-- Sağ Kirpikler -->
+    <path d="M 275 296 Q 290 284 305 296" fill="none" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round" />
+    <path d="M 303 293 L 309 289" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- Sevimli Kaşlar -->
+    <path d="M 210 282 Q 224 276 235 281" fill="none" stroke="#713f12" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M 277 281 Q 288 276 302 282" fill="none" stroke="#713f12" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- Pembe Yanak Allıkları (Blush) -->
+    <ellipse cx="205" cy="326" rx="15" ry="9" fill="#fb7185" opacity="0.75" />
+    <ellipse cx="307" cy="326" rx="15" ry="9" fill="#fb7185" opacity="0.75" />
+
+    <!-- Sevimli Küçük Burun -->
+    <path d="M 254 316 Q 256 319 258 316" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- Kocaman Neşeli Gülümseyen Ağız -->
+    <path d="M 240 334 Q 256 358 272 334 Z" fill="#dc2626" />
+    <path d="M 246 343 Q 256 352 266 343" fill="#fda4af" />
+  </g>
+
+  <!-- 5. UÇUŞAN 3D ŞEKER HARFLER (A VE B) -->
+  <!-- Sağdaki Parlayan 3D Şeker "A" Harfi -->
+  <g transform="translate(390, 290) rotate(14)" filter="url(#softShadow)">
+    <circle cx="0" cy="0" r="44" fill="url(#letterAGrad)" stroke="#ffffff" stroke-width="4" />
+    <!-- 3D Parlama Efekti -->
+    <ellipse cx="-12" cy="-14" rx="20" ry="10" fill="#ffffff" opacity="0.45" transform="rotate(-25 -12 -14)" />
+    <!-- "A" Harfi Yazısı -->
+    <text x="0" y="15" font-family="Fredoka, Comic Neue, sans-serif" font-weight="900" font-size="44" fill="#ffffff" text-anchor="middle">A</text>
+    <!-- Harf Üzerindeki Küçük Yıldız -->
+    <circle cx="24" cy="-24" r="5" fill="#fef08a" />
+  </g>
+
+  <!-- Soldaki Parlayan 3D Şeker "B" Harfi -->
+  <g transform="translate(105, 310) rotate(-14)" filter="url(#softShadow)">
+    <circle cx="0" cy="0" r="38" fill="url(#letterBGrad)" stroke="#ffffff" stroke-width="3.5" />
+    <!-- 3D Parlama Efekti -->
+    <ellipse cx="-10" cy="-12" rx="16" ry="8" fill="#ffffff" opacity="0.45" transform="rotate(-25 -10 -12)" />
+    <!-- "B" Harfi Yazısı -->
+    <text x="0" y="13" font-family="Fredoka, Comic Neue, sans-serif" font-weight="900" font-size="38" fill="#ffffff" text-anchor="middle">B</text>
+  </g>
+
+  <!-- 6. ALT KISIMDA PARLAYAN MİNİK KALPLER -->
+  <path d="M 335 390 A 6 6 0 0 1 343 388 A 6 6 0 0 1 351 390 Q 351 398 343 402 Q 335 398 335 390 Z" fill="#fde047" />
+  <path d="M 160 395 A 5 5 0 0 1 167 393 A 5 5 0 0 1 174 395 Q 174 402 167 405 Q 160 402 160 395 Z" fill="#f43f5e" />
 </svg>
