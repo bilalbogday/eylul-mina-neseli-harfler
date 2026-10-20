@@ -5245,3 +5245,702 @@
 
 
 
+
+/* ==========================================================================
+   FIRTINA VİNCİ: DERİN DENİZ HAZİNE VE KELİME AVI (OCEAN WINCH GAME)
+   ========================================================================== */
+
+.ocean-winch-container {
+  background: linear-gradient(180deg, #0284c7 0%, #0369a1 40%, #082f49 100%);
+  border-radius: 24px;
+  padding: 18px;
+  border: 3px solid #38bdf8;
+  box-shadow: 0 15px 40px rgba(2, 44, 67, 0.5);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  user-select: none;
+}
+
+.ocean-winch-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ocean-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ship-icon-badge {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  border: 2.5px solid #bae6fd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+}
+
+.ocean-main-title {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ocean-completed-tag {
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.ocean-subtitle {
+  margin: 3px 0 0 0;
+  font-size: 0.88rem;
+  color: #e0f2fe;
+  font-weight: 600;
+}
+
+.ocean-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ocean-gold-pill {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1.5px solid #facc15;
+  border-radius: 20px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gold-text {
+  color: #facc15;
+  font-weight: 900;
+  font-size: 0.95rem;
+}
+
+.btn-ocean-shop {
+  background: linear-gradient(135deg, #eab308, #ca8a04);
+  border: none;
+  border-radius: 20px;
+  padding: 7px 16px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(202, 138, 4, 0.4);
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+.btn-ocean-shop:hover {
+  transform: translateY(-1px);
+}
+
+.mode-toggle-pill {
+  background: rgba(15, 23, 42, 0.55);
+  border-radius: 22px;
+  padding: 3px;
+  display: flex;
+  gap: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.mode-btn {
+  border: none;
+  background: transparent;
+  color: #bae6fd;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mode-btn.active {
+  background: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* KAPTAN KONUŞMA BALONU VE METRİKLER */
+.ocean-status-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.captain-speech-card {
+  flex: 1;
+  min-width: 270px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 16px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.captain-avatar {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.captain-text-content {
+  flex: 1;
+}
+
+.captain-speaker-name {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #0369a1;
+  letter-spacing: 0.5px;
+}
+
+.captain-speech-text {
+  margin: 2px 0 0 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.btn-listen-captain {
+  background: #f0f9ff;
+  border: 1.5px solid #bae6fd;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #0284c7;
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+.btn-listen-captain:hover {
+  transform: scale(1.08);
+  background: #e0f2fe;
+}
+
+.ocean-quest-metrics {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.metric-box {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metric-label {
+  font-size: 0.78rem;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.metric-value {
+  font-size: 1.05rem;
+  color: #facc15;
+  font-weight: 900;
+}
+
+.pearls-stars-row {
+  display: flex;
+  gap: 5px;
+}
+
+.pearl-status-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px dashed #facc15;
+  color: #94a3b8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  font-size: 0.85rem;
+}
+
+.pearl-status-dot.collected {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: #854d0e;
+  border: 1.5px solid #ca8a04;
+  box-shadow: 0 0 10px rgba(250, 204, 21, 0.7);
+  animation: popScale 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.timer-box {
+  color: #facc15;
+}
+
+.timer-box.timer-danger {
+  border-color: #ef4444;
+  color: #ef4444;
+  animation: pulseDanger 1s infinite;
+}
+
+.relaxed-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.relaxed-text {
+  font-size: 0.82rem;
+  color: #4ade80;
+  font-weight: 800;
+}
+
+/* OYUN CANVAS SAHNESİ */
+.ocean-canvas-stage {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 3px solid #38bdf8;
+  box-shadow: 0 12px 35px rgba(2, 44, 67, 0.5);
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.ocean-canvas-element {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #0284c7;
+}
+
+.ocean-canvas-watermark {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(15, 23, 42, 0.6);
+  color: #e0f2fe;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+/* DİNAMİT ACİL DURUM BUTONU */
+.ocean-dynamite-action-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+  border: 2px solid #fca5a5;
+  border-radius: 18px;
+  padding: 10px 18px;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.6);
+  animation: bounce 0.8s infinite alternate;
+  z-index: 10;
+}
+
+.bomb-wiggle {
+  animation: wiggle 0.4s infinite alternate;
+}
+
+/* ALT KONTROL PANELİ */
+.ocean-bottom-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-shoot-hook-giant {
+  flex: 1;
+  min-width: 240px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border: 3px solid #fef08a;
+  border-radius: 18px;
+  padding: 14px 24px;
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(217, 119, 6, 0.5);
+  transition: transform 0.1s;
+}
+
+.btn-shoot-hook-giant:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #fbbf24, #d97706);
+}
+
+.btn-shoot-hook-giant:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn-shoot-hook-giant:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+}
+
+.controls-right-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-ocean-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 14px;
+  padding: 10px 16px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-ocean-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.btn-ocean-exit {
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  border-radius: 14px;
+  padding: 10px 18px;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  transition: transform 0.15s;
+}
+
+.btn-ocean-exit:hover {
+  transform: translateY(-1px);
+}
+
+/* TERSANE DÜKKANI MODALİ */
+.ocean-shop-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 47, 73, 0.82);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.ocean-shop-card {
+  background: #0f172a;
+  border: 2px solid #38bdf8;
+  border-radius: 24px;
+  max-width: 540px;
+  width: 100%;
+  padding: 22px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: modalScaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+}
+
+.shop-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shop-title h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #f8fafc;
+}
+
+.shop-wallet {
+  background: rgba(250, 204, 21, 0.15);
+  border: 1.5px solid #facc15;
+  border-radius: 16px;
+  padding: 5px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 900;
+  color: #facc15;
+  font-size: 0.95rem;
+}
+
+.shop-desc {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.shop-items-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shop-item-card {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.shop-item-icon {
+  font-size: 1.9rem;
+  line-height: 1;
+}
+
+.shop-item-details {
+  flex: 1;
+}
+
+.shop-item-details h4 {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #f1f5f9;
+}
+
+.shop-item-details p {
+  margin: 3px 0 0 0;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.item-level-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 5px;
+  font-size: 0.76rem;
+  color: #cbd5e1;
+  font-weight: 700;
+}
+
+.btn-buy {
+  background: linear-gradient(135deg, #eab308, #ca8a04);
+  border: none;
+  border-radius: 14px;
+  padding: 8px 16px;
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(202, 138, 4, 0.4);
+  transition: transform 0.1s;
+}
+
+.btn-buy:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn-buy:disabled {
+  background: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.shop-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.1);
+  padding-top: 12px;
+}
+
+.btn-close-shop {
+  background: #334155;
+  border: none;
+  border-radius: 12px;
+  padding: 9px 20px;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.btn-close-shop:hover {
+  background: #475569;
+}
+
+/* OYUN BİTTİ (KAPTAN MODU) OVERLAY */
+.ocean-gameover-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 47, 73, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.ocean-gameover-card {
+  background: #0f172a;
+  border: 2px solid #facc15;
+  border-radius: 24px;
+  max-width: 420px;
+  width: 100%;
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  animation: modalScaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.gameover-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.ocean-gameover-card h3 {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #facc15;
+}
+
+.ocean-gameover-card p {
+  margin: 0;
+  font-size: 0.98rem;
+  color: #cbd5e1;
+}
+
+.gameover-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.btn-play-again {
+  flex: 1;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
+  border: none;
+  border-radius: 14px;
+  padding: 12px;
+  color: #ffffff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.btn-finish-lesson {
+  flex: 1;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  border-radius: 14px;
+  padding: 12px;
+  color: #ffffff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* PEDAGOJİK BİLGİ DİPNOTU */
+.ocean-pedagogy-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #bae6fd;
+  opacity: 0.9;
+  line-height: 1.4;
+  padding: 4px 6px;
+}
+
+@media (max-width: 640px) {
+  .ocean-winch-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ocean-header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .ocean-quest-metrics {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .btn-shoot-hook-giant {
+    width: 100%;
+  }
+  .controls-right-actions {
+    width: 100%;
+  }
+  .btn-ocean-secondary,
+  .btn-ocean-exit {
+    flex: 1;
+    justify-content: center;
+  }
+}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
-import { Volume2, Mic, Rocket, Sparkles, Star, Award } from 'lucide-react'
+import { Volume2, Mic, Rocket, Sparkles, Star, Award, Compass } from 'lucide-react'
 import type { LetterCurriculum } from './curriculum'
 import { playSoundEffect, speakTurkish } from './sound'
 
@@ -15,102 +15,162 @@ interface RocketWordMission {
   id: string
   word: string
   emoji: string
-  missingIndex: number // Eksik olan harfin indeksi (genellikle 0 = ilk harf)
+  missionType: 'first' | 'last'
+  missingIndex: number // 0 = ilk harf, word.length - 1 = son harf
   targetChar: string
   distractors: string[]
-  familyTag?: string // örn: "Ailemiz"
+  familyTag?: string
 }
 
-// Kişiselleştirilmiş Aile Kelimeleri ve Müfredat Kelimeleri Havuzu
+// Kişiselleştirilmiş Aile Kelimeleri ve Müfredat Kelimeleri (Hem İlk Hem Son Harf Görevleri)
 const ROCKET_MISSIONS: RocketWordMission[] = [
-  // Aile ve Kardeş Kelimeleri
+  // 1. Aile İsimleri - İlk Harf Görevleri
   {
-    id: 'm_mina',
+    id: 'm_mina_first',
     word: 'MİNA',
     emoji: '👧',
+    missionType: 'first',
     missingIndex: 0,
     targetChar: 'M',
     distractors: ['A', 'N', 'L'],
     familyTag: 'Prenses Mina',
   },
   {
-    id: 'm_barlas',
+    id: 'm_barlas_first',
     word: 'BARLAS',
     emoji: '👶',
+    missionType: 'first',
     missingIndex: 0,
     targetChar: 'B',
     distractors: ['M', 'K', 'T'],
     familyTag: 'Cesur Kardeş',
   },
   {
-    id: 'm_emine',
+    id: 'm_emine_first',
     word: 'EMİNE',
     emoji: '👩',
+    missionType: 'first',
     missingIndex: 0,
     targetChar: 'E',
     distractors: ['A', 'İ', 'O'],
     familyTag: 'Canım Anne',
   },
   {
-    id: 'm_bilal',
+    id: 'm_bilal_first',
     word: 'BİLAL',
     emoji: '👨',
+    missionType: 'first',
     missingIndex: 0,
     targetChar: 'B',
     distractors: ['L', 'T', 'N'],
     familyTag: 'Sevgili Baba',
   },
-  // Müfredat ve Nesne Kelimeleri
+
+  // 2. Aile İsimleri - Son Harf Görevleri
   {
-    id: 'm_roket',
+    id: 'm_mina_last',
+    word: 'MİNA',
+    emoji: '👧',
+    missionType: 'last',
+    missingIndex: 3,
+    targetChar: 'A',
+    distractors: ['E', 'İ', 'O'],
+    familyTag: 'Prenses Mina (Son Ses)',
+  },
+  {
+    id: 'm_barlas_last',
+    word: 'BARLAS',
+    emoji: '👶',
+    missionType: 'last',
+    missingIndex: 5,
+    targetChar: 'S',
+    distractors: ['L', 'M', 'N'],
+    familyTag: 'Cesur Kardeş (Son Ses)',
+  },
+
+  // 3. Müfredat Kelimeleri - İlk ve Son Harfler
+  {
+    id: 'm_roket_first',
     word: 'ROKET',
     emoji: '🚀',
+    missionType: 'first',
     missingIndex: 0,
     targetChar: 'R',
     distractors: ['K', 'T', 'L'],
   },
   {
-    id: 'm_elma',
+    id: 'm_roket_last',
+    word: 'ROKET',
+    emoji: '🚀',
+    missionType: 'last',
+    missingIndex: 4,
+    targetChar: 'T',
+    distractors: ['K', 'P', 'N'],
+  },
+  {
+    id: 'm_elma_first',
     word: 'ELMA',
     emoji: '🍎',
+    missionType: 'first',
     missingIndex: 0,
     targetChar: 'E',
     distractors: ['A', 'İ', 'U'],
   },
   {
-    id: 'm_lale',
+    id: 'm_elma_last',
+    word: 'ELMA',
+    emoji: '🍎',
+    missionType: 'last',
+    missingIndex: 3,
+    targetChar: 'A',
+    distractors: ['E', 'İ', 'U'],
+  },
+  {
+    id: 'm_lale_first',
     word: 'LALE',
     emoji: '🌷',
+    missionType: 'first',
     missingIndex: 0,
     targetChar: 'L',
     distractors: ['N', 'T', 'E'],
   },
   {
-    id: 'm_nar',
+    id: 'm_lale_last',
+    word: 'LALE',
+    emoji: '🌷',
+    missionType: 'last',
+    missingIndex: 3,
+    targetChar: 'E',
+    distractors: ['A', 'İ', 'O'],
+  },
+  {
+    id: 'm_nar_first',
     word: 'NAR',
     emoji: '🍓',
+    missionType: 'first',
     missingIndex: 0,
     targetChar: 'N',
     distractors: ['M', 'L', 'R'],
   },
   {
-    id: 'm_at',
-    word: 'AT',
-    emoji: '🐴',
-    missingIndex: 0,
-    targetChar: 'A',
-    distractors: ['E', 'İ', 'O'],
+    id: 'm_nar_last',
+    word: 'NAR',
+    emoji: '🍓',
+    missionType: 'last',
+    missingIndex: 2,
+    targetChar: 'R',
+    distractors: ['N', 'T', 'S'],
   },
 ]
 
-// Web Audio API ile Gerçekçi Roket Motoru Gürültüsü Sentezleyici (White Noise + Filter Sweep)
+// Web Audio API ile Gerçekçi Roket Motoru Gürültüsü Sentezleyici
 function playRocketEngineRoar() {
   try {
     const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
     if (!AudioContextClass) return
     const ctx = new AudioContextClass()
     const now = ctx.currentTime
-    const bufferSize = ctx.sampleRate * 2.5 // 2.5 saniyelik ses
+    const bufferSize = ctx.sampleRate * 2.5
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate)
     const data = buffer.getChannelData(0)
 
@@ -151,7 +211,6 @@ function playCargoLockSound() {
     const ctx = new AudioContextClass()
     const now = ctx.currentTime
 
-    // İki keskin tık sesi (Mekanik kilit)
     ;[0, 0.08].forEach((offset) => {
       const osc = ctx.createOscillator()
       const gain = ctx.createGain()
@@ -183,7 +242,7 @@ export function SpaceRocketGame({
   const [missionIdx, setMissionIdx] = useState<number>(0)
   const currentMission = ROCKET_MISSIONS[missionIdx] || ROCKET_MISSIONS[0]
 
-  // Oyun Aşaması: 'loading' (Aşama 1: Kargo Yükleme) | 'launching' (Aşama 2: Sesli Fırlatma) | 'blastoff' (Ateşleme & Uçuş)
+  // Oyun Aşaması: 'loading' | 'launching' | 'blastoff'
   const [phase, setPhase] = useState<'loading' | 'launching' | 'blastoff'>('loading')
 
   // Seçilen / yüklenen harf
@@ -224,21 +283,26 @@ export function SpaceRocketGame({
     setIsLaunchingViaButton(false)
     setShowVictoryBanner(false)
 
-    const initialSpeech = `Astronot ${childName}, rokete "${currentMission.word}" kargosu yüklüyoruz! İlk eksik harfi bulabilir misin?`
-    setAstronautSpeech(initialSpeech)
+    const missionPrompt =
+      currentMission.missionType === 'first'
+        ? `Astronot ${childName}, rokete "${currentMission.word}" kargosu yüklüyoruz! İLK HARFİ (baş sesi) bulabilir misin?`
+        : `Astronot ${childName}, "${currentMission.word}" kelimesinin SON HARFİNİ (son sesi) bulup rokete yükleyelim!`
+    setAstronautSpeech(missionPrompt)
   }, [currentMission, childName])
 
   useEffect(() => {
     resetMission()
     const timer = setTimeout(() => {
-      speakTurkish(
-        `Astronot ${childName}! Roketin gövdesindeki kargoyu tamamlamak için doğru harf kapsülünü seç!`
-      )
+      const speechText =
+        currentMission.missionType === 'first'
+          ? `Astronot ${childName}! "${currentMission.word}" kelimesinin ilk harfini seç ve kargoyu tamamla!`
+          : `Astronot ${childName}! "${currentMission.word}" kelimesinin son harfini seç ve kargoyu tamamla!`
+      speakTurkish(speechText)
     }, 450)
     return () => clearTimeout(timer)
-  }, [resetMission, childName])
+  }, [resetMission, childName, currentMission])
 
-  // Aşama 1: Kargo Kapsülüne Tıklama veya Sürükleme
+  // Aşama 1: Kargo Kapsülüne Tıklama
   const handleSelectCapsule = (char: string) => {
     if (phase !== 'loading') return
 
@@ -253,7 +317,7 @@ export function SpaceRocketGame({
       setAstronautSpeech(readySpeech)
       speakTurkish(readySpeech)
 
-      // Mikrofon dinlemeyi başlat (İzin verilirse)
+      // Mikrofon dinlemeyi başlat
       startMicListening()
     } else {
       // Yanlış Harf (Manyetik Kalkan Bzzz Sesi)
@@ -261,14 +325,21 @@ export function SpaceRocketGame({
       setBouncingChar(char)
       setTimeout(() => setBouncingChar(null), 700)
 
-      const firstSoundHint = currentMission.word.slice(0, 1).toLocaleUpperCase('tr-TR')
-      const hintSpeech = `Hmm, bu harfle başlamıyor. Kelimenin ilk sesini dinleyelim: ${firstSoundHint}... ${currentMission.word}!`
-      setAstronautSpeech(hintSpeech)
-      speakTurkish(hintSpeech)
+      if (currentMission.missionType === 'first') {
+        const firstSound = currentMission.word.slice(0, 1).toLocaleUpperCase('tr-TR')
+        const hintSpeech = `Hmm, bu harfle başlamıyor. İlk sesi dinleyelim: ${firstSound}... ${currentMission.word}!`
+        setAstronautSpeech(hintSpeech)
+        speakTurkish(hintSpeech)
+      } else {
+        const lastSound = currentMission.word.slice(-1).toLocaleUpperCase('tr-TR')
+        const hintSpeech = `Hmm, bu harfle bitmiyor. Son sesi dinleyelim: ${currentMission.word}... ${lastSound}!`
+        setAstronautSpeech(hintSpeech)
+        speakTurkish(hintSpeech)
+      }
     }
   }
 
-  // Mikrofon Ses Seviyesi Ölçümü (Web Audio API AnalyserNode)
+  // Mikrofon Ses Seviyesi Ölçümü
   const startMicListening = async () => {
     if (!navigator.mediaDevices?.getUserMedia) return
     try {
@@ -291,18 +362,15 @@ export function SpaceRocketGame({
         if (!analyserRef.current) return
         analyserRef.current.getByteFrequencyData(dataArray)
 
-        // Ortalama ses genliği hesapla
         let sum = 0
         for (let i = 0; i < bufferLength; i++) {
           sum += dataArray[i]
         }
         const average = sum / bufferLength
-        // 0..100 arasına ölçekle (hassasiyet)
         const powerLevel = Math.min(100, Math.round((average / 55) * 100))
 
         setVoicePower((prev) => Math.max(prev * 0.9, powerLevel))
 
-        // Ses gücü %80'i geçerse ateşlemeyi tetikle!
         if (powerLevel >= 80) {
           triggerBlastoff()
           return
@@ -313,12 +381,10 @@ export function SpaceRocketGame({
 
       micAnimRef.current = requestAnimationFrame(checkVolume)
     } catch {
-      // Mikrofon izni verilmezse veya hata olursa buton fail-safe devrede kalır
       setIsMicListening(false)
     }
   }
 
-  // Mikrofon akışını kapat
   const stopMicListening = () => {
     if (micAnimRef.current) {
       cancelAnimationFrame(micAnimRef.current)
@@ -331,14 +397,13 @@ export function SpaceRocketGame({
     setIsMicListening(false)
   }
 
-  // Aşama 2: Roket Fırlatma (Mikrofon veya Butonla Tetiklenir)
+  // Aşama 2: Roket Fırlatma
   const triggerBlastoff = () => {
     stopMicListening()
     setIsLaunchingViaButton(true)
     setPhase('blastoff')
     setVoicePower(100)
 
-    // Geri sayım ve ateşleme
     speakTurkish('3... 2... 1... Fırlat!')
     playRocketEngineRoar()
     playSoundEffect('fanfare')
@@ -351,7 +416,6 @@ export function SpaceRocketGame({
       speakTurkish(`Tebrikler Astronot ${childName}! Roket uzay yıldızlarına ulaştı!`)
     }, 1800)
 
-    // 4.2 saniye sonra bir sonraki göreve geç
     setTimeout(() => {
       const nextIdx = (missionIdx + 1) % ROCKET_MISSIONS.length
       setMissionIdx(nextIdx)
@@ -372,13 +436,21 @@ export function SpaceRocketGame({
           <div className="rocket-icon-pill">🚀</div>
           <div>
             <h2 className="rocket-main-title">Uzaylı Kargo Roketi</h2>
-            <p className="rocket-subtitle">İlk Sesi Bul, Sesinle Roketi Uzaya Fırlat!</p>
+            <p className="rocket-subtitle">
+              {currentMission.missionType === 'first' ? 'İlk Sesi Bul' : 'Son Sesi Bul'}, Sesinle Roketi Uzaya Fırlat!
+            </p>
           </div>
         </div>
 
-        <div className="rocket-stats-pill">
-          <Star size={18} fill="#facc15" color="#eab308" />
-          <span>Fırlatılan: {launchedCount} Roket</span>
+        <div className="rocket-header-tags">
+          <span className="mission-type-tag">
+            <Compass size={14} />
+            {currentMission.missionType === 'first' ? 'İlk Harfi Bul' : 'Son Harfi Bul'}
+          </span>
+          <div className="rocket-stats-pill">
+            <Star size={16} fill="#facc15" color="#eab308" />
+            <span>{launchedCount} Roket</span>
+          </div>
         </div>
       </div>
 
@@ -407,7 +479,6 @@ export function SpaceRocketGame({
 
       {/* UZAY ÜSSÜ VE ROKET FIRLATMA SAHNESİ */}
       <div className="space-launchpad-scene">
-        {/* Gezegenler (Satürn, Mars) ve Arka Plan Yıldızları */}
         <div className="space-planet saturn">🪐</div>
         <div className="space-planet mars">🔴</div>
 
@@ -430,12 +501,10 @@ export function SpaceRocketGame({
               </linearGradient>
             </defs>
 
-            {/* Kanatçıklar (Fins) */}
             <path d="M 38 230 L 10 280 L 40 270 Z" fill="url(#rocketFinGrad)" />
             <path d="M 122 230 L 150 280 L 120 270 Z" fill="url(#rocketFinGrad)" />
             <path d="M 72 245 L 80 285 L 88 245 Z" fill="#991b1b" />
 
-            {/* Roket Gövdesi */}
             <path
               d="M 80 20 C 45 60 40 180 40 260 L 120 260 C 120 180 115 60 80 20 Z"
               fill="url(#rocketBodyGrad)"
@@ -443,20 +512,16 @@ export function SpaceRocketGame({
               strokeWidth="2"
             />
 
-            {/* Kırmızı Burun Konisi */}
             <path d="M 80 20 C 62 55 52 85 50 100 L 110 100 C 108 85 98 55 80 20 Z" fill="url(#rocketFinGrad)" />
 
-            {/* Yuvarlak Astronot Penceresi */}
             <circle cx="80" cy="140" r="26" fill="#0284c7" stroke="#94a3b8" strokeWidth="4" />
             <circle cx="80" cy="140" r="20" fill="#38bdf8" />
-            {/* Penceredeki Yansıma */}
             <path d="M 68 128 Q 78 124 88 130" stroke="#ffffff" strokeWidth="2.5" fill="none" strokeLinecap="round" />
 
-            {/* Motor Çıkışı (Nozzle) */}
             <polygon points="58,260 102,260 108,280 52,280" fill="#334155" />
           </svg>
 
-          {/* Astronot Penceresindeki El Sallayan Karakter */}
+          {/* Astronot Penceresindeki Karakter */}
           <div className="rocket-porthole-character">
             <span>🐶👋</span>
           </div>
@@ -492,7 +557,7 @@ export function SpaceRocketGame({
             </div>
           </div>
 
-          {/* ATEŞLEME ALEV VE DUMAN PARÇACIKLARI */}
+          {/* ATEŞLEME ALEVLERİ */}
           {phase === 'blastoff' && (
             <div className="rocket-thruster-flames">
               <div className="flame-core" />
@@ -504,7 +569,6 @@ export function SpaceRocketGame({
           )}
         </div>
 
-        {/* FIRLATMA RAMPASI TABANI */}
         <div className="launchpad-base">
           <div className="launchpad-beam left" />
           <div className="launchpad-beam right" />
@@ -512,11 +576,11 @@ export function SpaceRocketGame({
         </div>
       </div>
 
-      {/* AŞAMA 1: UÇAN KARGO KAPSÜLLERİ (HARF SEÇİMİ) */}
+      {/* AŞAMA 1: UÇAN KARGO KAPSÜLLERİ */}
       {phase === 'loading' && (
         <div className="cargo-capsules-dock">
           <div className="capsules-instruction">
-            📦 Eksik olan ilk harf kapsülünü seçip rokete yükle:
+            📦 {currentMission.missionType === 'first' ? 'İlk eksik harfi' : 'Son eksik harfi'} seçip rokete yükle:
           </div>
           <div className="capsules-row">
             {capsules.map((char, idx) => {
@@ -566,7 +630,6 @@ export function SpaceRocketGame({
             </p>
           </div>
 
-          {/* BÜYÜK KIRMIZI FIRLAT BUTONU (FAIL-SAFE) */}
           <button
             type="button"
             className="big-blastoff-btn"

@@ -22,6 +22,7 @@ import {
   Music,
   Rocket,
   Ship,
+  Anchor,
 } from 'lucide-react'
 import {
   ISLAND_GROUPS,
@@ -32,6 +33,7 @@ import {
 import { LighthouseTracingGame } from './LighthouseTracingGame'
 import { XylophoneMusicGame } from './XylophoneMusicGame'
 import { SpaceRocketGame } from './SpaceRocketGame'
+import { OceanWinchGame } from './OceanWinchGame'
 import { LetterSoundGame } from './LetterSoundGame'
 import { SyllableKitchenGame } from './SyllableKitchenGame'
 import { LetterDetectiveGame } from './LetterDetectiveGame'
@@ -51,7 +53,7 @@ export interface ChildProfile {
   name: string
   avatar: string
   stars: number
-  // Her harf için tamamlanan aktiviteler: sound, trace, syllable, detective, xylophone, rocket, quiz, game
+  // Her harf için tamamlanan aktiviteler: sound, trace, syllable, detective, xylophone, rocket, winch, quiz, game
   letterProgress: Record<
     string,
     {
@@ -61,6 +63,7 @@ export interface ChildProfile {
       detective?: boolean
       xylophone?: boolean
       rocket?: boolean
+      winch?: boolean
       quiz?: boolean
       game?: boolean
     }
@@ -141,7 +144,7 @@ export default function App() {
   const [selectedGroupId, setSelectedGroupId] = useState<number>(1)
   const [selectedLetterId, setSelectedLetterId] = useState<string | null>(null)
   const [exerciseStep, setExerciseStep] = useState<
-    'sound' | 'trace' | 'syllable' | 'detective' | 'xylophone' | 'rocket' | 'quiz' | 'game'
+    'sound' | 'trace' | 'syllable' | 'detective' | 'xylophone' | 'rocket' | 'winch' | 'quiz' | 'game'
   >('sound')
 
   // Yeni profil ekleme modal/form
@@ -259,6 +262,7 @@ export default function App() {
       | 'detective'
       | 'xylophone'
       | 'rocket'
+      | 'winch'
       | 'quiz'
       | 'game'
   ) => {
@@ -320,6 +324,7 @@ export default function App() {
         p.detective,
         p.xylophone,
         p.rocket,
+        p.winch,
         p.quiz,
         p.game,
       ].filter(Boolean).length
@@ -556,7 +561,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* 8 EĞLENCELİ ADIM VE OYUN SEKMESİ */}
+            {/* 9 EĞLENCELİ ADIM VE OYUN SEKMESİ */}
             <div className="exercise-tabs">
               <button
                 type="button"
@@ -662,6 +667,23 @@ export default function App() {
 
               <button
                 type="button"
+                className={`ex-tab ${exerciseStep === 'winch' ? 'active' : ''} ${
+                  activeProfile.letterProgress[selectedLetter.id]?.winch ? 'done' : ''
+                }`}
+                onClick={() => {
+                  playSoundEffect('click')
+                  setExerciseStep('winch')
+                }}
+              >
+                <Anchor size={18} />
+                <span>7. Fırtına Vinci</span>
+                {activeProfile.letterProgress[selectedLetter.id]?.winch && (
+                  <CheckCircle2 size={16} className="done-icon" />
+                )}
+              </button>
+
+              <button
+                type="button"
                 className={`ex-tab ${exerciseStep === 'quiz' ? 'active' : ''} ${
                   activeProfile.letterProgress[selectedLetter.id]?.quiz ? 'done' : ''
                 }`}
@@ -674,7 +696,7 @@ export default function App() {
                 }}
               >
                 <Ear size={18} />
-                <span>7. Dinle & Bul</span>
+                <span>8. Dinle & Bul</span>
                 {activeProfile.letterProgress[selectedLetter.id]?.quiz && (
                   <CheckCircle2 size={16} className="done-icon" />
                 )}
@@ -691,7 +713,7 @@ export default function App() {
                 }}
               >
                 <Gamepad2 size={18} />
-                <span>8. Balon Oyunu</span>
+                <span>9. Balon Oyunu</span>
                 {activeProfile.letterProgress[selectedLetter.id]?.game && (
                   <CheckCircle2 size={16} className="done-icon" />
                 )}
@@ -872,6 +894,36 @@ export default function App() {
                   onExit={() => {
                     markActivityDone(selectedLetter.id, 'rocket')
                     playSoundEffect('fanfare')
+                    setExerciseStep('winch')
+                  }}
+                />
+                <div className="step-next-bar">
+                  <button
+                    type="button"
+                    className="btn-primary btn-large"
+                    onClick={() => {
+                      markActivityDone(selectedLetter.id, 'rocket')
+                      playSoundEffect('click')
+                      setExerciseStep('winch')
+                    }}
+                  >
+                    Fırtına Vincine Geç <ChevronRight size={22} />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* ADIM 7: FIRTINA VİNCİ: DERİN DENİZ HAZİNE VE KELİME AVI */}
+            {exerciseStep === 'winch' && (
+              <div className="exercise-panel">
+                <OceanWinchGame
+                  letter={selectedLetter}
+                  childName={activeProfile.name}
+                  completed={Boolean(activeProfile.letterProgress[selectedLetter.id]?.winch)}
+                  onComplete={() => markActivityDone(selectedLetter.id, 'winch')}
+                  onExit={() => {
+                    markActivityDone(selectedLetter.id, 'winch')
+                    playSoundEffect('fanfare')
                     setExerciseStep('quiz')
                     if (quizQuestions[0]) {
                       setTimeout(() => speakTurkish(quizQuestions[0].speakPrompt), 300)
@@ -883,7 +935,7 @@ export default function App() {
                     type="button"
                     className="btn-primary btn-large"
                     onClick={() => {
-                      markActivityDone(selectedLetter.id, 'rocket')
+                      markActivityDone(selectedLetter.id, 'winch')
                       playSoundEffect('click')
                       setExerciseStep('quiz')
                       if (quizQuestions[0]) {
@@ -897,7 +949,7 @@ export default function App() {
               </div>
             )}
 
-            {/* ADIM 6: MİNİ SESLİ OYUN */}
+            {/* ADIM 9: MİNİ SESLİ BALON OYUNU */}
             {exerciseStep === 'game' && (
               <div className="exercise-panel">
                 <LetterSoundGame
@@ -913,7 +965,7 @@ export default function App() {
               </div>
             )}
 
-            {/* ADIM 5: SESİ DUYUP DOĞRU HARFİ/KELİMEYİ BULMA */}
+            {/* ADIM 8: SESİ DUYUP DOĞRU HARFİ/KELİMEYİ BULMA (TEST) */}
             {exerciseStep === 'quiz' && (
               <div className="exercise-panel">
                 {(() => {
@@ -923,7 +975,7 @@ export default function App() {
                     <div className="quiz-card">
                       <div className="quiz-header">
                         <span className="step-pill">
-                          7. Adım: Sesi Duy ve Bul ({quizQuestionIdx + 1}/{quizQuestions.length})
+                          8. Adım: Sesi Duy ve Bul ({quizQuestionIdx + 1}/{quizQuestions.length})
                         </span>
                         <button
                           type="button"
