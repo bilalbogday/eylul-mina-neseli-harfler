@@ -6499,3 +6499,1159 @@
     justify-content: space-between;
   }
 }
+
+/* ==========================================================================
+   MOBİL KULLANIM KOLAYLIĞI, KOMPAKT ARAYÜZ VE GÖRSEL BÜTÜNLÜK İYİLEŞTİRMELERİ
+   ========================================================================== */
+
+html,
+body,
+#root {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.app-shell {
+  max-width: 100vw;
+  overflow-x: hidden;
+  padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ÜST ÇUBUK KOMPAKT KONTROLLER */
+.top-navbar {
+  padding: max(8px, env(safe-area-inset-top, 8px)) 14px 8px;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.brand-box {
+  gap: 8px;
+  min-width: 0;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-size: 1.05rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.brand-subtitle {
+  font-size: 0.72rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.top-stats {
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.audio-ctrl-pill {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.audio-ctrl-pill:active {
+  transform: scale(0.92);
+}
+
+.audio-ctrl-pill.muted {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+.profile-pill-compact {
+  padding: 4px 10px 4px 5px;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.avatar-circle-sm {
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+}
+
+.profile-name-short {
+  max-width: 82px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score-pill {
+  padding: 5px 10px;
+  font-size: 0.86rem;
+  gap: 4px;
+}
+
+/* ANA EKRAN KOMPAKT KARŞILAMA + KALDIĞIN YERDEN DEVAM ET KARTI */
+.main-container {
+  padding: 12px 12px 20px;
+}
+
+.compact-hero-continue-card {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 55%, #f59e0b 100%);
+  color: #ffffff;
+  border-radius: 22px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.22);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-top-greeting-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-avatar-compact {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2.5px solid rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
+}
+
+.hero-greeting-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-greeting-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.hero-greeting-sub {
+  font-size: 0.84rem;
+  font-weight: 700;
+  margin: 2px 0 0;
+  opacity: 0.95;
+}
+
+.hero-listen-mini-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.24);
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.continue-journey-cta-btn {
+  width: 100%;
+  background: #ffffff;
+  color: #0f172a;
+  border: 2.5px solid #fde047;
+  border-radius: 18px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
+  transition: transform 0.15s ease;
+}
+
+.continue-journey-cta-btn:active {
+  transform: scale(0.98);
+}
+
+.continue-letter-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  color: #ffffff;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.continue-info-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.continue-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #e11d48;
+  letter-spacing: 0.02em;
+}
+
+.continue-main-label {
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.continue-sub-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.continue-play-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #16a34a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* KOMPAKT ADA SEÇİCİ ŞERİT */
+.island-selector-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.island-pill-btn {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 7px 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 0;
+}
+
+.island-pill-btn.active {
+  border-color: var(--island-accent, #ff6b6b);
+  background: #fffbeb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.island-pill-btn.done {
+  border-color: #22c55e;
+}
+
+.island-pill-emoji {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.island-pill-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+}
+
+.island-pill-name {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #1e293b;
+  white-space: nowrap;
+}
+
+.island-pill-count {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #64748b;
+}
+
+.island-section-compact {
+  padding: 14px;
+  border-radius: 22px;
+  margin-bottom: 14px;
+}
+
+.island-header-compact {
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.island-header-badge {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+/* HARF KARTI DURUM İPUCU VE ÇIKARTMA ROZETİ */
+.letter-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.letter-sticker-earned-badge {
+  font-size: 1.15rem;
+  background: #fef9c3;
+  border: 1.5px solid #fde047;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.letter-card-status-hint {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 3px 8px;
+  border-radius: 999px;
+  text-align: center;
+  width: 100%;
+}
+
+/* DERS EKRANI KOMPAKT ÜST VE İLERLEME ÇUBUĞU */
+.lesson-compact-header {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.lesson-header-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.btn-back-compact {
+  background: #f1f5f9;
+  border: 2px solid #cbd5e1;
+  color: #1e293b;
+  border-radius: 12px;
+  padding: 6px 10px;
+  font-weight: 800;
+  font-size: 0.84rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.lesson-letter-title-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.lesson-letter-badge-sm {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  color: #ffffff;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lesson-letter-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.lesson-letter-meta strong {
+  font-size: 0.92rem;
+  color: #0f172a;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lesson-sticker-goal-pill {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #d97706;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lesson-sticker-goal-pill.unlocked {
+  color: #16a34a;
+}
+
+.btn-activities-drawer {
+  background: #eff6ff;
+  border: 2px solid #93c5fd;
+  color: #1d4ed8;
+  border-radius: 12px;
+  padding: 6px 10px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.lesson-progress-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progress-segments-row {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 4px;
+}
+
+.prog-segment-btn {
+  height: 26px;
+  border-radius: 8px;
+  border: 1.5px solid #cbd5e1;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 0.74rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.prog-segment-btn.done {
+  background: #dcfce7;
+  border-color: #22c55e;
+  color: #15803d;
+}
+
+.prog-segment-btn.current {
+  background: #2563eb;
+  border-color: #1d4ed8;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.lesson-progress-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.current-step-indicator {
+  font-size: 0.8rem;
+  color: #334155;
+  font-weight: 700;
+}
+
+.btn-next-step-inline {
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  color: #0f172a;
+  border-radius: 10px;
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.activities-menu-popover {
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 10px;
+  margin-top: 4px;
+}
+
+.activities-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+  gap: 6px;
+}
+
+.activity-menu-item {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #1e293b;
+  cursor: pointer;
+  text-align: left;
+}
+
+.activity-menu-item.active {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.activity-menu-item.completed {
+  border-color: #22c55e;
+  background: #f0fdf4;
+}
+
+.act-menu-num {
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
+.act-menu-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.act-menu-check {
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+/* EBEVEYN KİLİDİ VE GÜVENLİ YEDEKLEME ALANI */
+.parent-gate-card {
+  margin-top: 16px;
+  background: #f8fafc;
+  border: 2px solid #cbd5e1;
+  border-radius: 22px;
+  padding: 16px;
+}
+
+.parent-gate-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.parent-gate-header h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #1e293b;
+}
+
+.parent-gate-challenge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.gate-question {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #0f172a;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  border-radius: 14px;
+  padding: 8px 20px;
+}
+
+.gate-options-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.gate-opt-btn {
+  min-width: 56px;
+  height: 48px;
+  border-radius: 14px;
+  border: 2px solid #94a3b8;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 1.15rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.gate-opt-btn:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.gate-error-msg {
+  color: #dc2626;
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.parent-unlocked-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.parent-section-box {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.parent-section-box h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+
+.parent-photo-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.parent-backup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.device-code-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-icon-Text {
+  background: #f1f5f9;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #1e293b;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.restore-feedback-msg {
+  font-size: 0.84rem;
+  font-weight: 800;
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin: 4px 0 0;
+}
+
+.restore-feedback-msg.ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.restore-feedback-msg.err {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* ==========================================================================
+   HECE MUTFAĞI VE DİĞER OYUNLAR İÇİN TELEFON EKRANINA SIĞDIRMA (VIEWPORT FIT)
+   ========================================================================== */
+.kitchen-v2-scene {
+  padding: 12px;
+  gap: 8px;
+  border-radius: 22px;
+}
+
+.kitchen-v2-topbar {
+  padding: 4px 6px;
+  gap: 8px;
+}
+
+.kitchen-v2-brand h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.wooden-order-board {
+  padding: 10px 14px;
+  border-radius: 18px;
+  gap: 10px;
+}
+
+.order-big-emoji-box {
+  width: 52px;
+  height: 52px;
+  font-size: 2.2rem;
+  border-radius: 14px;
+}
+
+.order-word-heading {
+  font-size: 1.45rem;
+}
+
+.order-sub-recipe {
+  font-size: 0.78rem;
+}
+
+.recipe-syllable-box {
+  min-width: 64px;
+  padding: 5px 10px;
+  border-radius: 12px;
+}
+
+.box-syllable-text {
+  font-size: 1.35rem;
+}
+
+/* Şef Kedi ve Kaynayan Tencereyi Kompakt Tut */
+.kitchen-center-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 2px 0;
+}
+
+.chef-mascot-column {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.chef-Mascot-svg-wrap {
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.chef-cat-svg {
+  width: 54px;
+  height: 58px;
+}
+
+.chef-cat-tag {
+  display: none;
+}
+
+.chef-speech-bubble {
+  flex: 1;
+  max-width: 100%;
+  padding: 8px 12px;
+  border-radius: 14px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.chef-speech-bubble p {
+  font-size: 0.84rem;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.cauldron-Interactive-zone {
+  min-height: 140px;
+}
+
+.magic-cauldron-svg {
+  width: 185px;
+  max-height: 145px;
+}
+
+.wooden-spice-shelf {
+  padding: 8px 10px 0;
+  gap: 6px;
+  border-radius: 18px;
+}
+
+.shelf-plank-top {
+  font-size: 0.8rem;
+}
+
+.svg-jars-grid {
+  grid-template-columns: repeat(auto-fit, minmax(62px, 1fr));
+  gap: 6px;
+  padding: 2px 2px 6px;
+}
+
+.jar-vector-svg {
+  width: 64px;
+  height: 80px;
+}
+
+.jar-bottom-hint {
+  font-size: 0.65rem;
+  padding: 2px 6px;
+}
+
+/* SİHİRLİ DENİZ FENERİ ÇİZİM ALANI MOBİL OPTİMİZASYONU */
+.lighthouse-game-container {
+  padding: 12px;
+  gap: 10px;
+  border-radius: 22px;
+}
+
+.lighthouse-header {
+  padding-bottom: 8px;
+  gap: 8px;
+}
+
+.lighthouse-icon-badge {
+  width: 40px;
+  height: 40px;
+  font-size: 1.6rem;
+  border-radius: 12px;
+}
+
+.lighthouse-main-title {
+  font-size: 1.15rem;
+}
+
+.lighthouse-subtitle {
+  font-size: 0.78rem;
+}
+
+.captain-speech-bubble {
+  padding: 8px 12px;
+  border-radius: 14px;
+  gap: 8px;
+}
+
+.lighthouse-stage-wrapper {
+  min-height: 310px;
+}
+
+.lighthouse-canvas {
+  min-height: 310px;
+}
+
+/* TELEFON EKRANLARI İÇİN EK SIKIŞTIRMA (320x700, 390x844, 430x932) */
+@media (max-width: 640px) {
+  .brand-subtitle {
+    display: none;
+  }
+
+  .score-pill-label {
+    display: none;
+  }
+
+  .profile-name-short {
+    max-width: 64px;
+    font-size: 0.78rem;
+  }
+
+  .main-container {
+    padding: 8px 10px 16px;
+  }
+
+  .compact-hero-continue-card {
+    padding: 12px;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .hero-avatar-compact {
+    width: 44px;
+    height: 44px;
+    font-size: 1.6rem;
+  }
+
+  .hero-greeting-title {
+    font-size: 1.05rem;
+  }
+
+  .hero-greeting-sub {
+    font-size: 0.78rem;
+  }
+
+  .continue-journey-cta-btn {
+    padding: 8px 12px;
+    gap: 10px;
+  }
+
+  .continue-letter-circle {
+    width: 42px;
+    height: 42px;
+    font-size: 1.25rem;
+  }
+
+  .continue-main-label {
+    font-size: 0.94rem;
+  }
+
+  .island-selector-strip {
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+
+  .island-pill-btn {
+    padding: 6px 3px;
+    border-radius: 12px;
+  }
+
+  .island-pill-emoji {
+    font-size: 1.1rem;
+  }
+
+  .island-pill-name {
+    font-size: 0.66rem;
+  }
+
+  .island-pill-count {
+    font-size: 0.64rem;
+  }
+
+  /* Hece Mutfağı Mobilde Tek Ekrana Tam Sığsın */
+  .kitchen-v2-topbar {
+    display: none;
+  }
+
+  .wooden-order-board {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between;
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .order-board-left {
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .order-big-emoji-box {
+    width: 42px;
+    height: 42px;
+    font-size: 1.75rem;
+    border-radius: 10px;
+  }
+
+  .order-word-heading {
+    font-size: 1.15rem;
+  }
+
+  .order-sub-recipe {
+    display: none;
+  }
+
+  .order-audio-btn {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+    border-radius: 12px;
+  }
+
+  .order-audio-btn span {
+    display: none;
+  }
+
+  .order-syllable-boxes {
+    width: auto !important;
+    gap: 4px;
+    flex-wrap: nowrap;
+  }
+
+  .recipe-syllable-box {
+    min-width: 50px;
+    padding: 4px 8px;
+    border-radius: 10px;
+  }
+
+  .box-step-num {
+    font-size: 0.6rem;
+  }
+
+  .box-syllable-text {
+    font-size: 1.1rem;
+  }
+
+  .chef-cat-svg {
+    width: 42px;
+    height: 44px;
+  }
+
+  .chef-speech-bubble {
+    padding: 6px 10px;
+  }
+
+  .chef-speech-bubble p {
+    font-size: 0.78rem;
+  }
+
+  .cauldron-Interactive-zone {
+    min-height: 118px;
+  }
+
+  .magic-cauldron-svg {
+    width: 155px;
+    max-height: 122px;
+  }
+
+  .wooden-spice-shelf {
+    padding: 6px 8px 0;
+    gap: 4px;
+  }
+
+  .shelf-plank-top {
+    font-size: 0.74rem;
+  }
+
+  .svg-jars-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    padding: 2px 0 4px;
+  }
+
+  .jar-vector-svg {
+    width: 54px;
+    height: 68px;
+  }
+
+  .jar-bottom-hint {
+    font-size: 0.58rem;
+    padding: 1px 4px;
+    white-space: nowrap;
+  }
+
+  /* Ders kartı iç boşlukları */
+  .exercise-stage-card {
+    padding: 12px;
+    border-radius: 20px;
+  }
+
+  .sound-showcase {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .giant-letter-card {
+    width: 120px;
+    height: 120px;
+    font-size: 3.6rem;
+  }
+
+  /* Alt navigasyon güvenli alan */
+  .bottom-pwa-nav {
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 360px) {
+  .brand-title {
+    font-size: 0.92rem;
+  }
+
+  .profile-name-short {
+    display: none;
+  }
+
+  .lesson-letter-meta strong {
+    font-size: 0.82rem;
+  }
+
+  .btn-activities-drawer {
+    padding: 5px 8px;
+    font-size: 0.74rem;
+  }
+}
+
+/* HAREKET AZALTMA TERCİHİ (ACCESSIBILITY) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

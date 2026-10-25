@@ -48,7 +48,7 @@ export const ISLAND_GROUPS: IslandGroup[] = [
   {
     id: 1,
     title: '1. Ada: Neşeli Orman',
-    subtitle: 'A - N - E - T - İ - L Sesleri (Maarif Modeli 1. Grup)',
+    subtitle: 'A • N • E • T • İ • L Sesleri',
     themeEmoji: '🌳',
     bgGradient: 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)',
     accentColor: '#16a34a',
@@ -57,7 +57,7 @@ export const ISLAND_GROUPS: IslandGroup[] = [
   {
     id: 2,
     title: '2. Ada: Gökkuşağı Koyu',
-    subtitle: 'O - K - U - R - I - M Sesleri (Maarif Modeli 2. Grup)',
+    subtitle: 'O • K • U • R • I • M Sesleri',
     themeEmoji: '🌈',
     bgGradient: 'linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)',
     accentColor: '#0284c7',
@@ -66,7 +66,7 @@ export const ISLAND_GROUPS: IslandGroup[] = [
   {
     id: 3,
     title: '3. Ada: Yıldızlı Tepe',
-    subtitle: 'Ü - S - Ö - Y - D - Z Sesleri (Maarif Modeli 3. Grup)',
+    subtitle: 'Ü • S • Ö • Y • D • Z Sesleri',
     themeEmoji: '🌟',
     bgGradient: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)',
     accentColor: '#d97706',
@@ -75,7 +75,7 @@ export const ISLAND_GROUPS: IslandGroup[] = [
   {
     id: 4,
     title: '4. Ada: Masal Şatosu',
-    subtitle: 'Ç - B - G - C - Ş Sesleri (Maarif Modeli 4. Grup)',
+    subtitle: 'Ç • B • G • C • Ş Sesleri',
     themeEmoji: '🏰',
     bgGradient: 'linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%)',
     accentColor: '#9333ea',
@@ -84,7 +84,7 @@ export const ISLAND_GROUPS: IslandGroup[] = [
   {
     id: 5,
     title: '5. Ada: Uzay İstasyonu',
-    subtitle: 'P - H - V - Ğ - F - J Sesleri (Maarif Modeli 5. Grup)',
+    subtitle: 'P • H • V • Ğ • F • J Sesleri',
     themeEmoji: '🚀',
     bgGradient: 'linear-gradient(135deg, #ffe4e6 0%, #fecdd3 100%)',
     accentColor: '#e11d48',
@@ -99,16 +99,16 @@ export const LETTERS_DATA: LetterCurriculum[] = [
     upper: 'A',
     lower: 'a',
     groupId: 1,
-    phoneticText: 'aaa! Arı derken ağzımızı kocaman açıp aaa diyoruz.',
+    phoneticText: 'Aaa! Arı derken ağzımızı açıp aaa sesini çıkarıyoruz.',
     soundHint: 'Aaa!',
     mascotWord: 'Arı',
     mascotEmoji: '🐝',
     color: '#ef4444',
     sticker: { id: 'stk_a', name: 'Çalışkan Arı', emoji: '🐝', islandTitle: 'Neşeli Orman' },
     words: [
-      { word: 'Arı', emoji: '🐝', syllables: ['A', 'rı'], sentence: 'Eylül Mina arı uçtu.' },
-      { word: 'At', emoji: '🐴', syllables: ['At'], sentence: 'Beyaz at koşuyor.' },
-      { word: 'Ayı', emoji: '🐻', syllables: ['A', 'yı'], sentence: 'Sevimli ayı bal yedi.' },
+      { word: 'Arı', emoji: '🐝', syllables: ['A', 'rı'], sentence: 'Çalışkan arı çiçeklere uçtu.' },
+      { word: 'At', emoji: '🐴', syllables: ['At'], sentence: 'Beyaz at kırda koşuyor.' },
+      { word: 'Ayı', emoji: '🐻', syllables: ['A', 'yı'], sentence: 'Sevimli ayı tatlı bal yedi.' },
     ],
     syllableTasks: [
       { parts: ['a', 'n'], result: 'an', meaning: 'A ve N birleşti: an', emoji: '✨' },
