@@ -16,32 +16,17 @@ export const db = getFirestore(app)
 const DEVICE_ID_KEY = 'neseli_harfler_device_id'
 
 export function getOrCreateDeviceId(): string {
-  try {
-    let id = localStorage.getItem(DEVICE_ID_KEY)
-    if (!id || !isValidBackupCode(id)) {
-      id = 'dev_' + Math.random().toString(36).substring(2, 10) + '_' + Date.now().toString(36)
-      localStorage.setItem(DEVICE_ID_KEY, id)
-    }
-    return id
-  } catch {
-    return 'dev_local_fallback'
+  let id = localStorage.getItem(DEVICE_ID_KEY)
+  if (!id) {
+    id = 'dev_' + Math.random().toString(36).substring(2, 10) + '_' + Date.now().toString(36)
+    localStorage.setItem(DEVICE_ID_KEY, id)
   }
-}
-
-export function isValidBackupCode(code: string): boolean {
-  const trimmed = code.trim()
-  return /^dev_[a-z0-9]{4,20}_[a-z0-9]{4,20}$/i.test(trimmed)
-}
-
-export function maskBackupCode(code: string): string {
-  if (!code || code.length < 10) return 'dev_••••_••••'
-  return `${code.slice(0, 6)}••••${code.slice(-4)}`
+  return id
 }
 
 export async function saveCloudBackup(data: Record<string, unknown>): Promise<boolean> {
   try {
     const deviceId = getOrCreateDeviceId()
-    if (!isValidBackupCode(deviceId)) return false
     await setDoc(
       doc(db, 'neseli_harfler_profiles', deviceId),
       {
@@ -57,23 +42,15 @@ export async function saveCloudBackup(data: Record<string, unknown>): Promise<bo
   }
 }
 
-export async function loadCloudBackup(
-  customDeviceId?: string
-): Promise<Record<string, unknown> | null> {
+export async function loadCloudBackup(customDeviceId?: string): Promise<Record<string, unknown> | null> {
   try {
     const deviceId = (customDeviceId || getOrCreateDeviceId()).trim()
-    if (!isValidBackupCode(deviceId)) {
-      return null
-    }
     const snap = await getDoc(doc(db, 'neseli_harfler_profiles', deviceId))
     if (snap.exists()) {
-      const raw = snap.data() as Record<string, unknown>
-      if (raw && Array.isArray(raw.profiles) && raw.profiles.length > 0) {
-        if (customDeviceId) {
-          localStorage.setItem(DEVICE_ID_KEY, deviceId)
-        }
-        return raw
+      if (customDeviceId) {
+        localStorage.setItem(DEVICE_ID_KEY, deviceId)
       }
+      return snap.data() as Record<string, unknown>
     }
     return null
   } catch (err) {
@@ -83,18 +60,34 @@ export async function loadCloudBackup(
 }
 
 export async function saveGlobalAvatar(avatarUrlOrData: string): Promise<boolean> {
-  // Güvenlik: Yalnızca bu cihazın kendi bulut profili içine kaydet, genel ortak kaydı ezme
-  return saveCloudBackup({ primaryAvatar: avatarUrlOrData })
+  try {
+    await setDoc(
+      doc(db, 'neseli_harfler_global', 'default_avatar'),
+      {
+        avatar: avatarUrlOrData,
+        updatedAt: new Date().toISOString(),
+      },
+      { merge: true }
+    )
+    return true
+  } catch (err) {
+    console.warn('Global avatar kaydedilemedi:', err)
+    return false
+  }
 }
 
 export async function loadGlobalAvatar(): Promise<string | null> {
   try {
-    const data = await loadCloudBackup()
-    if (data && typeof data.primaryAvatar === 'string' && data.primaryAvatar) {
-      return data.primaryAvatar
+    const snap = await getDoc(doc(db, 'neseli_harfler_global', 'default_avatar'))
+    if (snap.exists()) {
+      const data = snap.data()
+      if (data && typeof data.avatar === 'string' && data.avatar) {
+        return data.avatar
+      }
     }
     return null
-  } catch {
+  } catch (err) {
+    console.warn('Global avatar okunamadı:', err)
     return null
   }
 }

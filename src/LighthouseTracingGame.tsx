@@ -449,8 +449,8 @@ export function LighthouseTracingGame({
     // Doğru çizgi üzerindeki ilerlemeyi hesapla
     const { progress, dist } = calculateSegmentProgress({ x: nx, y: ny }, pStart, pEnd)
 
-    // Geniş tolerans alanı (%18 yarıçap ~ 60px)
-    if (dist <= 18) {
+    // Geniş tolerans alanı (%14 yarıçap ~ 50px)
+    if (dist <= 15) {
       // Sadece ileri doğru hareketi kabul et (kaldığı yerden devam mekaniği)
       if (progress >= strokeProgress - 0.05) {
         const nextProg = Math.max(strokeProgress, progress)
@@ -764,30 +764,28 @@ export function LighthouseTracingGame({
         </div>
       </div>
 
-      {/* 1. GRUP MEB HARFLERİ VE RAKAMLAR SEÇİCİ BANT (Yalnızca serbest modda göster) */}
-      {!letter && (
-        <div className="lighthouse-quick-selector">
-          <span className="quick-label">Harf / Rakam Seç:</span>
-          <div className="quick-pills-row">
-            {QUICK_SELECT_ITEMS.map((item) => {
-              const isActive = currentChar === item.key
-              return (
-                <button
-                  key={item.key}
-                  type="button"
-                  className={`quick-char-pill ${isActive ? 'active' : ''}`}
-                  onClick={() => {
-                    playSoundEffect('click')
-                    setCurrentChar(item.key)
-                  }}
-                >
-                  {item.label}
-                </button>
-              )
-            })}
-          </div>
+      {/* 1. GRUP MEB HARFLERİ VE RAKAMLAR SEÇİCİ BANT */}
+      <div className="lighthouse-quick-selector">
+        <span className="quick-label">Harf / Rakam Seç:</span>
+        <div className="quick-pills-row">
+          {QUICK_SELECT_ITEMS.map((item) => {
+            const isActive = currentChar === item.key
+            return (
+              <button
+                key={item.key}
+                type="button"
+                className={`quick-char-pill ${isActive ? 'active' : ''}`}
+                onClick={() => {
+                  playSoundEffect('click')
+                  setCurrentChar(item.key)
+                }}
+              >
+                {item.label}
+              </button>
+            )
+          })}
         </div>
-      )}
+      </div>
 
       {/* KAPTAN MARTI KONUŞMA BALONU (REHBER) */}
       <div className="captain-speech-bubble">

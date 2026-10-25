@@ -376,17 +376,17 @@ export function SyllableKitchenGame({
     setFlyingJar(null)
     setDragState(null)
 
-    const welcomeHint = `Tarif: ${currentDish.word}! Önce "${currentDish.targetParts[0]}" kavanozuna dokun veya tencereye sürükle!`
+    const welcomeHint = `Siparişimiz: ${currentDish.word}! Önce "${currentDish.targetParts[0]}" kavanozunu tencereye atalım!`
     setChefSpeech(welcomeHint)
 
     const t = setTimeout(() => {
       playSoundEffect('bubble')
       speakTurkish(
-        `${currentDish.word}! Önce ${currentDish.targetParts[0]} hecesini tencereye atalım!`,
-        0.92,
-        1.08
+        `Yeni siparişimiz ${currentDish.word}! Hadi sırayla doğru hece kavanozlarını tencereye atalım!`,
+        0.9,
+        1.1
       )
-    }, 80)
+    }, 220)
     return () => clearTimeout(t)
   }, [currentDish])
 
@@ -433,13 +433,14 @@ export function SyllableKitchenGame({
         setPotMood('sneeze')
         spawnParticles('smoke_green', 14)
 
-        const sneezeText = `Bu "${jar.text}". Şimdi "${expectedPart}" kavanozunu bulup tencereye atalım!`
+        const sneezeText =
+          'Hapşuuu! Bu hece bu yemeğe uymadı, sıradaki heceyi bulalım!'
         setChefSpeech(sneezeText)
-        speakTurkish(sneezeText, 0.92, 1.1)
+        speakTurkish(sneezeText, 0.9, 1.1)
 
         setTimeout(() => {
           setPotMood('idle')
-        }, 1200)
+        }, 2100)
       }
     },
     [addedCount, cookingPhase, currentDish, spawnParticles]
@@ -713,8 +714,14 @@ export function SyllableKitchenGame({
         </div>
       </div>
 
-      {/* SEVİYE SEÇİCİ SEKMELER (Yalnızca serbest modda göster) */}
-      {!letter && (
+      {/* SEVİYE SEÇİCİ SEKMELER */}
+      {letter ? (
+        <div className="kitchen-level-tabs">
+          <div className="kitchen-lvl-btn active">
+            🔤 "{letter.upper}" Harfi Menüsü ({dishIdx + 1}/{activeDishes.length})
+          </div>
+        </div>
+      ) : (
         <div className="kitchen-level-tabs">
           <button
             type="button"
